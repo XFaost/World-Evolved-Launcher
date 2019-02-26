@@ -1,0 +1,72 @@
+﻿<Page x:Class="NFS.Main"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NFS"
+      mc:Ignorable="d" 
+      Title="Main" >
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="1"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="ACCOUNT INFORMATION" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
+
+        <Grid Grid.Row="1" Margin="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="Images/mail_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
+
+            <TextBlock Grid.Column="1" Text="E-Mail" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
+            <TextBox Style="{DynamicResource LoginBox}" Name="email" Grid.Column="1" BorderBrush="#00000000" Padding="7 0 0 0"/>
+        </Grid>
+        <Grid Grid.Row="2" Margin="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="Images/pass_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
+            <TextBlock Name="infAboutSavePass" Text="Password" Grid.Column="1" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
+            <PasswordBox Name="password" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="0" VerticalContentAlignment="Center" Foreground="WhiteSmoke" Padding="7 0 0 0"/>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="5 0 5 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <CheckBox Name="CheckForRememberUser" Grid.Column="0" VerticalAlignment="Center">
+                <CheckBox.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </CheckBox.Resources>
+                <Label Content="save login and password" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
+            </CheckBox>
+        </Grid>
+
+        <Grid Grid.Row="4" Background="#FF727272" Margin="2 0 2 0"/>
+        <TextBlock Grid.Row="5" Text="RESTORE AND SETTINGS" Margin="15 5 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
+        <Button Grid.Row="6" Content="Don't have an accont?" Margin="0 0 0 1" Click="startReg" Style="{StaticResource MainButtons}"/>
+        <Button Grid.Row="7" Content="Settings" Margin="0 1 0 0" Click="openSettings" Style="{StaticResource MainButtons}"/>
+        <TextBlock Grid.Row="8" Text="I'm forgot my password" MouseLeftButtonUp="recoveryAcc" Style="{StaticResource TextBlockButton}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFAFB6C5"/>
+    </Grid>
+</Page>

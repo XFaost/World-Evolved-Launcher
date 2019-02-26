@@ -1,33 +1,42 @@
 ﻿using System;
-using System.IO;
-using System.Net;
-using GameLauncher;
-using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using GameLauncher.HashPassword;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using System.Net;
+using GameLauncher;
+using System.Xml;
+using GameLauncher.HashPassword;
 
 namespace NFS
 {
-    public partial class regist : Window
+    /// <summary>
+    /// Interaction logic for Registration.xaml
+    /// </summary>
+    public partial class Registration : Page
     {
-        private string serverIP = "";
 
-        public regist(string ip)
+        string serverIP = "http://185.125.231.50:8680/soapbox-race-core/Engine.svc";
+
+        public Registration()
         {
-            serverIP = ip;
             InitializeComponent();
-            this.DataContext = new WindowViewModel(this);
+        }
+
+
+        void backFunk()
+        {
+            NavigationService.GoBack();
         }
 
         private void Press_Regist(object sender, RoutedEventArgs e)
@@ -87,14 +96,15 @@ namespace NFS
                         MessageBox.Show("Указанная электронная почта занята.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
-                    else if(Description != "")
+                    else if (Description != "")
                     {
                         MessageBox.Show(Description);
                     }
                     if (childrenNode["UserId"].InnerText != "" && childrenNode["LoginToken"].InnerText != "")
                     {
                         MessageBox.Show("Вы были успешно зарегистрированы.", "World Evolved", MessageBoxButton.OK);
-                        Close();
+                        backFunk();
+                        return;
                     }
                 };
             }
@@ -103,6 +113,11 @@ namespace NFS
                 MessageBox.Show("Что-то пошло не так.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+        private void Press_Back(object sender, RoutedEventArgs e)
+        {
+            backFunk();
+            return;
         }
     }
 }

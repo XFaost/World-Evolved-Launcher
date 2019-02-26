@@ -7,18 +7,21 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="UrlButton" TargetType="Button">
-        <Setter Property="Template" >
+        <Setter Property="Background" Value="#7F000000" />
+        <Setter Property="BorderThickness" Value="0"/>
+
+        <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate>
-                    <Grid>
-                        <TextBlock></TextBlock>
-                    </Grid>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Cursor" Value="Hand" />
             </Trigger>
         </Style.Triggers>
@@ -97,43 +100,12 @@
         </Setter>
     </Style>
 
-    <Style x:Key="OKButton" TargetType="Button" >
-        
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="White" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{StaticResource BackgroungColorBrush}" CornerRadius="5" >
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding Content}" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Cursor" Value="Hand" />
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect Color="White" Direction="290" BlurRadius="10" ShadowDepth="0" />
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property = "Command" Value="{Binding MinimizeCommand}"/>
-            </Trigger>
-        </Style.Triggers>
-        
-    </Style>
-
     <Style x:Key="CloseButton" TargetType="{x:Type Button}" >
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Foreground" Value="#FFAFB6C5" />
+        <Setter Property="Content" Value="×"/>
+        <Setter Property="FontSize" Value="20"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -152,6 +124,30 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <Style x:Key="HideButton" TargetType="{x:Type Button}" >
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="#FFAFB6C5" />
+        <Setter Property="Content" Value="_"/>
+        <Setter Property="FontSize" Value="14"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="#00000000">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <Style TargetType="TextBlock" x:Key="TextBlockButton">
         <Style.Triggers>
@@ -162,4 +158,27 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="{x:Type Button}" x:Key="MainButtons">
+        <Setter Property="Background" Value="{StaticResource BackgroungColorBrush}" />
+        <Setter Property="Foreground" Value="#FFC2CAD7" />
+        <Setter Property="BorderThickness" Value="0"/>
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FF1A212C" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    
 </ResourceDictionary>

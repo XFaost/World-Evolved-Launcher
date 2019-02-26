@@ -3,15 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        
+               xmlns:local="clr-namespace:NFS"
+        mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        
-        xmlns:local="clr-namespace:NFS"
-        mc:Ignorable="d"
-        Title="World Evolved v.1.0.0" Width="293" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Height="236">
+        Title="MainWinows2" Height="500" Width="850"
+        WindowStartupLocation="CenterScreen">
 
-    <Grid Background="{StaticResource BackgroungColorBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="142*"/>
+            <ColumnDefinition Width="425*"></ColumnDefinition>
+            <ColumnDefinition Width="283*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -19,84 +24,41 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Image Source="Images/logo.png" Margin="3" RenderOptions.BitmapScalingMode="HighQuality"/>
-        </Grid>
+        <Image Grid.ColumnSpan="3" Grid.RowSpan="3" Source="Images/map.png" Stretch="UniformToFill"/>
+        <Image Source="Images/logo.png" Grid.ColumnSpan="2" Margin="15" RenderOptions.BitmapScalingMode="HighQuality"/>
 
-        <Button Command="{Binding CloseCommand}" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Style="{StaticResource CloseButton}">X</Button>
+        <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+            <Button Command="{Binding MinimizeCommand}" Style="{StaticResource HideButton}" Margin="10 5 5 0"/>
+            <Button Command="{Binding CloseCommand}" Style="{StaticResource CloseButton}" Margin="5 5 10 0"/>
+        </StackPanel>
 
-        <Grid Grid.Row="1" Background="{StaticResource BackgroungColorLightBrush}">
 
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="20 0 5 0" Background="#D82C394C" CornerRadius="10">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Margin="5 0 5 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Label Name="OnlineInf" Grid.Column="0" Foreground="Green" Content="Онлайн: нет данних"/>
-                <Label Name="PingInf" Grid.Column="1" HorizontalAlignment="Right" Foreground="Green" Content="Пинг: нет данных"/>
+                <TextBlock Text="NEWS TODAY" Foreground="#FF919CAE" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Label Name="OnlineInf" Content="Online: NULL" Foreground="#FFD2D6DC" FontSize="12" Margin="0 0 5 0"/>
+                    <Label Name="PingInf" Content="Ping: NULL" Foreground="#FFD2D6DC" FontSize="12" Margin="5 0 5 0"/>
+                </StackPanel>
+                <Image Grid.Row="1" Source="Images/oDTilm0.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="0 5 0 0"/>
             </Grid>
+        </Border>
 
-            <Grid Grid.Row="1" Margin="5 0 5 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+        <Border Grid.Column="2" Grid.Row="1" Margin="5 0 25 0" Background="#D82C394C" CornerRadius="10">
+            <Frame Name="UserPanel" ContentRendered="myFrame_ContentRendered"/>
+            
+        </Border>
 
-                <Image Grid.Column="0" Source="Images/mail_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
-
-                <TextBlock Grid.Column="1" Margin="3 0 0 0" VerticalAlignment="Center" Foreground="Gray">Электронная почта</TextBlock>
-                <TextBox Style="{DynamicResource LoginBox}" Name="email" Grid.Column="1" BorderBrush="#00000000"/>
-            </Grid>
-
-            <Grid Grid.Row="2" Margin="5 0 5 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25" />
-                    <ColumnDefinition Width="41*" />
-                    <ColumnDefinition Width="253*"/>
-                </Grid.ColumnDefinitions>
-
-                <Image Source="Images/pass_icon.png" Grid.Column="0" Margin="0,0,5,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <TextBlock Name="infAboutSavePass" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Foreground="Gray"  Margin="3 0 0 0" Text="Пароль"/>
-                <PasswordBox Name="password" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="#00000000"/>
-            </Grid>
-
-            <Grid Grid.Row="3" Margin="10 1 10 3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Style="{StaticResource TextBlockButton}" MouseLeftButtonUp="recoveryAcc" Grid.Column="0" Foreground="#0066ff" HorizontalAlignment="Left" Text="Я забыл пароль"/>
-                <TextBlock Style="{StaticResource TextBlockButton}" MouseLeftButtonUp="startReg" Grid.Column="1" Foreground="Gray" HorizontalAlignment="Left" Text="Зарегистрироваться"/>
-            </Grid>
-
-            <Grid Grid.Row="4" Margin="5 0 5 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Button Name="PlayButton" Click="Press_Play" Grid.Column="0" Style="{StaticResource OKButton}" Margin="0 3 5 3" Content="ИГРАТЬ"/>
-                <CheckBox Name="CheckForRememberUser" Grid.Column="1" VerticalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.ColumnSpan="2" Foreground="White" VerticalAlignment="Center" Content="Запомнить меня"/>
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Margin="20 5 0 0" VerticalAlignment="Top">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
@@ -104,19 +66,21 @@
             <Button Click="openVK" Style="{StaticResource UrlButton}" Grid.Column="0" Grid.Row="1"/>
 
             <Image Grid.Column="2" Grid.Row="1" Source="Images/discord.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-            <Button Click="openDiscord" Style="{StaticResource UrlButton}" Grid.Column="2" Grid.Row="1" Background="#FFDDDD04"/>
+            <Button Click="openDiscord" Style="{StaticResource UrlButton}" Grid.Column="2" Grid.Row="1"/>
 
             <Image Grid.Column="1" Grid.Row="1" Source="Images/miniLogo.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="3"/>
             <Button Click="openSite" Style="{StaticResource UrlButton}" Grid.Column="1" Grid.Row="1"/>
 
         </Grid>
 
+
+        <Button Name="PlayButton" Click="Press_Play" Grid.Column="2" Grid.Row="2"  Margin="5 10 25 25" Content="LAUNCH" FontSize="20" FontWeight="Bold" Style="{StaticResource MainButtons}"/>
     </Grid>
 
     <WindowChrome.WindowChrome>
         <WindowChrome
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
-            CaptionHeight="50"
+            CaptionHeight="115"
             CornerRadius="15"
             GlassFrameThickness="0"
             />

@@ -231,9 +231,17 @@ namespace NFS
             return nodes;
         }
 
+        public Main mPage;
+        private void myFrame_ContentRendered(object sender, EventArgs e)
+        {
+            UserPanel.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+            mPage = new Main();
+            UserPanel.NavigationService.Navigate(mPage);
 
             ServerProxy.Instance.Start();
 
@@ -269,9 +277,9 @@ namespace NFS
                     }
                     else
                     {
-                        email.Text = saveLogin;
-                        CheckForRememberUser.IsChecked = true;
-                        infAboutSavePass.Text = "Ваш пароль сохранен. Приятной игры! :)";
+                        mPage.email.Text = saveLogin;
+                        mPage.CheckForRememberUser.IsChecked = true;
+                        mPage.infAboutSavePass.Text = "Password saved";
                         //infAboutSavePass.Foreground = new System.Windows.Media.SolidColorBrush(Colors.Green);
                     }
                 }
@@ -346,6 +354,7 @@ namespace NFS
                     this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
                         PlayButton.IsEnabled = true;
+                        PlayButton.Content = "LAUNCH";
                     });
                 };
 
@@ -355,28 +364,35 @@ namespace NFS
         void Press_Play(object sender, RoutedEventArgs e)
         {
             PlayButton.IsEnabled = false;
+            PlayButton.Content = "LAUNCHED";
             string Login = "";
             string EncryptPass = "";
 
-            if (saveLogin == "" && saveEncryptPass == "" && (email.Text.ToString() == "" || password.Password.ToString() == ""))
+            if (saveLogin == "" && saveEncryptPass == "" && (mPage.email.Text.ToString() == "" || mPage.password.Password.ToString() == ""))
             {
                 MessageBox.Show("Пожалуйста, введите данные для авторизации.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
                 PlayButton.IsEnabled = true;
+                PlayButton.Content = "LAUNCH";
                 return;
             }
-            if (saveLogin != "" && saveEncryptPass != "" && email.Text.ToString() != "" && password.Password.ToString() != "")
+            if (saveLogin != "" && saveEncryptPass != "" && mPage.email.Text.ToString() != "" && mPage.password.Password.ToString() != "")
             {
-                Login = email.Text.ToString();
-                EncryptPass = SHA.HashPassword(password.Password.ToString()).ToLower();
+                Login = mPage.email.Text.ToString();
+                EncryptPass = SHA.HashPassword(mPage.password.Password.ToString()).ToLower();
             }
-            if (saveLogin == "" && saveEncryptPass == "" && email.Text.ToString() != "" && password.Password.ToString() != "")
+            if (saveLogin == "" && saveEncryptPass == "" && mPage.email.Text.ToString() != "" && mPage.password.Password.ToString() != "")
             {
-                Login = email.Text.ToString();
-                EncryptPass = SHA.HashPassword(password.Password.ToString()).ToLower();
+                Login = mPage.email.Text.ToString();
+                EncryptPass = SHA.HashPassword(mPage.password.Password.ToString()).ToLower();
             }
-            if (saveLogin != "" && saveEncryptPass != "" && email.Text.ToString() != "" && password.Password.ToString() == "")
+            if (saveEncryptPass != "" && mPage.email.Text.ToString() == saveLogin && mPage.password.Password.ToString() == "")
             {
                 Login = saveLogin;
+                EncryptPass = saveEncryptPass;
+            }
+            if (saveEncryptPass != "" && mPage.email.Text.ToString() != saveLogin && mPage.password.Password.ToString() == "")
+            {
+                Login = mPage.email.Text.ToString();
                 EncryptPass = saveEncryptPass;
             }
 
@@ -394,6 +410,10 @@ namespace NFS
                             updateSaveData("", 1);
                             updateSaveData("", 2);
                             PlayButton.IsEnabled = true;
+                            PlayButton.Content = "LAUNCH";
+                            mPage.infAboutSavePass.Text = "Password";
+                            saveLogin = "";
+                            saveEncryptPass = "";
                             return;
                         }
                         else
@@ -403,12 +423,12 @@ namespace NFS
                     }
                     else if (childrenNode["LoginToken"].InnerText != "" && childrenNode["UserId"].InnerText != "")
                     {
-                        if (CheckForRememberUser.IsChecked == true && email.Text.ToString() != "" && password.Password.ToString() != "")
+                        if (mPage.CheckForRememberUser.IsChecked == true && mPage.email.Text.ToString() != "" && mPage.password.Password.ToString() != "")
                         {
                             updateSaveData(Login, 1);
                             updateSaveData(EncryptPass, 2);
                         }
-                        if (CheckForRememberUser.IsChecked == false)
+                        if (mPage.CheckForRememberUser.IsChecked == false)
                         {
                             updateSaveData("", 1);
                             updateSaveData("", 2);
@@ -421,6 +441,7 @@ namespace NFS
                             saveWayToFileNFSW = ""; updateSaveData("", 0);
                             MessageBox.Show("Вы авторизовались, но файл игры(" + saveWayToFileNFSW + ") не был найден.\nПожалуйста, перезагрузите клиент.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
                             PlayButton.IsEnabled = true;
+                            PlayButton.Content = "LAUNCH";
                             return;
                         }
 
@@ -446,14 +467,9 @@ namespace NFS
             }
 
         }
-        void startReg(object sender, RoutedEventArgs e)
-        {
-            regist form = new regist(serverIP);
-            form.ShowDialog();
-        }
         void recoveryAcc(object sender, RoutedEventArgs e)
         {
-            if (email.Text.ToString() == "")
+            if (mPage.email.Text.ToString() == "")
             {
                 MessageBox.Show("Пожалуйста, введите почту для сброса пароля.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Question);
                 return;
@@ -465,7 +481,7 @@ namespace NFS
                 Uri resetPasswordUrl = new Uri(serverIP + "/RecoveryPassword/forgotPassword");
 
                 var request = (HttpWebRequest)System.Net.WebRequest.Create(resetPasswordUrl);
-                var postData = "email=" + email.Text.ToString();
+                var postData = "email=" + mPage.email.Text.ToString();
                 var data = Encoding.ASCII.GetBytes(postData);
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
@@ -487,7 +503,7 @@ namespace NFS
 
             if (responseString[0] == 'L' && responseString[5] == 't' && responseString[23] == 's')//Link to reset password sent to: [e-mail]
             {
-                MessageBox.Show("Ссылка для сброса пароля отправлена на: [" + email.Text.ToString() + "]", "World Evolved", MessageBoxButton.OK);
+                MessageBox.Show("Ссылка для сброса пароля отправлена на: [" + mPage.email.Text.ToString() + "]", "World Evolved", MessageBoxButton.OK);
                 return;
             }
             if (responseString == "ERROR: Recovery password link already sent, please check your spam mail box or try again in 1 hour.")

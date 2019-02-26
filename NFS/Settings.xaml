@@ -1,0 +1,45 @@
+﻿<Page x:Class="NFS.Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NFS"
+      mc:Ignorable="d" 
+      Title="Settings"
+      d:DesignHeight="250" d:DesignWidth="200">
+
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Settings" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Language:" Foreground="#FFAFB6C5" VerticalAlignment="Center"/>
+        <ComboBox Grid.Column="1" Grid.Row="1" Margin="0 5 0 5">
+            <ComboBoxItem IsSelected="True">ENG</ComboBoxItem>
+            <ComboBoxItem>RU</ComboBoxItem>
+        </ComboBox>
+        
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Download size:" Foreground="#FFAFB6C5" VerticalAlignment="Center"/>
+        <ComboBox Grid.Column="1" Grid.Row="2" Margin="0 5 0 5">
+            <ComboBoxItem IsSelected="True">Standart</ComboBoxItem>
+            <ComboBoxItem>Maximum</ComboBoxItem>
+        </ComboBox>
+        
+        <Button Grid.Row="6" Grid.Column="0" Content="Back" Margin="0 0 1 1" Click="Press_Back" Style="{StaticResource MainButtons}"/>
+        <Button Grid.Row="6" Grid.Column="1" Content="Save" Margin="1 0 0 1" Click="Press_Back" Style="{StaticResource MainButtons}"/>
+    </Grid>
+</Page>

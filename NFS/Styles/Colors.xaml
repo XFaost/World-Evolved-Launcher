@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:NFS">
 
-    <Color              x:Key="BackgroungColor">#000d1a</Color>
-    <SolidColorBrush    x:Key="BackgroungColorBrush" Color="{StaticResource BackgroungColor}" />
+    <Color              x:Key="BackgroungColor">#FF222B3B</Color>
+    <SolidColorBrush    x:Key="BackgroungColorBrush" Color="{StaticResource BackgroungColor}" /> 
 
-    <Color              x:Key="BackgroungColorLight">#001a33</Color>
+    <Color              x:Key="BackgroungColorLight">#FF232C3D</Color>
     <SolidColorBrush    x:Key="BackgroungColorLightBrush" Color="{StaticResource BackgroungColorLight}" />
 
 </ResourceDictionary>
