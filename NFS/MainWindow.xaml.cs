@@ -268,8 +268,6 @@ namespace NFS
             mPage = new Main();
             UserPanel.NavigationService.Navigate(mPage);
 
-            ServerProxy.Instance.Start();
-
             this.DataContext = new WindowViewModel(this);
 
             if (!System.IO.File.Exists("getLastError.exe"))
@@ -279,6 +277,10 @@ namespace NFS
             }
 
             readSaveData();
+
+            ServerProxy.Instance.SetCheckOnline(Int32.Parse(DRPCOnline) == 1);
+            ServerProxy.Instance.Start();
+            
 
             if (Int32.Parse(DRPCOnline) != 0)
             {
@@ -323,7 +325,6 @@ namespace NFS
         {
             readSaveData();
 
-            ServerProxy.Instance.SetCheckOnline(Int32.Parse(DRPCOnline) == 1);
             ServerProxy.Instance.SetCheckCar(Int32.Parse(DRPCCar) == 1);
             ServerProxy.Instance.SetCheckEvent(Int32.Parse(DRPCEvent) == 1);
             ServerProxy.Instance.SetCheckLobby(Int32.Parse(DRPCLobby) == 1);
