@@ -29,6 +29,7 @@ namespace NFS.Class.Diss.Proxy
         public static Dictionary<string, int> executedPowerupsRemainingSecs = new Dictionary<string, int>();
         public static Dictionary<string, bool> executedPowerups = new Dictionary<string, bool>();
         public static bool activated;
+        private static readonly bool checkOnline = ServerProxy.Instance.GetCheckOnline();
 
         private static Response ProxyRequest(NancyContext context)
         {
@@ -133,8 +134,8 @@ namespace NFS.Class.Diss.Proxy
 
                 }
 
-
-                DiscordGamePresence.handleGameState(fixedPath, replyToServer, POSTContent, GETContent);
+                if(checkOnline)
+                    DiscordGamePresence.handleGameState(fixedPath, replyToServer, POSTContent, GETContent);
 
                 return new TextResponse(replyToServer, response.Content.Headers.ContentType.ToString()) { StatusCode = (HttpStatusCode)(int)response.StatusCode };
             }

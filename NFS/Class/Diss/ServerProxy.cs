@@ -11,7 +11,7 @@ namespace NFS.Class.Diss
         private string _serverUrl;
         private string _serverName;
         private NancyHost _host;
-        private bool _checkCar, _checkEvent, _checkLobby;
+        private bool _checkCar, _checkEvent, _checkLobby, _checkOnline;
 
         public string GetServerUrl() => _serverUrl;
         public void SetServerUrl(string serverUrl)
@@ -23,6 +23,12 @@ namespace NFS.Class.Diss
         public void SetServerName(string serverName)
         {
             _serverName = serverName;
+        }
+
+        public bool GetCheckOnline() => _checkOnline;
+        public void SetCheckOnline(bool checkOnline)
+        {
+            _checkOnline = checkOnline;
         }
 
         public bool GetCheckCar() => _checkCar;

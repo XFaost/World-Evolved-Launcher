@@ -323,28 +323,36 @@ namespace NFS
         {
             readSaveData();
 
+            ServerProxy.Instance.SetCheckOnline(Int32.Parse(DRPCOnline) == 1);
             ServerProxy.Instance.SetCheckCar(Int32.Parse(DRPCCar) == 1);
             ServerProxy.Instance.SetCheckEvent(Int32.Parse(DRPCEvent) == 1);
             ServerProxy.Instance.SetCheckLobby(Int32.Parse(DRPCLobby) == 1);
 
-            _presence.Details = "Загрузка игры";
-            _presence.Timestamps = new Timestamps()
+            if(Int32.Parse(DRPCCar) == 1)
             {
-                Start = DateTime.UtcNow
-            };
-            discordRpcClient.SetPresence(_presence);
+                _presence.Details = "Загрузка игры";
+                _presence.Timestamps = new Timestamps()
+                {
+                    Start = DateTime.UtcNow
+                };
+                discordRpcClient.SetPresence(_presence);
+            }
+            
             var nfswProcess = Process.Start(saveWayToFileNFSW, args);
             if (nfswProcess != null)
             {
                 nfswProcess.EnableRaisingEvents = true;
 
                 nfswProcess.Exited += (sender2, e2) => {
-                    _presence.Details = "Открыт лаунчер";
-                    _presence.Timestamps = new Timestamps()
+                    if (Int32.Parse(DRPCCar) == 1)
                     {
-                        Start = DateTime.UtcNow
-                    };
-                    discordRpcClient.SetPresence(_presence);
+                        _presence.Details = "Открыт лаунчер";
+                        _presence.Timestamps = new Timestamps()
+                        {
+                            Start = DateTime.UtcNow
+                        };
+                        discordRpcClient.SetPresence(_presence);
+                    }
                     var exitCode = nfswProcess.ExitCode;
 
                     if (exitCode != 0)
