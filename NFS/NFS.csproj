@@ -37,7 +37,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\mainIcon.ico</ApplicationIcon>
+    <ApplicationIcon>mainIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DiscordRPC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -225,10 +225,9 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\mainIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="DiscordRPC.dll" />
+    <Resource Include="mainIcon.ico" />
+    <Resource Include="Images\mainIcon.ico" />
     <Resource Include="Images\map.png" />
     <Resource Include="Images\oDTilm0.png" />
   </ItemGroup>

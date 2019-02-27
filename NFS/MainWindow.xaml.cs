@@ -31,13 +31,14 @@ namespace NFS
     {
         private
         string serverIP = "http://185.125.231.50:8680/soapbox-race-core/Engine.svc";
-        string saveWayToFileNFSW = ""; string wayToLog = "";
-        string saveLogin = "";
-        string saveEncryptPass = "";
+        string saveWayToFileNFSW = "", wayToLog = "";
+        string saveLogin = "", saveEncryptPass = "";
+        string language = "0", fileSize = "0";
+        string DRPCOnline = "0", DRPCCar = "0", DRPCEvent = "0", DRPCLobby = "0";
         Thread ThreadForMonitoringOnlineAndPing;
-        private Thread _nfswstarted;
+        Thread _nfswstarted;
 
-        private static RichPresence _presence = new RichPresence()
+        static RichPresence _presence = new RichPresence()
         {
             Details = "Открыт лаунчер",
 
@@ -74,14 +75,26 @@ namespace NFS
 
         void updateSaveData(string newText, int line_to_edit)
         {
-            string[] file = new string[3];
+            string[] file = new string[9];
 
-            try { file[0] = File.ReadLines("saveData.txt").Skip(0).First(); }
+            try { file[0] = File.ReadLines("saveData.txt").Skip(0).First(); }// way to nfsw.exe
             catch { file[0] = ""; }
-            try { file[1] = File.ReadLines("saveData.txt").Skip(1).First(); }
+            try { file[1] = File.ReadLines("saveData.txt").Skip(1).First(); }// loogin
             catch { file[1] = ""; }
-            try { file[2] = File.ReadLines("saveData.txt").Skip(3).First(); }
+            try { file[2] = File.ReadLines("saveData.txt").Skip(2).First(); }// encryptPass
             catch { file[2] = ""; }
+            try { file[3] = File.ReadLines("saveData.txt").Skip(3).First(); }// language
+            catch { file[3] = ""; }
+            try { file[4] = File.ReadLines("saveData.txt").Skip(4).First(); }// fileSize
+            catch { file[4] = ""; }
+            try { file[5] = File.ReadLines("saveData.txt").Skip(5).First(); }// DRPCOnline
+            catch { file[5] = ""; }
+            try { file[6] = File.ReadLines("saveData.txt").Skip(6).First(); }// DRPCCar
+            catch { file[6] = ""; }
+            try { file[7] = File.ReadLines("saveData.txt").Skip(7).First(); }// DRPCEvent
+            catch { file[7] = ""; }
+            try { file[8] = File.ReadLines("saveData.txt").Skip(8).First(); }// DRPCLobby
+            catch { file[8] = ""; }
 
             file[line_to_edit] = newText;
 
@@ -90,15 +103,27 @@ namespace NFS
                 writetext.WriteLine(file[0]);
                 writetext.WriteLine(file[1]);
                 writetext.WriteLine(file[2]);
+                writetext.WriteLine(file[3]);
+                writetext.WriteLine(file[4]);
+                writetext.WriteLine(file[5]);
+                writetext.WriteLine(file[6]);
+                writetext.WriteLine(file[7]);
+                writetext.WriteLine(file[8]);
             }
         }
         void readSaveData()
         {
             try
             {
-                saveWayToFileNFSW = File.ReadLines("saveData.txt").Skip(0).First();
-                saveLogin = File.ReadLines("saveData.txt").Skip(1).First();
-                saveEncryptPass = File.ReadLines("saveData.txt").Skip(2).First();
+                saveWayToFileNFSW = File.ReadLines("saveData.txt").Skip(0).First(); 
+                saveLogin =         File.ReadLines("saveData.txt").Skip(1).First();
+                saveEncryptPass =   File.ReadLines("saveData.txt").Skip(2).First();
+                language =          File.ReadLines("saveData.txt").Skip(3).First() == "" ? language :   File.ReadLines("saveData.txt").Skip(3).First();
+                fileSize =          File.ReadLines("saveData.txt").Skip(4).First() == "" ? fileSize :   File.ReadLines("saveData.txt").Skip(4).First();
+                DRPCOnline =        File.ReadLines("saveData.txt").Skip(5).First() == "" ? DRPCOnline : File.ReadLines("saveData.txt").Skip(5).First();
+                DRPCCar =           File.ReadLines("saveData.txt").Skip(6).First() == "" ? DRPCCar :    File.ReadLines("saveData.txt").Skip(6).First();
+                DRPCEvent =         File.ReadLines("saveData.txt").Skip(7).First() == "" ? DRPCEvent :  File.ReadLines("saveData.txt").Skip(7).First();
+                DRPCLobby =         File.ReadLines("saveData.txt").Skip(8).First() == "" ? DRPCLobby :  File.ReadLines("saveData.txt").Skip(8).First();
             }
             catch
             {
@@ -113,8 +138,8 @@ namespace NFS
             openFolder.InitialDirectory = "";
             openFolder.IsFolderPicker = false;
             openFolder.Filters.Add(new CommonFileDialogFilter("nfsw", "*.exe"));
-            openFolder.Title = "Пожалуйста, укажите где находиться файл nfsw.exe";
-            if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show("Вы не указал файл игры.\nКлиент завершает работу."); Process.GetCurrentProcess().Kill(); }
+            openFolder.Title = "Пожалуйста, укажите где находится файл nfsw.exe";
+            if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show("Вы не указали файл игры.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
             saveWayToFileNFSW = openFolder.FileName;
             updateSaveData(saveWayToFileNFSW, 0);
             return;
@@ -245,10 +270,6 @@ namespace NFS
 
             ServerProxy.Instance.Start();
 
-            discordRpcClient = new DiscordRpcClient("549220332527943701");
-            discordRpcClient.Initialize();
-            discordRpcClient.SetPresence(_presence);
-
             this.DataContext = new WindowViewModel(this);
 
             if (!System.IO.File.Exists("getLastError.exe"))
@@ -258,6 +279,13 @@ namespace NFS
             }
 
             readSaveData();
+
+            if (Int32.Parse(DRPCOnline) != 0)
+            {
+                discordRpcClient = new DiscordRpcClient("549220332527943701");
+                discordRpcClient.Initialize();
+                discordRpcClient.SetPresence(_presence);
+            }
 
             if (!System.IO.File.Exists(saveWayToFileNFSW))
             {
@@ -293,6 +321,12 @@ namespace NFS
         private
         void LaunchGame(string args)
         {
+            readSaveData();
+
+            ServerProxy.Instance.SetCheckCar(Int32.Parse(DRPCCar) == 1);
+            ServerProxy.Instance.SetCheckEvent(Int32.Parse(DRPCEvent) == 1);
+            ServerProxy.Instance.SetCheckLobby(Int32.Parse(DRPCLobby) == 1);
+
             _presence.Details = "Загрузка игры";
             _presence.Timestamps = new Timestamps()
             {
@@ -463,7 +497,7 @@ namespace NFS
             }
             catch
             {
-                MessageBox.Show("Что-то пошло не так.");
+                MessageBox.Show("Что-то пошло не так.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }

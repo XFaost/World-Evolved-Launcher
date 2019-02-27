@@ -59,14 +59,14 @@
                         </ResourceDictionary.MergedDictionaries>
                     </ResourceDictionary>
                 </CheckBox.Resources>
-                <Label Content="save login and password" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
+                <Label Content="Save login and password" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
             </CheckBox>
         </Grid>
 
         <Grid Grid.Row="4" Background="#FF727272" Margin="2 0 2 0"/>
         <TextBlock Grid.Row="5" Text="RESTORE AND SETTINGS" Margin="15 5 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
-        <Button Grid.Row="6" Content="Don't have an accont?" Margin="0 0 0 1" Click="startReg" Style="{StaticResource MainButtons}"/>
+        <Button Grid.Row="6" Content="Don't have an account?" Margin="0 0 0 1" Click="startReg" Style="{StaticResource MainButtons}"/>
         <Button Grid.Row="7" Content="Settings" Margin="0 1 0 0" Click="openSettings" Style="{StaticResource MainButtons}"/>
-        <TextBlock Grid.Row="8" Text="I'm forgot my password" MouseLeftButtonUp="recoveryAcc" Style="{StaticResource TextBlockButton}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFAFB6C5"/>
+        <TextBlock Grid.Row="8" Text="I forgot my password" MouseLeftButtonUp="recoveryAcc" Style="{StaticResource TextBlockButton}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFAFB6C5"/>
     </Grid>
 </Page>

@@ -15,7 +15,17 @@ namespace NFS.Class.Diss.RPC
     class DiscordGamePresence
     {
         private static DateTime RPCstartTimestamp;
-        public static RichPresence _presence = new RichPresence();
+        public static RichPresence _presence = new RichPresence()
+        {
+            Timestamps = GetCurrentTimestamp(),
+            Assets = new Assets()
+            {
+                LargeImageKey = "maxmlpzbsrw"
+            }
+        };
+
+
+        private static readonly bool checkCar = ServerProxy.Instance.GetCheckCar(), checkEvent = ServerProxy.Instance.GetCheckEvent(), checkLobby = ServerProxy.Instance.GetCheckLobby();
 
         //Some checks
         private static readonly string serverName = ServerProxy.Instance.GetServerName();
@@ -38,8 +48,6 @@ namespace NFS.Class.Diss.RPC
 
         public static void handleGameState(string uri, string serverreply = "", string POST = "", string GET = "")
         {
-
-            //MessageBox.Show("handleGameState");
             RPCstartTimestamp = DateTime.Now;
 
             var SBRW_XML = new XmlDocument();
@@ -88,6 +96,7 @@ namespace NFS.Class.Diss.RPC
 
                 _presence.Details = "Collecting gems (" + PersonaTreasure + " of " + TotalTreasure + ")";
                 _presence.Timestamps = GetCurrentTimestamp();
+                
                 MainWindow.discordRpcClient.SetPresence(_presence);
 
                 Console.WriteLine(serverreply);
@@ -153,9 +162,18 @@ namespace NFS.Class.Diss.RPC
             }
             if (uri == "/matchmaking/leavelobby")
             {
-                _presence.Details = "Driving " + PersonaCarName;
+                
+                if (checkCar)
+                {
+                    //MessageBox.Show("{DRIVING CARNAME}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
+                    _presence.Details = "Driving " + PersonaCarName;
+                    _presence.Timestamps = GetCurrentTimestamp();
+
+                }
+                else _presence.Details = "Онлайн";
+
                 _presence.State = string.Empty;
-                _presence.Timestamps = GetCurrentTimestamp();
+
                 _presence.Assets = new Assets()
                 {
                     LargeImageKey = "maxmlpzbsrw"
@@ -169,11 +187,24 @@ namespace NFS.Class.Diss.RPC
             if (uri == "/matchmaking/acceptinvite")
             {
                 SBRW_XML.LoadXml(serverreply);
-                EventID = Convert.ToInt32(SBRW_XML.SelectSingleNode("LobbyInfo/EventId").InnerText);
 
-                _presence.Details = "In Lobby: " + EventList.getEventName(EventID);
-                _presence.State = "Driving " + PersonaCarName;
-                _presence.Timestamps = GetCurrentTimestamp();
+                if (checkLobby)
+                {
+                    //MessageBox.Show("{IN LOBBY0}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
+                    EventID = Convert.ToInt32(SBRW_XML.SelectSingleNode("LobbyInfo/EventId").InnerText);
+                    _presence.State = "In Lobby: " + EventList.getEventName(EventID);
+                    _presence.Timestamps = GetCurrentTimestamp();
+                }
+                else _presence.State = "";
+
+                if (checkCar)
+                {
+                    //MessageBox.Show("{IN LOBBY1}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
+                    _presence.Details = "Driving " + PersonaCarName;
+                    _presence.Timestamps = GetCurrentTimestamp();
+                }
+                else _presence.Details = "Онлайн";
+
                 _presence.Assets = new Assets()
                 {
                     LargeImageKey = "maxmlpzbsrw"
@@ -190,14 +221,20 @@ namespace NFS.Class.Diss.RPC
                 _presence.Assets = new Assets();
                 if (UpdatePersonaPresenceParam == "1")
                 {
-                    _presence.Details = "Driving " + PersonaCarName;
+                    if (checkCar)
+                    {
+                        //MessageBox.Show("{IN SAFEHOUSE/FREEROAM}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
+                        _presence.Details = "Driving " + PersonaCarName;
+                    }
+                    else _presence.Details = "Онлайн";
                 }
                 else
                 {
                     _presence.Details = "In Safehouse";
+                    _presence.Timestamps = GetCurrentTimestamp();
                 }
                 _presence.State = string.Empty;
-                _presence.Timestamps = GetCurrentTimestamp();
+
                 _presence.Assets = new Assets()
                 {
                     LargeImageKey = "maxmlpzbsrw"
@@ -208,11 +245,22 @@ namespace NFS.Class.Diss.RPC
             //IN EVENT
             if (Regex.Match(uri, "/matchmaking/launchevent").Success)
             {
-                EventID = Convert.ToInt32(splitted_uri[3]);
+                if (checkEvent)
+                {
+                    EventID = Convert.ToInt32(splitted_uri[3]);
+                    _presence.State = "In Event: " + EventList.getEventName(EventID);
+                    _presence.Timestamps = GetCurrentTimestamp();
+                }
+                else _presence.State = "";
 
-                _presence.Details = "In Event: " + EventList.getEventName(EventID);
-                _presence.State = "Driving " + PersonaCarName;
-                _presence.Timestamps = GetCurrentTimestamp();
+                if (checkCar)
+                {
+                    //MessageBox.Show("{IN EVENT}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
+                    _presence.Details = "Driving " + PersonaCarName;
+                    _presence.Timestamps = GetCurrentTimestamp();
+                }
+                else _presence.Details = "Онлайн";
+
                 _presence.Assets = new Assets()
                 {
                     LargeImageKey = "maxmlpzbsrw"
@@ -223,9 +271,21 @@ namespace NFS.Class.Diss.RPC
             }
             if (uri == "/event/arbitration")
             {
-                _presence.Details = "In Event: " + EventList.getEventName(EventID);
-                _presence.State = "Driving " + PersonaCarName;
-                _presence.Timestamps = GetCurrentTimestamp();
+                if (checkEvent)
+                {
+                    _presence.State = "In Event: " + EventList.getEventName(EventID);
+                    _presence.Timestamps = GetCurrentTimestamp();
+                }
+                else _presence.State = "";
+
+                if (checkCar)
+                {
+                    //MessageBox.Show("{IN EVENT2}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
+                    _presence.Details = "Driving " + PersonaCarName;
+                    _presence.Timestamps = GetCurrentTimestamp();
+                }
+                else _presence.Details = "Онлайн";
+
                 _presence.Assets = new Assets()
                 {
                     LargeImageKey = "maxmlpzbsrw"
@@ -236,9 +296,21 @@ namespace NFS.Class.Diss.RPC
             }
             if (uri == "/event/launched" && eventTerminatedManually == false)
             {
-                _presence.Details = "In Event: " + EventList.getEventName(EventID);
-                _presence.State = "Driving " + PersonaCarName;
-                _presence.Timestamps = GetCurrentTimestamp();
+                if (checkEvent)
+                {
+                    _presence.State = "In Event: " + EventList.getEventName(EventID);
+                    _presence.Timestamps = GetCurrentTimestamp();
+                }
+                else _presence.State = "";
+
+                if (checkCar)
+                {
+                    //MessageBox.Show("{IN EVENT3}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
+                    _presence.Details = "Driving " + PersonaCarName;
+                    _presence.Timestamps = GetCurrentTimestamp();
+                }
+                else _presence.Details = "Онлайн";
+
                 _presence.Assets = new Assets()
                 {
                     LargeImageKey = "maxmlpzbsrw"
