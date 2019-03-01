@@ -24,19 +24,25 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using DiscordRPC;
 using NFS.Class.Diss;
+using Ionic.Zip;
+using System.ComponentModel;
+
 
 namespace NFS
 {
     public partial class MainWindow : Window
     {
         private
+        string version = "1.1.0";
         string serverIP = "http://185.125.231.50:8680/soapbox-race-core/Engine.svc";
-        string saveWayToFileNFSW = "", wayToLog = "";
+        string saveWayToFileNFSW = "", wayToLog = "", folderTogame = "";
         string saveLogin = "", saveEncryptPass = "";
         string language = "0", fileSize = "0";
         string DRPCOnline = "0", DRPCCar = "0", DRPCEvent = "0", DRPCLobby = "0";
         Thread ThreadForMonitoringOnlineAndPing;
-        Thread _nfswstarted;
+        Thread _nfswstarted, dowloadGameThread;
+        SynchronizationContext context;
+        ZipFile zip;
 
         static RichPresence _presence = new RichPresence()
         {
@@ -132,17 +138,33 @@ namespace NFS
             //MessageBox.Show("'" + saveWayToFileNFSW + "'\n'" + saveLogin + "'\n'" + saveEncryptPass + "'");
             return;
         }
-        void setFileForGame()
+        bool setFileForGame()
         {
-            var openFolder = new CommonOpenFileDialog();
-            openFolder.InitialDirectory = "";
-            openFolder.IsFolderPicker = false;
-            openFolder.Filters.Add(new CommonFileDialogFilter("nfsw", "*.exe"));
-            openFolder.Title = "Пожалуйста, укажите где находится файл nfsw.exe";
-            if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show("Вы не указали файл игры.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
-            saveWayToFileNFSW = openFolder.FileName;
-            updateSaveData(saveWayToFileNFSW, 0);
-            return;
+            MessageBoxResult result = MessageBox.Show("У Вас скачена игра?", "World Evolved", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                var openFolder = new CommonOpenFileDialog();
+                openFolder.InitialDirectory = "";
+                openFolder.IsFolderPicker = false;
+                openFolder.Filters.Add(new CommonFileDialogFilter("nfsw", "*.exe"));
+                openFolder.Title = "Пожалуйста, укажите где находится файл nfsw.exe";
+                if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show("Вы не указали файл игры.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
+                saveWayToFileNFSW = openFolder.FileName;
+                updateSaveData(saveWayToFileNFSW, 0);
+                return true;
+            }
+            else
+            {
+                var openFolder = new CommonOpenFileDialog();
+                openFolder.InitialDirectory = "";
+                openFolder.IsFolderPicker = true;
+                openFolder.Title = "Пожалуйста, укажите куда Вы хотите установить игру";
+                if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show("Вы не указали папки.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
+                saveWayToFileNFSW = openFolder.FileName;
+                updateSaveData(saveWayToFileNFSW, 0);
+                folderTogame = saveWayToFileNFSW;
+                return false;
+            }
         }
 
         void getInfAboutServer()
@@ -262,6 +284,76 @@ namespace NFS
             UserPanel.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
         }
 
+        void downloadGame()
+        {
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://ch56558@vh174.timeweb.ru/nfsw.zip");
+            request.Credentials = new NetworkCredential("ch56558", "Rj8S7dvnhbqf");
+            request.Method = WebRequestMethods.Ftp.DownloadFile;
+
+            using (Stream ftpStream = request.GetResponse().GetResponseStream())
+            using (Stream fileStream = File.Create(folderTogame + @"\nfsw.zip"))
+            {
+                byte[] buffer = new byte[10240];
+                int read;
+                while ((read = ftpStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    fileStream.Write(buffer, 0, read);
+                    this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+                    {
+                        BarProgress.Value = (fileStream.Position * 100) / 1829124164;
+
+                        TextProgress.Text = string.Format( "Downloading | {0} % | {1}GB / {2}GB",
+                            ((fileStream.Position * 100) / 1829124164).ToString(),
+                            Math.Round((double)fileStream.Position / (double)1000000000, 2).ToString("N2"),
+                            Math.Round((double)1829124164 / (double)1000000000, 2).ToString("N2")
+                            );
+                    });
+                }
+            }
+
+            zip = ZipFile.Read(saveWayToFileNFSW + @"\nfsw.zip");
+            zip.ExtractProgress += zip_ExtractProgress;
+            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+            {
+                BarProgress.Maximum = zip.Count;
+            });
+            context = SynchronizationContext.Current;
+            ExtractAsync(saveWayToFileNFSW, zip);
+
+            updateSaveData(saveWayToFileNFSW + @"\nfsw\nfsw.exe", 0);
+
+            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+            {
+                TextProgress.Text = "Done!";
+                PlayButton.IsEnabled = true;
+            });
+
+            return;
+        }
+
+        void ExtractAsync(string to, ZipFile zip)
+        {
+            zip.ExtractAll(to, ExtractExistingFileAction.OverwriteSilently);
+            zip.Dispose();
+        }
+
+        void zip_ExtractProgress(object sender, ExtractProgressEventArgs e)
+        {
+            switch (e.EventType)
+            {
+                case ZipProgressEventType.Extracting_AfterExtractEntry:
+
+                    this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+                    {
+                        TextProgress.Text = string.Format("Extracting | {0}%", (e.EntriesExtracted*100) / e.EntriesTotal );
+                        BarProgress.Value = e.EntriesExtracted;
+                    });
+
+
+                    break;
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -270,17 +362,46 @@ namespace NFS
 
             this.DataContext = new WindowViewModel(this);
 
+            readSaveData();
+
+            //---checkUpdate
+
+            string v = "";
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://ch56558@vh174.timeweb.ru/v.txt");
+            request.Credentials = new NetworkCredential("ch56558", "Rj8S7dvnhbqf");
+            request.Method = WebRequestMethods.Ftp.DownloadFile;
+
+            using (Stream ftpStream = request.GetResponse().GetResponseStream())
+            using (Stream fileStream = File.Create(@"v.txt"))
+            {
+                byte[] buffer = new byte[10240];
+                int read;
+                while ((read = ftpStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    v = System.Text.Encoding.UTF8.GetString(buffer).TrimEnd('\0');
+                }
+            }
+
+            File.Delete(@"v.txt");
+
+            if (v != version)
+            {
+                MessageBox.Show("Сейчас обновиться лаунчер");
+                Process.Start(@".\Update\Update.exe");
+                Process.GetCurrentProcess().Kill();
+            }
+
+            //-----------------------------
+
             if (!System.IO.File.Exists("getLastError.exe"))
             {
                 MessageBox.Show("Отсутствует необходимый файл для клиента \"getLastError.exe\".\nПожалуйста, переустановите клиент.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
                 Process.GetCurrentProcess().Kill();
             }
 
-            readSaveData();
-
             ServerProxy.Instance.SetCheckOnline(Int32.Parse(DRPCOnline) == 1);
             ServerProxy.Instance.Start();
-            
+
 
             if (Int32.Parse(DRPCOnline) != 0)
             {
@@ -289,12 +410,30 @@ namespace NFS
                 discordRpcClient.SetPresence(_presence);
             }
 
-            if (!System.IO.File.Exists(saveWayToFileNFSW))
+            if (saveWayToFileNFSW != "" && saveWayToFileNFSW[saveWayToFileNFSW.Length - 1] == 'e' && saveWayToFileNFSW[saveWayToFileNFSW.Length - 2] == 'x' && saveWayToFileNFSW[saveWayToFileNFSW.Length - 3] == 'e' && saveWayToFileNFSW[saveWayToFileNFSW.Length - 4] == '.')
+            { 
+                if (!System.IO.File.Exists(saveWayToFileNFSW))
+                {
+                    saveWayToFileNFSW = ""; updateSaveData("", 0);
+                }
+            }
+            else if(saveWayToFileNFSW != "")
             {
-                saveWayToFileNFSW = ""; updateSaveData("", 0);
+                PlayButton.IsEnabled = false;
+                dowloadGameThread = new Thread(downloadGame);
+                dowloadGameThread.IsBackground = true;
+                dowloadGameThread.Start();
             }
 
-            if (saveWayToFileNFSW == "") setFileForGame();
+            if (saveWayToFileNFSW == "")
+                if (!setFileForGame())
+                {
+                    PlayButton.IsEnabled = false;
+                    dowloadGameThread = new Thread(downloadGame);
+                    dowloadGameThread.IsBackground = true;
+                    dowloadGameThread.Start();
+                }
+
 
             if (saveLogin != "" && saveEncryptPass != "")
             {
@@ -310,7 +449,6 @@ namespace NFS
                         mPage.email.Text = saveLogin;
                         mPage.CheckForRememberUser.IsChecked = true;
                         mPage.infAboutSavePass.Text = "Password saved";
-                        //infAboutSavePass.Foreground = new System.Windows.Media.SolidColorBrush(Colors.Green);
                     }
                 }
             }
@@ -318,6 +456,9 @@ namespace NFS
             ThreadForMonitoringOnlineAndPing = new Thread(getInfAboutServer);
             ThreadForMonitoringOnlineAndPing.IsBackground = true;
             ThreadForMonitoringOnlineAndPing.Start();
+
+           
+
         }
 
         private
@@ -406,6 +547,8 @@ namespace NFS
 
         void Press_Play(object sender, RoutedEventArgs e)
         {
+            readSaveData();
+
             PlayButton.IsEnabled = false;
             PlayButton.Content = "LAUNCHED";
             string Login = "";
@@ -481,8 +624,8 @@ namespace NFS
 
                         if (!System.IO.File.Exists(saveWayToFileNFSW))
                         {
-                            saveWayToFileNFSW = ""; updateSaveData("", 0);
                             MessageBox.Show("Вы авторизовались, но файл игры(" + saveWayToFileNFSW + ") не был найден.\nПожалуйста, перезагрузите клиент.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            saveWayToFileNFSW = ""; updateSaveData("", 0);
                             PlayButton.IsEnabled = true;
                             PlayButton.Content = "LAUNCH";
                             return;
