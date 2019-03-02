@@ -4,7 +4,7 @@
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
     
     <v:String x:Key="WE">World Evolved</v:String>
-    <v:String x:Key="version">1.0.9</v:String>
+    <v:String x:Key="version">1.1.0</v:String>
 
     <v:String x:Key="questWaytoGame">У Вас скачана игра?</v:String>
     <v:String x:Key="questWaytoGame0">Пожалуйста, укажите где находится файл nfsw.exe</v:String>
