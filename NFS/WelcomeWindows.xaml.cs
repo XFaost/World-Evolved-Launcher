@@ -19,11 +19,11 @@ using System.Globalization;
 namespace NFS
 {
     /// <summary>
-    /// Interaction logic for Settings.xaml
+    /// Interaction logic for WelcomeWindows.xaml
     /// </summary>
-    public partial class Settings : Page
+    public partial class WelcomeWindows : Window
     {
-        string autoUpdate = "1";
+        string autoUpadte = "1";
         string DRPCOnline = "0", DRPCCar = "0", DRPCEvent = "0", DRPCLobby = "0";
 
         string getStrFromResource(string key)
@@ -40,7 +40,7 @@ namespace NFS
             catch { file[1] = ""; }
             try { file[2] = File.ReadLines("saveData.txt").Skip(2).First(); }// encryptPass
             catch { file[2] = ""; }
-            try { file[3] = File.ReadLines("saveData.txt").Skip(3).First(); }// fileSize
+            try { file[3] = File.ReadLines("saveData.txt").Skip(3).First(); }// autoUpdate
             catch { file[3] = ""; }
             try { file[4] = File.ReadLines("saveData.txt").Skip(4).First(); }// DRPCOnline
             catch { file[4] = ""; }
@@ -69,11 +69,11 @@ namespace NFS
         {
             try
             {
-                autoUpdate = File.ReadLines("saveData.txt").Skip(3).First() == "" ? autoUpdate : File.ReadLines("saveData.txt").Skip(3).First();
-                DRPCOnline = File.ReadLines("saveData.txt").Skip(4).First() == "" ? DRPCOnline : File.ReadLines("saveData.txt").Skip(4).First();
-                DRPCCar = File.ReadLines("saveData.txt").Skip(5).First() == "" ? DRPCCar : File.ReadLines("saveData.txt").Skip(5).First();
-                DRPCEvent = File.ReadLines("saveData.txt").Skip(6).First() == "" ? DRPCEvent : File.ReadLines("saveData.txt").Skip(6).First();
-                DRPCLobby = File.ReadLines("saveData.txt").Skip(7).First() == "" ? DRPCLobby : File.ReadLines("saveData.txt").Skip(7).First();
+                autoUpadte = File.ReadLines("saveData.txt").Skip(4).First() == "" ? autoUpadte : File.ReadLines("saveData.txt").Skip(4).First();
+                DRPCOnline = File.ReadLines("saveData.txt").Skip(5).First() == "" ? DRPCOnline : File.ReadLines("saveData.txt").Skip(5).First();
+                DRPCCar = File.ReadLines("saveData.txt").Skip(6).First() == "" ? DRPCCar : File.ReadLines("saveData.txt").Skip(6).First();
+                DRPCEvent = File.ReadLines("saveData.txt").Skip(7).First() == "" ? DRPCEvent : File.ReadLines("saveData.txt").Skip(7).First();
+                DRPCLobby = File.ReadLines("saveData.txt").Skip(8).First() == "" ? DRPCLobby : File.ReadLines("saveData.txt").Skip(8).First();
             }
             catch
             {
@@ -82,11 +82,8 @@ namespace NFS
             //MessageBox.Show("'" + saveWayToFileNFSW + "'\n'" + saveLogin + "'\n'" + saveEncryptPass + "'");
             return;
         }
-        void backFunk()
-        {
-            NavigationService.GoBack();
-        }
-        public Settings()
+
+        public WelcomeWindows()
         {
             InitializeComponent();
 
@@ -108,32 +105,28 @@ namespace NFS
 
             readSaveData();
 
-            CheckForAutoUpdate.IsChecked = Int32.Parse(autoUpdate) != 0;
+            CheckForAutoUpdate.IsChecked = Int32.Parse(autoUpadte) != 0;
 
-            CheckForDRPCOnline.IsChecked =  Int32.Parse(DRPCOnline) != 0;
-            CheckForDRPCCar.IsChecked =     Int32.Parse(DRPCCar) != 0;
-            CheckForDRPCEvent.IsChecked =   Int32.Parse(DRPCEvent) != 0;
-            CheckForDRPCLobby.IsChecked =   Int32.Parse(DRPCLobby) != 0;
+            CheckForDRPCOnline.IsChecked = Int32.Parse(DRPCOnline) != 0;
+            CheckForDRPCCar.IsChecked = Int32.Parse(DRPCCar) != 0;
+            CheckForDRPCEvent.IsChecked = Int32.Parse(DRPCEvent) != 0;
+            CheckForDRPCLobby.IsChecked = Int32.Parse(DRPCLobby) != 0;
 
             CheckForDRPCCar.IsEnabled = CheckForDRPCEvent.IsEnabled = CheckForDRPCLobby.IsEnabled = (bool)CheckForDRPCOnline.IsChecked;
             if (CheckForDRPCOnline.IsChecked == false)
                 CheckForDRPCCar.IsChecked = CheckForDRPCEvent.IsChecked = CheckForDRPCLobby.IsChecked = (bool)CheckForDRPCOnline.IsChecked;
 
         }
-        private void Press_Back(object sender, RoutedEventArgs e)
-        {
-            backFunk();
-            return;
-        }
+
         private void Press_Save(object sender, RoutedEventArgs e)
         {
-            updateSaveData((CheckForAutoUpdate.IsChecked == true ? 1 : 0).ToString(), 3);
-            updateSaveData((CheckForDRPCOnline.IsChecked == true ? 1 : 0).ToString(), 4);
-            updateSaveData((CheckForDRPCCar.IsChecked ==    true ? 1 : 0).ToString(), 5);
-            updateSaveData((CheckForDRPCEvent.IsChecked ==  true ? 1 : 0).ToString(), 6);
-            updateSaveData((CheckForDRPCLobby.IsChecked ==  true ? 1 : 0).ToString(), 7);
+            updateSaveData((CheckForAutoUpdate.IsChecked == true ? 1 : 0).ToString(),3);
+            updateSaveData((CheckForDRPCOnline.IsChecked == true ? 1 : 0).ToString(),4);
+            updateSaveData((CheckForDRPCCar.IsChecked ==    true ? 1 : 0).ToString(),5);
+            updateSaveData((CheckForDRPCEvent.IsChecked ==  true ? 1 : 0).ToString(),6);
+            updateSaveData((CheckForDRPCLobby.IsChecked ==  true ? 1 : 0).ToString(),7);
 
-            backFunk();
+            Close();
             return;
         }
 
@@ -142,7 +135,6 @@ namespace NFS
             CheckForDRPCCar.IsEnabled = CheckForDRPCEvent.IsEnabled = CheckForDRPCLobby.IsEnabled = (bool)CheckForDRPCOnline.IsChecked;
             if (CheckForDRPCOnline.IsChecked == false)
                 CheckForDRPCCar.IsChecked = CheckForDRPCEvent.IsChecked = CheckForDRPCLobby.IsChecked = (bool)CheckForDRPCOnline.IsChecked;
-            MessageBox.Show(getStrFromResource("changeOnline"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void LanguageChanged(Object sender, EventArgs e)

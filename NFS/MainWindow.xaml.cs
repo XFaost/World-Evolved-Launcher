@@ -36,14 +36,12 @@ namespace NFS
         private
         string version = (string)Application.Current.Resources["version"];
         string serverIP = "http://185.125.231.50:8680/soapbox-race-core/Engine.svc";
-        string saveWayToFileNFSW = "", wayToLog = "", folderTogame = "";
+        string saveWayToFileNFSW = "", wayToLog = "";
         string saveLogin = "", saveEncryptPass = "";
-        string language = "0", fileSize = "0";
+        string autoUpdate = "1";
         string DRPCOnline = "0", DRPCCar = "0", DRPCEvent = "0", DRPCLobby = "0";
         Thread ThreadForMonitoringOnlineAndPing;
-        Thread _nfswstarted, dowloadGameThread;
-        SynchronizationContext context;
-        ZipFile zip;
+        Thread _nfswstarted;
 
         static RichPresence _presence = new RichPresence()
         {
@@ -86,7 +84,7 @@ namespace NFS
         }
         void updateSaveData(string newText, int line_to_edit)
         {
-            string[] file = new string[9];
+            string[] file = new string[8];
 
             try { file[0] = File.ReadLines("saveData.txt").Skip(0).First(); }// way to nfsw.exe
             catch { file[0] = ""; }
@@ -94,18 +92,16 @@ namespace NFS
             catch { file[1] = ""; }
             try { file[2] = File.ReadLines("saveData.txt").Skip(2).First(); }// encryptPass
             catch { file[2] = ""; }
-            try { file[3] = File.ReadLines("saveData.txt").Skip(3).First(); }// language
+            try { file[3] = File.ReadLines("saveData.txt").Skip(3).First(); }// checkUpdate
             catch { file[3] = ""; }
-            try { file[4] = File.ReadLines("saveData.txt").Skip(4).First(); }// fileSize
+            try { file[4] = File.ReadLines("saveData.txt").Skip(4).First(); }// DRPCOnline
             catch { file[4] = ""; }
-            try { file[5] = File.ReadLines("saveData.txt").Skip(5).First(); }// DRPCOnline
+            try { file[5] = File.ReadLines("saveData.txt").Skip(5).First(); }// DRPCCar
             catch { file[5] = ""; }
-            try { file[6] = File.ReadLines("saveData.txt").Skip(6).First(); }// DRPCCar
+            try { file[6] = File.ReadLines("saveData.txt").Skip(6).First(); }// DRPCEvent
             catch { file[6] = ""; }
-            try { file[7] = File.ReadLines("saveData.txt").Skip(7).First(); }// DRPCEvent
+            try { file[7] = File.ReadLines("saveData.txt").Skip(7).First(); }// DRPCLobby
             catch { file[7] = ""; }
-            try { file[8] = File.ReadLines("saveData.txt").Skip(8).First(); }// DRPCLobby
-            catch { file[8] = ""; }
 
             file[line_to_edit] = newText;
 
@@ -119,7 +115,6 @@ namespace NFS
                 writetext.WriteLine(file[5]);
                 writetext.WriteLine(file[6]);
                 writetext.WriteLine(file[7]);
-                writetext.WriteLine(file[8]);
             }
         }
         void readSaveData()
@@ -129,12 +124,11 @@ namespace NFS
                 saveWayToFileNFSW = File.ReadLines("saveData.txt").Skip(0).First(); 
                 saveLogin =         File.ReadLines("saveData.txt").Skip(1).First();
                 saveEncryptPass =   File.ReadLines("saveData.txt").Skip(2).First();
-                language =          File.ReadLines("saveData.txt").Skip(3).First() == "" ? language :   File.ReadLines("saveData.txt").Skip(3).First();
-                fileSize =          File.ReadLines("saveData.txt").Skip(4).First() == "" ? fileSize :   File.ReadLines("saveData.txt").Skip(4).First();
-                DRPCOnline =        File.ReadLines("saveData.txt").Skip(5).First() == "" ? DRPCOnline : File.ReadLines("saveData.txt").Skip(5).First();
-                DRPCCar =           File.ReadLines("saveData.txt").Skip(6).First() == "" ? DRPCCar :    File.ReadLines("saveData.txt").Skip(6).First();
-                DRPCEvent =         File.ReadLines("saveData.txt").Skip(7).First() == "" ? DRPCEvent :  File.ReadLines("saveData.txt").Skip(7).First();
-                DRPCLobby =         File.ReadLines("saveData.txt").Skip(8).First() == "" ? DRPCLobby :  File.ReadLines("saveData.txt").Skip(8).First();
+                autoUpdate =        File.ReadLines("saveData.txt").Skip(3).First() == "" ? autoUpdate : File.ReadLines("saveData.txt").Skip(3).First();
+                DRPCOnline =        File.ReadLines("saveData.txt").Skip(4).First() == "" ? DRPCOnline : File.ReadLines("saveData.txt").Skip(4).First();
+                DRPCCar =           File.ReadLines("saveData.txt").Skip(5).First() == "" ? DRPCCar :    File.ReadLines("saveData.txt").Skip(5).First();
+                DRPCEvent =         File.ReadLines("saveData.txt").Skip(6).First() == "" ? DRPCEvent :  File.ReadLines("saveData.txt").Skip(6).First();
+                DRPCLobby =         File.ReadLines("saveData.txt").Skip(7).First() == "" ? DRPCLobby :  File.ReadLines("saveData.txt").Skip(7).First();
             }
             catch
             {
@@ -143,33 +137,16 @@ namespace NFS
 
             return;
         }
-        bool setFileForGame()
+        void setFileForGame()
         {
-            MessageBoxResult result = MessageBox.Show(getStrFromResource("questWaytoGame"), getStrFromResource("WE"), MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
-            {
-                var openFolder = new CommonOpenFileDialog();
-                openFolder.InitialDirectory = "";
-                openFolder.IsFolderPicker = false;
-                openFolder.Filters.Add(new CommonFileDialogFilter("nfsw", "*.exe"));
-                openFolder.Title = getStrFromResource("questWaytoGame0");
-                if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show(getStrFromResource("questWaytoGame1"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
-                saveWayToFileNFSW = openFolder.FileName;
-                updateSaveData(saveWayToFileNFSW, 0);
-                return true;
-            }
-            else
-            {
-                var openFolder = new CommonOpenFileDialog();
-                openFolder.InitialDirectory = "";
-                openFolder.IsFolderPicker = true;
-                openFolder.Title = getStrFromResource("questWaytoGame2");
-                if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show(getStrFromResource("questWaytoGame1"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
-                saveWayToFileNFSW = openFolder.FileName;
-                updateSaveData(saveWayToFileNFSW, 0);
-                folderTogame = saveWayToFileNFSW;
-                return false;
-            }
+            var openFolder = new CommonOpenFileDialog();
+            openFolder.InitialDirectory = "";
+            openFolder.IsFolderPicker = false;
+            openFolder.Filters.Add(new CommonFileDialogFilter("nfsw", "*.exe"));
+            openFolder.Title = getStrFromResource("questWaytoGame0");
+            if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show(getStrFromResource("questWaytoGame1"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
+            saveWayToFileNFSW = openFolder.FileName;
+            updateSaveData(saveWayToFileNFSW, 0);
         }
 
         void getInfAboutServer()
@@ -289,81 +266,6 @@ namespace NFS
             UserPanel.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
         }
 
-        void downloadGame()
-        {
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://ch56558@vh174.timeweb.ru/nfsw.zip");
-            request.Credentials = new NetworkCredential("ch56558", "Rj8S7dvnhbqf");
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            long sizeFile = response.ContentLength;
-
-            using (Stream ftpStream = request.GetResponse().GetResponseStream())
-            using (Stream fileStream = File.Create(saveWayToFileNFSW + @"\nfsw.zip"))
-            {
-                byte[] buffer = new byte[10240];
-                int read;
-                while ((read = ftpStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    fileStream.Write(buffer, 0, read);
-                    this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
-                    {
-                        BarProgress.Value = (fileStream.Position * 100) / sizeFile;
-
-                        TextProgress.Text = string.Format( getStrFromResource("downloading") + " | {0} % | {1}GB / {2}GB",
-                            ((fileStream.Position * 100) / sizeFile).ToString(),
-                            Math.Round((double)fileStream.Position / (double)1000000000, 2).ToString("N2"),
-                            Math.Round((double)sizeFile / (double)1000000000, 2).ToString("N2")
-                            );
-                    });
-                }
-            }
-
-            zip = ZipFile.Read(saveWayToFileNFSW + @"\nfsw.zip");
-            zip.ExtractProgress += zip_ExtractProgress;
-            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
-            {
-                BarProgress.Maximum = zip.Count;
-            });
-            context = SynchronizationContext.Current;
-            ExtractAsync(saveWayToFileNFSW, zip);
-
-            updateSaveData(saveWayToFileNFSW + @"\nfsw\nfsw.exe", 0);
-
-            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
-            {
-                TextProgress.Text = getStrFromResource("done");
-                PlayButton.IsEnabled = true;
-            });
-            File.Delete(saveWayToFileNFSW + @"\nfsw.zip");
-
-            return;
-        }
-
-        void ExtractAsync(string to, ZipFile zip)
-        {
-            zip.ExtractAll(to, ExtractExistingFileAction.OverwriteSilently);
-            zip.Dispose();
-        }
-
-        void zip_ExtractProgress(object sender, ExtractProgressEventArgs e)
-        {
-            switch (e.EventType)
-            {
-                case ZipProgressEventType.Extracting_AfterExtractEntry:
-
-                    this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
-                    {
-                        TextProgress.Text = string.Format(getStrFromResource("extracting") + " | {0}%", (e.EntriesExtracted*100) / e.EntriesTotal );
-                        BarProgress.Value = e.EntriesExtracted;
-                    });
-
-
-                    break;
-            }
-        }
-
-        
         public MainWindow()
         {
             InitializeComponent();
@@ -375,36 +277,43 @@ namespace NFS
 
             readSaveData();
 
-            //---checkUpdate
-
-            string v = "";
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://ch56558@vh174.timeweb.ru/v.txt");
-            request.Credentials = new NetworkCredential("ch56558", "Rj8S7dvnhbqf");
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-
-            using (Stream ftpStream = request.GetResponse().GetResponseStream())
-            using (Stream fileStream = File.Create(@"v.txt"))
+            if (saveWayToFileNFSW == "" && saveLogin == "")
             {
-                byte[] buffer = new byte[10240];
-                int read;
-                while ((read = ftpStream.Read(buffer, 0, buffer.Length)) > 0)
+                WelcomeWindows welcome = new WelcomeWindows();
+                welcome.ShowDialog();
+            }
+
+            //---checkUpdate
+            if(autoUpdate == "1")
+            {
+                string v = "";
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://ch56558@vh174.timeweb.ru/v.txt");
+                request.Credentials = new NetworkCredential("ch56558", "Rj8S7dvnhbqf");
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
+
+                using (Stream ftpStream = request.GetResponse().GetResponseStream())
+                using (Stream fileStream = File.Create(@"v.txt"))
                 {
-                    v = System.Text.Encoding.UTF8.GetString(buffer).TrimEnd('\0');
+                    byte[] buffer = new byte[10240];
+                    int read;
+                    while ((read = ftpStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        v = System.Text.Encoding.UTF8.GetString(buffer).TrimEnd('\0');
+                    }
+                }
+
+                File.Delete(@"v.txt");
+
+                if (v != version)
+                {
+                    MessageBoxResult result = MessageBox.Show(getStrFromResource("questUpdate"), getStrFromResource("WE") + " | " + version + " --> " + v, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Process.Start(@".\Update\Update.exe");
+                        Process.GetCurrentProcess().Kill();
+                    }                
                 }
             }
-
-            File.Delete(@"v.txt");
-
-            if (v != version)
-            {
-                MessageBoxResult result = MessageBox.Show(getStrFromResource("questUpdate"), getStrFromResource("WE") + " | " + version + " --> " + v, MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    Process.Start(@".\Update\Update.exe");
-                    Process.GetCurrentProcess().Kill();
-                }                
-            }
-
             //-----------------------------
 
             if (!System.IO.File.Exists("getLastError.exe"))
@@ -424,29 +333,13 @@ namespace NFS
                 discordRpcClient.SetPresence(_presence);
             }
 
-            if (saveWayToFileNFSW != "" && saveWayToFileNFSW[saveWayToFileNFSW.Length - 1] == 'e' && saveWayToFileNFSW[saveWayToFileNFSW.Length - 2] == 'x' && saveWayToFileNFSW[saveWayToFileNFSW.Length - 3] == 'e' && saveWayToFileNFSW[saveWayToFileNFSW.Length - 4] == '.')
-            { 
-                if (!System.IO.File.Exists(saveWayToFileNFSW))
-                {
-                    saveWayToFileNFSW = ""; updateSaveData("", 0);
-                }
-            }
-            else if(saveWayToFileNFSW != "")
+            if (!System.IO.File.Exists(saveWayToFileNFSW))
             {
-                PlayButton.IsEnabled = false;
-                dowloadGameThread = new Thread(downloadGame);
-                dowloadGameThread.IsBackground = true;
-                dowloadGameThread.Start();
+                saveWayToFileNFSW = ""; updateSaveData("", 0);
             }
 
             if (saveWayToFileNFSW == "")
-                if (!setFileForGame())
-                {
-                    PlayButton.IsEnabled = false;
-                    dowloadGameThread = new Thread(downloadGame);
-                    dowloadGameThread.IsBackground = true;
-                    dowloadGameThread.Start();
-                }
+                setFileForGame();
 
 
             if (saveLogin != "" && saveEncryptPass != "")

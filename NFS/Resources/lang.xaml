@@ -69,7 +69,7 @@ Launcher quits</v:String>
 
     <v:String x:Key="settings">SETTINGS</v:String>
     <v:String x:Key="language">Language:</v:String>
-    <v:String x:Key="downloadSize">Download Size:</v:String>
+    <v:String x:Key="autoUpdate">Auto. check for updates</v:String>
     <v:String x:Key="onlineFromSetting">Online</v:String>
     <v:String x:Key="event">Event</v:String>
     <v:String x:Key="car">Car</v:String>

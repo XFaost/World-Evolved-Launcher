@@ -69,7 +69,7 @@
 
     <v:String x:Key="settings">НАСТРОЙКИ</v:String>
     <v:String x:Key="language">Язык:</v:String>
-    <v:String x:Key="downloadSize">Графика:</v:String>
+    <v:String x:Key="autoUpdate">Авто. проверка обновлений</v:String>
     <v:String x:Key="onlineFromSetting">Онлайн</v:String>
     <v:String x:Key="event">Событие</v:String>
     <v:String x:Key="car">Машина</v:String>
