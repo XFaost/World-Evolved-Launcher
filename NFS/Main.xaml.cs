@@ -36,7 +36,10 @@ namespace NFS
         {
             InitializeComponent();
         }
-
+        string getStrFromResource(string key)
+        {
+            return (string)Application.Current.Resources[key];
+        }
         void startReg(object sender, RoutedEventArgs e)
         {
            NavigationService.Navigate(new Registration());
@@ -45,7 +48,7 @@ namespace NFS
         {
             if (email.Text.ToString() == "")
             {
-                MessageBox.Show("Пожалуйста, введите почту для сброса пароля.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Question);
+                MessageBox.Show(getStrFromResource("questToFillLogin"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Question);
                 return;
             }
 
@@ -71,26 +74,26 @@ namespace NFS
             }
             catch
             {
-                MessageBox.Show("Что-то пошло не так.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(getStrFromResource("unknownError"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             if (responseString[0] == 'L' && responseString[5] == 't' && responseString[23] == 's')//Link to reset password sent to: [e-mail]
             {
-                MessageBox.Show("Ссылка для сброса пароля отправлена на: [" + email.Text.ToString() + "]", "World Evolved", MessageBoxButton.OK);
+                MessageBox.Show(getStrFromResource("recoveryAcc") + " [" + email.Text.ToString() + "]", getStrFromResource("WE"), MessageBoxButton.OK);
                 return;
             }
             if (responseString == "ERROR: Recovery password link already sent, please check your spam mail box or try again in 1 hour.")
             {
-                MessageBox.Show("ОШИБКА: Ссылка для восстановления пароля уже отправлена, проверьте почтовый ящик для спама или повторите попытку через 1 час.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(getStrFromResource("checkSpam"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             if (responseString == "ERROR: Invalid email!")
             {
-                MessageBox.Show("ОШИБКА: Аккаунта с такой электронной почтой нет на сервере.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(getStrFromResource("invalidEmail"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            MessageBox.Show(responseString, "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(responseString, getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         void openSettings(object sender, RoutedEventArgs e)
         {

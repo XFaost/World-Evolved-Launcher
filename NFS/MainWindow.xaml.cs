@@ -26,14 +26,15 @@ using DiscordRPC;
 using NFS.Class.Diss;
 using Ionic.Zip;
 using System.ComponentModel;
+using System.Globalization;
 
-
+//(string)Application.Current.Resources["news"]
 namespace NFS
 {
     public partial class MainWindow : Window
     {
         private
-        string version = "1.1.0";
+        string version = (string)Application.Current.Resources["version"];
         string serverIP = "http://185.125.231.50:8680/soapbox-race-core/Engine.svc";
         string saveWayToFileNFSW = "", wayToLog = "", folderTogame = "";
         string saveLogin = "", saveEncryptPass = "";
@@ -46,7 +47,7 @@ namespace NFS
 
         static RichPresence _presence = new RichPresence()
         {
-            Details = "Открыт лаунчер",
+            Details = (string)Application.Current.Resources["launcherOpen"],
 
             Assets = new Assets()
             {
@@ -79,6 +80,10 @@ namespace NFS
             wayToLog += "NFSWO_COMMUNICATION_LOG.txt";
         }
 
+        string getStrFromResource(string key)
+        {
+            return (string)Application.Current.Resources[key];
+        }
         void updateSaveData(string newText, int line_to_edit)
         {
             string[] file = new string[9];
@@ -135,20 +140,20 @@ namespace NFS
             {
                 using (var tw = new StreamWriter("saveData.txt", true)) ;
             }
-            //MessageBox.Show("'" + saveWayToFileNFSW + "'\n'" + saveLogin + "'\n'" + saveEncryptPass + "'");
+
             return;
         }
         bool setFileForGame()
         {
-            MessageBoxResult result = MessageBox.Show("У Вас скачена игра?", "World Evolved", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show(getStrFromResource("questWaytoGame"), getStrFromResource("WE"), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 var openFolder = new CommonOpenFileDialog();
                 openFolder.InitialDirectory = "";
                 openFolder.IsFolderPicker = false;
                 openFolder.Filters.Add(new CommonFileDialogFilter("nfsw", "*.exe"));
-                openFolder.Title = "Пожалуйста, укажите где находится файл nfsw.exe";
-                if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show("Вы не указали файл игры.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
+                openFolder.Title = getStrFromResource("questWaytoGame0");
+                if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show(getStrFromResource("questWaytoGame1"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
                 saveWayToFileNFSW = openFolder.FileName;
                 updateSaveData(saveWayToFileNFSW, 0);
                 return true;
@@ -158,8 +163,8 @@ namespace NFS
                 var openFolder = new CommonOpenFileDialog();
                 openFolder.InitialDirectory = "";
                 openFolder.IsFolderPicker = true;
-                openFolder.Title = "Пожалуйста, укажите куда Вы хотите установить игру";
-                if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show("Вы не указали папки.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
+                openFolder.Title = getStrFromResource("questWaytoGame2");
+                if (openFolder.ShowDialog() != CommonFileDialogResult.Ok) { MessageBox.Show(getStrFromResource("questWaytoGame1"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning); Process.GetCurrentProcess().Kill(); }
                 saveWayToFileNFSW = openFolder.FileName;
                 updateSaveData(saveWayToFileNFSW, 0);
                 folderTogame = saveWayToFileNFSW;
@@ -194,7 +199,7 @@ namespace NFS
 
                 this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                 {
-                    PingInf.Content = "Пинг: " + ping + "ms";
+                    PingInf.Content = ping + "ms";
                 });
 
                 WebClientWithTimeout client = new WebClientWithTimeout();
@@ -207,7 +212,7 @@ namespace NFS
 
                     this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
-                        OnlineInf.Content = string.Format("Онлайн: {0}/{1}", json.onlineNumber, json.maxOnlinePlayers);
+                        OnlineInf.Content = string.Format("{0}/{1}", json.onlineNumber, json.maxOnlinePlayers);
                     });
 
                     SiteLink = json.homePageUrl;
@@ -236,12 +241,12 @@ namespace NFS
 
                     switch ((int)serverReply.StatusCode)
                     {
-                        case 5: MessageBox.Show("Невозможно подключиться к HTTP-части сервера", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                        case 6: MessageBox.Show("Потеря связи", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                        case 7: MessageBox.Show("Что-то блокирует соединение с клиентом", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                        case 10: MessageBox.Show("Обрыв сессии, попробуйте ещё раз", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                        case 13: MessageBox.Show("Невозможно подключиться к XMPP-части сервера", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                        case 410: MessageBox.Show("Ваш аккаунт забанен", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
+                        case 5:     MessageBox.Show(getStrFromResource("error5"),   getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                        case 6:     MessageBox.Show(getStrFromResource("error6"),   getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                        case 7:     MessageBox.Show(getStrFromResource("error7"),   getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                        case 10:    MessageBox.Show(getStrFromResource("error10"),  getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                        case 13:    MessageBox.Show(getStrFromResource("error13"),  getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                        case 410:   MessageBox.Show(getStrFromResource("error500"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
                         case 500:   //MessageBox.Show("Внутренняя ошибка сервера");
                             using (StreamReader sr = new StreamReader(serverReply.GetResponseStream()))
                             {
@@ -249,7 +254,7 @@ namespace NFS
                             }
                             break;
 
-                        default: MessageBox.Show("StatusCode server: " + (int)serverReply.StatusCode, "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
+                        default: MessageBox.Show(getStrFromResource("anotherError") + (int)serverReply.StatusCode, getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
                     }
                 }
                 else
@@ -259,7 +264,7 @@ namespace NFS
             }
             if (string.IsNullOrEmpty(serverLoginResponse))
             {
-                MessageBox.Show("Сервер в оффлайне.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(getStrFromResource("offline"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 Process.GetCurrentProcess().Kill();
             }
 
@@ -270,7 +275,7 @@ namespace NFS
             }
             catch
             {
-                MessageBox.Show("Сервер в оффлайне или отсутствует подключение к интернету.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(getStrFromResource("offlineOrErrorInternet"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 Process.GetCurrentProcess().Kill();
             }
 
@@ -305,7 +310,7 @@ namespace NFS
                     {
                         BarProgress.Value = (fileStream.Position * 100) / sizeFile;
 
-                        TextProgress.Text = string.Format( "Downloading | {0} % | {1}GB / {2}GB",
+                        TextProgress.Text = string.Format( getStrFromResource("downloading") + " | {0} % | {1}GB / {2}GB",
                             ((fileStream.Position * 100) / sizeFile).ToString(),
                             Math.Round((double)fileStream.Position / (double)1000000000, 2).ToString("N2"),
                             Math.Round((double)sizeFile / (double)1000000000, 2).ToString("N2")
@@ -327,7 +332,7 @@ namespace NFS
 
             this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
-                TextProgress.Text = "Done!";
+                TextProgress.Text = getStrFromResource("done");
                 PlayButton.IsEnabled = true;
             });
             File.Delete(saveWayToFileNFSW + @"\nfsw.zip");
@@ -349,7 +354,7 @@ namespace NFS
 
                     this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
-                        TextProgress.Text = string.Format("Extracting | {0}%", (e.EntriesExtracted*100) / e.EntriesTotal );
+                        TextProgress.Text = string.Format(getStrFromResource("extracting") + " | {0}%", (e.EntriesExtracted*100) / e.EntriesTotal );
                         BarProgress.Value = e.EntriesExtracted;
                     });
 
@@ -358,9 +363,11 @@ namespace NFS
             }
         }
 
+        
         public MainWindow()
         {
             InitializeComponent();
+            
             mPage = new Main();
             UserPanel.NavigationService.Navigate(mPage);
 
@@ -390,16 +397,19 @@ namespace NFS
 
             if (v != version)
             {
-                MessageBox.Show("Сейчас обновиться лаунчер", version + " --> " + v);
-                Process.Start(@".\Update\Update.exe");
-                Process.GetCurrentProcess().Kill();
+                MessageBoxResult result = MessageBox.Show(getStrFromResource("questUpdate"), getStrFromResource("WE") + " | " + version + " --> " + v, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Process.Start(@".\Update\Update.exe");
+                    Process.GetCurrentProcess().Kill();
+                }                
             }
 
             //-----------------------------
 
             if (!System.IO.File.Exists("getLastError.exe"))
             {
-                MessageBox.Show("Отсутствует необходимый файл для клиента \"getLastError.exe\".\nПожалуйста, переустановите клиент.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(getStrFromResource("getlastErrorNotFound"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error);
                 Process.GetCurrentProcess().Kill();
             }
 
@@ -452,7 +462,7 @@ namespace NFS
                     {
                         mPage.email.Text = saveLogin;
                         mPage.CheckForRememberUser.IsChecked = true;
-                        mPage.infAboutSavePass.Text = "Password saved";
+                        mPage.infAboutSavePass.Text = getStrFromResource("passSaved");
                     }
                 }
             }
@@ -476,7 +486,7 @@ namespace NFS
 
             if(Int32.Parse(DRPCCar) == 1)
             {
-                _presence.Details = "Загрузка игры";
+                _presence.Details = getStrFromResource("loading");
                 _presence.Timestamps = new Timestamps()
                 {
                     Start = DateTime.UtcNow
@@ -492,7 +502,7 @@ namespace NFS
                 nfswProcess.Exited += (sender2, e2) => {
                     if (Int32.Parse(DRPCCar) == 1)
                     {
-                        _presence.Details = "Открыт лаунчер";
+                        _presence.Details = getStrFromResource("launcherOpen");
                         _presence.Timestamps = new Timestamps()
                         {
                             Start = DateTime.UtcNow
@@ -505,12 +515,12 @@ namespace NFS
                     {
                         if (!System.IO.File.Exists("getLastError.exe"))
                         {
-                            MessageBox.Show("Отсутствует необходимый файл для клиента \"getLastError.exe\".\nПожалуйста, переустановите клиент.\nКлиент завершает работу.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(getStrFromResource("getlastErrorNotFound"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error);
                             Process.GetCurrentProcess().Kill();
                         }
                         if (!System.IO.File.Exists(wayToLog))
                         {
-                            MessageBox.Show("Отсутствует Лог игры по пути \"" + wayToLog + "\"", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(getStrFromResource("logNotFound") + " \"" + wayToLog + "\"", getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
                         }
                         int error;
@@ -525,16 +535,16 @@ namespace NFS
                                 error = getErrorProcess.ExitCode;
                                 switch (error)
                                 {
-                                    case 1001: MessageBox.Show("Отсутствует необходимый Лог игры по пути \"" + wayToLog + "\"\nИгра завершилась с ошибкой " + exitCode.ToString(), "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 5: MessageBox.Show("Невозможно подключиться к HTTP-части сервера\nИгра завершилась с ошибкой " + exitCode.ToString(), "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 6: MessageBox.Show("Потеря связи\n" + "Игра завершилась с ошибкой " + exitCode.ToString(), "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 7: MessageBox.Show("Что-то блокирует соединение с клиентом\nИгра завершилась с ошибкой " + exitCode.ToString(), "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 10: MessageBox.Show("Обрыв сессии, попробуйте ещё раз\nИгра завершилась с ошибкой " + exitCode.ToString(), "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 13: MessageBox.Show("Невозможно подключиться к XMPP-части сервера\nИгра завершилась с ошибкой " + exitCode.ToString(), "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 410: MessageBox.Show("Ваш аккаунт забанен\n", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 500: MessageBox.Show("Внутренняя ошибка сервера\nИгра завершилась с ошибкой " + exitCode.ToString(), "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 1001:  MessageBox.Show( getStrFromResource("logNotFound") + " \"" + wayToLog + "\"",                                                   getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 5:     MessageBox.Show( getStrFromResource("error5") +                 getStrFromResource("gameReturnCode") +  exitCode.ToString(),    getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 6:     MessageBox.Show( getStrFromResource("error6") +                 getStrFromResource("gameReturnCode") +  exitCode.ToString(),    getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 7:     MessageBox.Show( getStrFromResource("error7") +                 getStrFromResource("gameReturnCode") +  exitCode.ToString(),    getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 10:    MessageBox.Show( getStrFromResource("error10") +                getStrFromResource("gameReturnCode") +  exitCode.ToString(),    getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 13:    MessageBox.Show( getStrFromResource("error13") +                getStrFromResource("gameReturnCode") +  exitCode.ToString(),    getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 410:   MessageBox.Show( getStrFromResource("error410"),                                                                                getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 500:   MessageBox.Show( getStrFromResource("error500") +               getStrFromResource("gameReturnCode") +  exitCode.ToString(),    getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
 
-                                    default: MessageBox.Show("Ошибка со стороны сервера: " + error + "\nИгра завершилась с ошибкой " + exitCode.ToString(), "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    default:    MessageBox.Show(   getStrFromResource("anotherError") + error + getStrFromResource("gameReturnCode") +  exitCode.ToString(),    getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
                                 }
                             };
                         }
@@ -542,27 +552,26 @@ namespace NFS
                     this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
                         PlayButton.IsEnabled = true;
-                        PlayButton.Content = "LAUNCH";
+                        PlayButton.Content = getStrFromResource("launch");
                     });
                 };
 
             }
         }
-
         void Press_Play(object sender, RoutedEventArgs e)
         {
             readSaveData();
 
             PlayButton.IsEnabled = false;
-            PlayButton.Content = "LAUNCHED";
+            PlayButton.Content = getStrFromResource("launched");
             string Login = "";
             string EncryptPass = "";
 
             if (saveLogin == "" && saveEncryptPass == "" && (mPage.email.Text.ToString() == "" || mPage.password.Password.ToString() == ""))
             {
-                MessageBox.Show("Пожалуйста, введите данные для авторизации.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(getStrFromResource("questToFillAccInf"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 PlayButton.IsEnabled = true;
-                PlayButton.Content = "LAUNCH";
+                PlayButton.Content = getStrFromResource("launch");
                 return;
             }
             if (saveLogin != "" && saveEncryptPass != "" && mPage.email.Text.ToString() != "" && mPage.password.Password.ToString() != "")
@@ -596,11 +605,11 @@ namespace NFS
                     {
                         if (Description == "LOGIN ERROR")
                         {
-                            MessageBox.Show("Неверный логин или пароль.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(getStrFromResource("questErrorAccInf"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error);
                             updateSaveData("", 1);
                             updateSaveData("", 2);
                             PlayButton.IsEnabled = true;
-                            PlayButton.Content = "LAUNCH";
+                            PlayButton.Content = getStrFromResource("launch");
                             mPage.infAboutSavePass.Text = "Password";
                             saveLogin = "";
                             saveEncryptPass = "";
@@ -608,7 +617,7 @@ namespace NFS
                         }
                         else
                         {
-                            MessageBox.Show(Description, "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(Description, getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                     else if (childrenNode["LoginToken"].InnerText != "" && childrenNode["UserId"].InnerText != "")
@@ -628,10 +637,10 @@ namespace NFS
 
                         if (!System.IO.File.Exists(saveWayToFileNFSW))
                         {
-                            MessageBox.Show("Вы авторизовались, но файл игры(" + saveWayToFileNFSW + ") не был найден.\nПожалуйста, перезагрузите клиент.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(getStrFromResource("notfoundTheGame") + "\n* \"" + saveWayToFileNFSW + "\"", getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                             saveWayToFileNFSW = ""; updateSaveData("", 0);
                             PlayButton.IsEnabled = true;
-                            PlayButton.Content = "LAUNCH";
+                            PlayButton.Content = getStrFromResource("launch");
                             return;
                         }
 
@@ -653,7 +662,7 @@ namespace NFS
             }
             catch
             {
-                MessageBox.Show("Что-то пошло не так.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(getStrFromResource("unknownError"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
@@ -661,7 +670,7 @@ namespace NFS
         {
             if (mPage.email.Text.ToString() == "")
             {
-                MessageBox.Show("Пожалуйста, введите почту для сброса пароля.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Question);
+                MessageBox.Show(getStrFromResource("questToFillLogin"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Question);
                 return;
             }
 
@@ -687,26 +696,26 @@ namespace NFS
             }
             catch
             {
-                MessageBox.Show("Что-то пошло не так.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(getStrFromResource("unknownError"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             if (responseString[0] == 'L' && responseString[5] == 't' && responseString[23] == 's')//Link to reset password sent to: [e-mail]
             {
-                MessageBox.Show("Ссылка для сброса пароля отправлена на: [" + mPage.email.Text.ToString() + "]", "World Evolved", MessageBoxButton.OK);
+                MessageBox.Show(getStrFromResource("recoveryAcc") + " [" + mPage.email.Text.ToString() + "]", getStrFromResource("WE"), MessageBoxButton.OK);
                 return;
             }
             if (responseString == "ERROR: Recovery password link already sent, please check your spam mail box or try again in 1 hour.")
             {
-                MessageBox.Show("ОШИБКА: Ссылка для восстановления пароля уже отправлена, проверьте почтовый ящик для спама или повторите попытку через 1 час.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(getStrFromResource("checkSpam"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             if (responseString == "ERROR: Invalid email!")
             {
-                MessageBox.Show("ОШИБКА: Аккаунта с такой электронной почтой нет на сервере.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(getStrFromResource("invalidEmail"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            MessageBox.Show(responseString, "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(responseString, getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         void openSite(object sender, RoutedEventArgs e)
         {

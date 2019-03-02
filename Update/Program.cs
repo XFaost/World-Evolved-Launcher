@@ -66,7 +66,7 @@ namespace Update
             Console.WriteLine("\n\nDone!");
             File.Delete(@"launcherUpdate.zip");
 
-            MessageBox((IntPtr)0, "Обновление окончено. Сейчас загрузиться лаунчер", "World Evolved", 0);
+            MessageBox((IntPtr)0, "Update completed successfully\nОбновление завершилось успешно", "World Evolved", 0);
             Process.Start(@"NFS.exe");
             return;
         }

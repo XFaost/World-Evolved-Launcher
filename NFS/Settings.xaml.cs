@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NFS.Class.Diss;
+using System.Globalization;
 
 namespace NFS
 {
@@ -25,6 +26,10 @@ namespace NFS
         string language = "0", fileSize = "0";
         string DRPCOnline = "0", DRPCCar = "0", DRPCEvent = "0", DRPCLobby = "0";
 
+        string getStrFromResource(string key)
+        {
+            return (string)Application.Current.Resources[key];
+        }
         void updateSaveData(string newText, int line_to_edit)
         {
             string[] file = new string[9];
@@ -88,9 +93,26 @@ namespace NFS
         public Settings()
         {
             InitializeComponent();
+
+            App.LanguageChanged += LanguageChanged;
+
+            CultureInfo currLang = App.Language;
+
+            //Заполняем меню смены языка:
+            LangBox.Items.Clear();
+            foreach (var lang in App.Languages)
+            {
+                ComboBoxItem menuLang = new ComboBoxItem();
+                menuLang.Content = lang.DisplayName;
+                menuLang.Tag = lang;
+                menuLang.IsSelected = lang.Equals(currLang);
+                menuLang.Selected += ChangeLanguageClick;
+                LangBox.Items.Add(menuLang);
+            }
+
             readSaveData();
 
-            LangBox.SelectedIndex = Int32.Parse(language);
+            //LangBox.SelectedIndex = Int32.Parse(language);
             SizeBox.SelectedIndex = Int32.Parse(fileSize);
 
             CheckForDRPCOnline.IsChecked =  Int32.Parse(DRPCOnline) != 0;
@@ -127,7 +149,33 @@ namespace NFS
             CheckForDRPCCar.IsEnabled = CheckForDRPCEvent.IsEnabled = CheckForDRPCLobby.IsEnabled = (bool)CheckForDRPCOnline.IsChecked;
             if (CheckForDRPCOnline.IsChecked == false)
                 CheckForDRPCCar.IsChecked = CheckForDRPCEvent.IsChecked = CheckForDRPCLobby.IsChecked = (bool)CheckForDRPCOnline.IsChecked;
-            MessageBox.Show("Если Вы изменяете параметр \"Online\", необходимо после сохранения настроек перезагрузить лаунчер.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(getStrFromResource("changeOnline"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        private void LanguageChanged(Object sender, EventArgs e)
+        {
+            CultureInfo currLang = App.Language;
+
+            //Отмечаем нужный пункт смены языка как выбранный язык
+            foreach (ComboBoxItem i in LangBox.Items)
+            {
+                CultureInfo ci = i.Tag as CultureInfo;
+                i.IsSelected = ci != null && ci.Equals(currLang);
+            }
+        }
+
+        private void ChangeLanguageClick(Object sender, EventArgs e)
+        {
+            ComboBoxItem mi = sender as ComboBoxItem;
+            if (mi != null)
+            {
+                CultureInfo lang = mi.Tag as CultureInfo;
+                if (lang != null)
+                {
+                    App.Language = lang;
+                }
+            }
+
         }
     }
 }

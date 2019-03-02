@@ -40,10 +40,12 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="NEWS TODAY" Foreground="#FF919CAE" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <TextBlock Text="{DynamicResource news}" Foreground="#FF919CAE" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Label Name="OnlineInf" Content="Online: NULL" Foreground="#FFD2D6DC" FontSize="12" Margin="0 0 5 0"/>
-                    <Label Name="PingInf" Content="Ping: NULL" Foreground="#FFD2D6DC" FontSize="12" Margin="5 0 5 0"/>
+                    <Label Content="{DynamicResource online}" Foreground="#FFD2D6DC" FontSize="12"/>
+                    <Label Name="OnlineInf" Content="NULL" Foreground="#FFD2D6DC" FontSize="12" Margin="-5 0 0 0"/>
+                    <Label Content="{DynamicResource ping}" Foreground="#FFD2D6DC" FontSize="12"/>
+                    <Label Name="PingInf" Content="NULL" Foreground="#FFD2D6DC" FontSize="12" Margin="-5 0 0 0"/>
                 </StackPanel>
                 <Image Grid.Row="1" Source="Images/oDTilm0.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="0 5 0 0"/>
             </Grid>
@@ -73,14 +75,14 @@
 
         </Grid>
 
-        <TextBlock Text="v 1.1.0" Grid.Column="0" Grid.Row="2" Foreground="#FF919CAE" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10"/>
+        <TextBlock Text="{DynamicResource version}" Grid.Column="0" Grid.Row="2" Foreground="#FF919CAE" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10"/>
 
         <Grid Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
             <ProgressBar Name="BarProgress" Height="20" Margin="20 0 20 0" VerticalAlignment="Top"/>
-            <TextBlock Name="TextProgress" Text="Done" Foreground="Black" HorizontalAlignment="Center"/>
+            <TextBlock Name="TextProgress" Text="{DynamicResource done}" Foreground="Black" HorizontalAlignment="Center"/>
         </Grid>
 
-        <Button Name="PlayButton" Click="Press_Play" Grid.Column="2" Grid.Row="2"  Margin="5 10 25 25" Content="LAUNCH" FontSize="20" FontWeight="Bold" Style="{StaticResource MainButtons}"/>
+        <Button Name="PlayButton" Click="Press_Play" Grid.Column="2" Grid.Row="2"  Margin="5 10 25 25" Content="{DynamicResource launch}" FontSize="20" FontWeight="Bold" Style="{StaticResource MainButtons}"/>
     </Grid>
 
     <WindowChrome.WindowChrome>

@@ -46,6 +46,11 @@ namespace NFS.Class.Diss.RPC
         public static int TEDay = 0;
         public static List<string> PersonaIds = new List<string>();
 
+        static string getStrFromResource(string key)
+        {
+            return (string)Application.Current.Resources[key];
+        }
+
         public static void handleGameState(string uri, string serverreply = "", string POST = "", string GET = "")
         {
             RPCstartTimestamp = DateTime.Now;
@@ -166,11 +171,11 @@ namespace NFS.Class.Diss.RPC
                 if (checkCar)
                 {
                     //MessageBox.Show("{DRIVING CARNAME}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                    _presence.Details = "Driving " + PersonaCarName;
+                    _presence.Details = getStrFromResource("driving") + PersonaCarName;
                     _presence.Timestamps = GetCurrentTimestamp();
 
                 }
-                else _presence.Details = "Онлайн";
+                else _presence.Details = getStrFromResource("dissOnline");
 
                 _presence.State = string.Empty;
 
@@ -200,10 +205,10 @@ namespace NFS.Class.Diss.RPC
                 if (checkCar)
                 {
                     //MessageBox.Show("{IN LOBBY1}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                    _presence.Details = "Driving " + PersonaCarName;
+                    _presence.Details = getStrFromResource("driving") + PersonaCarName;
                     _presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.Details = "Онлайн";
+                else _presence.Details = getStrFromResource("dissOnline");
 
                 _presence.Assets = new Assets()
                 {
@@ -224,13 +229,13 @@ namespace NFS.Class.Diss.RPC
                     if (checkCar)
                     {
                         //MessageBox.Show("{IN SAFEHOUSE/FREEROAM}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                        _presence.Details = "Driving " + PersonaCarName;
+                        _presence.Details = getStrFromResource("driving") + PersonaCarName;
                     }
-                    else _presence.Details = "Онлайн";
+                    else _presence.Details = getStrFromResource("dissOnline");
                 }
                 else
                 {
-                    _presence.Details = "In Safehouse";
+                    _presence.Details = getStrFromResource("savehouse");
                     _presence.Timestamps = GetCurrentTimestamp();
                 }
                 _presence.State = string.Empty;
@@ -248,7 +253,7 @@ namespace NFS.Class.Diss.RPC
                 if (checkEvent)
                 {
                     EventID = Convert.ToInt32(splitted_uri[3]);
-                    _presence.State = "In Event: " + EventList.getEventName(EventID);
+                    _presence.State = getStrFromResource("dissEvent") + EventList.getEventName(EventID);
                     _presence.Timestamps = GetCurrentTimestamp();
                 }
                 else _presence.State = "";
@@ -256,10 +261,10 @@ namespace NFS.Class.Diss.RPC
                 if (checkCar)
                 {
                     //MessageBox.Show("{IN EVENT}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                    _presence.Details = "Driving " + PersonaCarName;
+                    _presence.Details = getStrFromResource("driving") + PersonaCarName;
                     _presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.Details = "Онлайн";
+                else _presence.Details = getStrFromResource("dissOnline");
 
                 _presence.Assets = new Assets()
                 {
@@ -273,7 +278,7 @@ namespace NFS.Class.Diss.RPC
             {
                 if (checkEvent)
                 {
-                    _presence.State = "In Event: " + EventList.getEventName(EventID);
+                    _presence.State = getStrFromResource("dissEvent") + EventList.getEventName(EventID);
                     _presence.Timestamps = GetCurrentTimestamp();
                 }
                 else _presence.State = "";
@@ -281,10 +286,10 @@ namespace NFS.Class.Diss.RPC
                 if (checkCar)
                 {
                     //MessageBox.Show("{IN EVENT2}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                    _presence.Details = "Driving " + PersonaCarName;
+                    _presence.Details = getStrFromResource("driving") + PersonaCarName;
                     _presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.Details = "Онлайн";
+                else _presence.Details = getStrFromResource("dissOnline");
 
                 _presence.Assets = new Assets()
                 {
@@ -298,7 +303,7 @@ namespace NFS.Class.Diss.RPC
             {
                 if (checkEvent)
                 {
-                    _presence.State = "In Event: " + EventList.getEventName(EventID);
+                    _presence.State = getStrFromResource("dissEvent") + EventList.getEventName(EventID);
                     _presence.Timestamps = GetCurrentTimestamp();
                 }
                 else _presence.State = "";
@@ -306,10 +311,10 @@ namespace NFS.Class.Diss.RPC
                 if (checkCar)
                 {
                     //MessageBox.Show("{IN EVENT3}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                    _presence.Details = "Driving " + PersonaCarName;
+                    _presence.Details = getStrFromResource("driving") + PersonaCarName;
                     _presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.Details = "Онлайн";
+                else _presence.Details = getStrFromResource("dissOnline");
 
                 _presence.Assets = new Assets()
                 {

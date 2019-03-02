@@ -20,7 +20,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="ACCOUNT INFORMATION" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
+        <TextBlock Grid.Row="0" Text="{DynamicResource accInf}" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
 
         <Grid Grid.Row="1" Margin="1">
             <Grid.ColumnDefinitions>
@@ -29,7 +29,7 @@
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" Source="Images/mail_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
 
-            <TextBlock Grid.Column="1" Text="E-Mail" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
+            <TextBlock Grid.Column="1" Text="{DynamicResource email}" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
             <TextBox Style="{DynamicResource LoginBox}" Name="email" Grid.Column="1" BorderBrush="#00000000" Padding="7 0 0 0"/>
         </Grid>
         <Grid Grid.Row="2" Margin="1">
@@ -38,7 +38,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" Source="Images/pass_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
-            <TextBlock Name="infAboutSavePass" Text="Password" Grid.Column="1" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
+            <TextBlock Name="infAboutSavePass" Text="{DynamicResource pass}" Grid.Column="1" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
             <PasswordBox Name="password" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="0" VerticalContentAlignment="Center" Foreground="WhiteSmoke" Padding="7 0 0 0"/>
         </Grid>
 
@@ -59,14 +59,14 @@
                         </ResourceDictionary.MergedDictionaries>
                     </ResourceDictionary>
                 </CheckBox.Resources>
-                <Label Content="Save login and password" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
+                <Label Content="{DynamicResource saveLaP}" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
             </CheckBox>
         </Grid>
 
         <Grid Grid.Row="4" Background="#FF727272" Margin="2 0 2 0"/>
-        <TextBlock Grid.Row="5" Text="RESTORE AND SETTINGS" Margin="15 5 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
-        <Button Grid.Row="6" Content="Don't have an account?" Margin="0 0 0 1" Click="startReg" Style="{StaticResource MainButtons}"/>
-        <Button Grid.Row="7" Content="Settings" Margin="0 1 0 0" Click="openSettings" Style="{StaticResource MainButtons}"/>
-        <TextBlock Grid.Row="8" Text="I forgot my password" MouseLeftButtonUp="recoveryAcc" Style="{StaticResource TextBlockButton}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFAFB6C5"/>
+        <TextBlock Grid.Row="5" Text="{DynamicResource RaS}" Margin="15 5 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
+        <Button Grid.Row="6" Content="{DynamicResource startReg}" Margin="0 0 0 1" Click="startReg" Style="{StaticResource MainButtons}"/>
+        <Button Grid.Row="7" Content="{DynamicResource settingsFromMain}" Margin="0 1 0 0" Click="openSettings" Style="{StaticResource MainButtons}"/>
+        <TextBlock Grid.Row="8" Text="{DynamicResource forgetPass}" MouseLeftButtonUp="recoveryAcc" Style="{StaticResource TextBlockButton}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFAFB6C5"/>
     </Grid>
 </Page>

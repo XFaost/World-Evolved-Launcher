@@ -1,0 +1,95 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:NFS.Resources"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+    
+    <v:String x:Key="WE">World Evolved</v:String>
+    <v:String x:Key="version">1.0.9</v:String>
+
+    <v:String x:Key="questWaytoGame">У Вас скачана игра?</v:String>
+    <v:String x:Key="questWaytoGame0">Пожалуйста, укажите где находится файл nfsw.exe</v:String>
+    <v:String x:Key="questWaytoGame1" xml:space="preserve">Вы не указали файл игры. 
+Лаунчер завершает работу</v:String>
+    <v:String x:Key="questWaytoGame2">Пожалуйста, укажите куда Вы хотите установить игру</v:String>
+
+    <v:String x:Key="unknownError">Что-то пошло не так</v:String>
+    <v:String x:Key="error5">Невозможно подключиться к HTTP-части сервера</v:String>
+    <v:String x:Key="error6">Потеря связи</v:String>
+    <v:String x:Key="error7">Что-то блокирует соединение с лаунчером</v:String>
+    <v:String x:Key="error10">Обрыв сессии, попробуйте ещё раз</v:String>
+    <v:String x:Key="error13">Невозможно подключиться к XMPP-части сервера</v:String>
+    <v:String x:Key="error410">Ваш аккаунт забанен</v:String>
+    <v:String x:Key="error500">Внутренняя ошибка сервера</v:String>
+    <v:String x:Key="anotherError" xml:space="preserve">Ошибка со стороны сервера: </v:String>
+    <v:String x:Key="getlastErrorNotFound">Отсутствует необходимый файл "getLastError.exe".
+Пожалуйста, переустановите лаунчер.
+Завершение работы...</v:String>
+    <v:String x:Key="logNotFound">Отсутствует лог игры</v:String>
+    <v:String x:Key="gameReturnCode" xml:space="preserve">
+Игра завершилась с кодом: </v:String>
+    <v:String x:Key="questToFillAccInf">Пожалуйста, введите данные для авторизации</v:String>
+    <v:String x:Key="questToFillAccInfForReg">Пожалуйста, заполните все данные</v:String>
+    <v:String x:Key="questToFillLogin">Пожалуйста, введите почту для сброса пароля</v:String>
+    <v:String x:Key="questErrorAccInf">Неверный логин или пароль</v:String>
+    <v:String x:Key="questErrorAccInfForReg">Пароли не совпадают. Попробуйте еще раз</v:String>
+    <v:String x:Key="notfoundTheGame" xml:space="preserve">Вы авторизовались, но файл игры* не был найден.
+Пожалуйста, перезагрузите лаунчер</v:String>
+
+    <v:String x:Key="recoveryAcc">Ссылка для сброса пароля отправлена на:</v:String>
+    <v:String x:Key="checkSpam">ОШИБКА: Ссылка для восстановления пароля уже отправлена, проверьте почтовый ящик для спама или повторите попытку через 1 час</v:String>
+    <v:String x:Key="invalidEmail">ОШИБКА: Аккаунта с такой электронной почтой не существует</v:String>
+    <v:String x:Key="alreadyEmail">Указанная электронная почта занята</v:String>
+    <v:String x:Key="succReg">Вы были успешно зарегистрированы</v:String>
+
+    <v:String x:Key="offline" xml:space="preserve">Сервер в оффлайне.
+лаунчер завершает работу</v:String>
+    <v:String x:Key="offlineOrErrorInternet" xml:space="preserve">Сервер в оффлайне или отсутствует подключение к интернету.
+лаунчер завершает работу</v:String>
+
+    <v:String x:Key="questUpdate">Вышла новая версия. Обновить?</v:String>
+    <v:String x:Key="changeOnline">Если Вы изменяете параметр "Online", необходимо после сохранения настроек перезагрузить лаунчер</v:String>
+
+
+    <!-- Main window -->
+    <v:String x:Key="news">СВЕЖИЕ НОВОСТИ</v:String>
+    <v:String x:Key="launch">ИГРАТЬ</v:String>
+    <v:String x:Key="launched">ЗАПУЩЕНО</v:String>
+    <v:String x:Key="online">Онлайн:</v:String>
+    <v:String x:Key="ping">Пинг:</v:String>
+    <v:String x:Key="downloading">Загрузка</v:String>
+    <v:String x:Key="extracting">Распаковка</v:String>
+    <v:String x:Key="done">Все готово!</v:String>
+
+    <v:String x:Key="accInf">АВТОРИЗАЦИЯ</v:String>
+    <v:String x:Key="saveLaP">Сохранить почту и пароль</v:String>
+    <v:String x:Key="RaS">НАСТРОЙКИ И ВОСТАНОВЛЕНИЕ</v:String>
+    <v:String x:Key="startReg">Зарегистрироваться</v:String>
+    <v:String x:Key="settingsFromMain">Настройки</v:String>
+    <v:String x:Key="forgetPass">Я забыл пароль</v:String>
+
+    <v:String x:Key="settings">НАСТРОЙКИ</v:String>
+    <v:String x:Key="language">Язык:</v:String>
+    <v:String x:Key="downloadSize">Графика:</v:String>
+    <v:String x:Key="onlineFromSetting">Онлайн</v:String>
+    <v:String x:Key="event">Событие</v:String>
+    <v:String x:Key="car">Машина</v:String>
+    <v:String x:Key="lobby">Лобби</v:String>
+
+    <v:String x:Key="email">Эл. почта</v:String>
+    <v:String x:Key="pass">Пароль</v:String>
+    <v:String x:Key="passSaved">Пароль сохранен</v:String>
+    <v:String x:Key="back">Назад</v:String>
+    <v:String x:Key="save">Сохранить</v:String>
+
+    <v:String x:Key="accReg">РЕГИСТРАЦИЯ АККАУНТА</v:String>
+    <v:String x:Key="toReg">Зарегистрироваться</v:String>
+
+    <!-- Discord -->
+    <v:String x:Key="loading">Загрузка игры</v:String>
+    <v:String x:Key="launcherOpen">Открыт лаунчер</v:String>
+    <v:String x:Key="dissOnline">Онлайн</v:String>
+    <v:String x:Key="driving" xml:space="preserve">Машина: </v:String>
+    <v:String x:Key="dissEvent" xml:space="preserve">Событие: </v:String>
+    <v:String x:Key="savehouse" xml:space="preserve">В гараже</v:String>
+    
+</ResourceDictionary>

@@ -1,0 +1,95 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:NFS.Resources"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+
+    <v:String x:Key="WE">World Evolved</v:String>
+    <v:String x:Key="version">1.0.9</v:String>
+
+    <v:String x:Key="questWaytoGame">You have downloaded the game?</v:String>
+    <v:String x:Key="questWaytoGame0">Please indicate where the file nfsw.exe is located</v:String>
+    <v:String x:Key="questWaytoGame1" xml:space="preserve">You did not specify the game file.
+Launcher quits</v:String>
+    <v:String x:Key="questWaytoGame2">Please indicate where you want to install the game</v:String>
+
+    <v:String x:Key="unknownError">Unknown Error</v:String>
+    <v:String x:Key="error5">Unable to connect to the HTTP server part</v:String>
+    <v:String x:Key="error6">Loss of communication</v:String>
+    <v:String x:Key="error7">Something is blocking the connection with the launcher</v:String>
+    <v:String x:Key="error10">Session break, try again</v:String>
+    <v:String x:Key="error13">Unable to connect to XMPP server parts</v:String>
+    <v:String x:Key="error410">You are banned</v:String>
+    <v:String x:Key="error500">Internal Server Error</v:String>
+    <v:String x:Key="anotherError" xml:space="preserve">Server side error: </v:String>
+    <v:String x:Key="getlastErrorNotFound">Missing required file "getLastError.exe".
+Please reinstall the launcher.
+Shutdown...</v:String>
+    <v:String x:Key="logNotFound">There is no game log</v:String>
+    <v:String x:Key="gameReturnCode" xml:space="preserve">
+The game ended with the code: </v:String>
+    <v:String x:Key="questToFillAccInf">Please enter your login details</v:String>
+    <v:String x:Key="questToFillAccInfForReg">Please fill in all details</v:String>
+    <v:String x:Key="questToFillLogin">Please enter a password to reset your password.</v:String>
+    <v:String x:Key="questErrorAccInf">Wrong login or password</v:String>
+    <v:String x:Key="questErrorAccInfForReg">Passwords do not match. try again</v:String>
+    <v:String x:Key="notfoundTheGame" xml:space="preserve">You are logged in, but the game file* was not found.
+Please restart the launcher</v:String>
+
+    <v:String x:Key="recoveryAcc">Password reset link sent to </v:String>
+    <v:String x:Key="checkSpam">ERROR: Recovery password link already sent, please check your spam mail box or try again in 1 hour</v:String>
+    <v:String x:Key="invalidEmail">ERROR: Invalid email!</v:String>
+    <v:String x:Key="alreadyEmail">The specified email is busy</v:String>
+    <v:String x:Key="succReg">You have been successfully registered</v:String>
+
+    <v:String x:Key="offline" xml:space="preserve">Server is offline.
+Launcher quits</v:String>
+    <v:String x:Key="offlineOrErrorInternet" xml:space="preserve">The server is offline or there is no internet connection.
+Launcher quits</v:String>
+
+    <v:String x:Key="questUpdate">A new version has been released. Update?</v:String>
+    <v:String x:Key="changeOnline">If you change the "Online" parameter, you need to restart the launcher after saving the settings</v:String>
+
+
+    <!-- Main window -->
+    <v:String x:Key="news">NEWS</v:String>
+    <v:String x:Key="launch">LAUNCH</v:String>
+    <v:String x:Key="launched">LAUNCHED</v:String>
+    <v:String x:Key="online">Online:</v:String>
+    <v:String x:Key="ping">Ping:</v:String>
+    <v:String x:Key="downloading">Loading</v:String>
+    <v:String x:Key="extracting">Extracting</v:String>
+    <v:String x:Key="done">Done!</v:String>
+
+    <v:String x:Key="accInf">AUTHORIZATION</v:String>
+    <v:String x:Key="saveLaP">Save e-mail and password</v:String>
+    <v:String x:Key="RaS">RESTORE AND SETTINGS</v:String>
+    <v:String x:Key="startReg">Don't have an account?</v:String>
+    <v:String x:Key="settingsFromMain">Settings</v:String>
+    <v:String x:Key="forgetPass">I forgot my password</v:String>
+
+    <v:String x:Key="settings">SETTINGS</v:String>
+    <v:String x:Key="language">Language:</v:String>
+    <v:String x:Key="downloadSize">Download Size:</v:String>
+    <v:String x:Key="onlineFromSetting">Online</v:String>
+    <v:String x:Key="event">Event</v:String>
+    <v:String x:Key="car">Car</v:String>
+    <v:String x:Key="lobby">Lobby</v:String>
+
+    <v:String x:Key="email">E-mail</v:String>
+    <v:String x:Key="pass">Password</v:String>
+    <v:String x:Key="passSaved">Password saved</v:String>
+    <v:String x:Key="back">Back</v:String>
+    <v:String x:Key="save">Save</v:String>
+
+    <v:String x:Key="accReg">ACCOUNT REGISTRATION</v:String>
+    <v:String x:Key="toReg">To register</v:String>
+
+    <!-- Discord -->
+    <v:String x:Key="loading">Downloading</v:String>
+    <v:String x:Key="launcherOpen">Launcher is open</v:String>
+    <v:String x:Key="dissOnline">Online</v:String>
+    <v:String x:Key="driving" xml:space="preserve">Car: </v:String>
+    <v:String x:Key="dissEvent" xml:space="preserve">Event: </v:String>
+    <v:String x:Key="savehouse" xml:space="preserve">In Savehous</v:String>
+    
+</ResourceDictionary>

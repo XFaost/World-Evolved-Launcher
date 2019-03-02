@@ -20,7 +20,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="ACCOUNT REGISTRATION" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
+        <TextBlock Grid.Row="0" Text="{DynamicResource accReg}" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
 
         <Grid Grid.Row="1" Margin="1">
             <Grid.ColumnDefinitions>
@@ -29,7 +29,7 @@
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" Source="Images/mail_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
 
-            <TextBlock Grid.Column="1" Text="E-Mail" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
+            <TextBlock Grid.Column="1" Text="{DynamicResource email}" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
             <TextBox Style="{DynamicResource LoginBox}" Name="emailForRegist" Grid.Column="1" BorderBrush="#00000000" Padding="7 0 0 0"/>
         </Grid>
         
@@ -39,7 +39,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" Source="Images/pass_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
-            <TextBlock Text="Password" Grid.Column="1" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
+            <TextBlock Text="{DynamicResource pass}" Grid.Column="1" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
             <PasswordBox Name="password0" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="0" VerticalContentAlignment="Center" Foreground="WhiteSmoke" Padding="7 0 0 0"/>
         </Grid>
 
@@ -49,11 +49,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" Source="Images/pass_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
-            <TextBlock Text="Password" Grid.Column="1" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
+            <TextBlock Text="{DynamicResource pass}" Grid.Column="1" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
             <PasswordBox Name="password1" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="0" VerticalContentAlignment="Center" Foreground="WhiteSmoke" Padding="7 0 0 0"/>
         </Grid>
 
-        <Button Grid.Row="5" Content="To register" Margin="0 0 0 1" Click="Press_Regist" Style="{StaticResource MainButtons}"/>
-        <Button Grid.Row="6" Content="Back" Margin="0 0 0 1" Click="Press_Back" Style="{StaticResource MainButtons}"/>
+        <Button Grid.Row="5" Content="{DynamicResource toReg}" Margin="0 0 0 1" Click="Press_Regist" Style="{StaticResource MainButtons}"/>
+        <Button Grid.Row="6" Content="{DynamicResource back}" Margin="0 0 0 1" Click="Press_Back" Style="{StaticResource MainButtons}"/>
     </Grid>
 </Page>

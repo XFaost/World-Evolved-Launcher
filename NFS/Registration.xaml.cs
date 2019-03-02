@@ -25,6 +25,10 @@ namespace NFS
     /// </summary>
     public partial class Registration : Page
     {
+        string getStrFromResource(string key)
+        {
+            return (string)Application.Current.Resources[key];
+        }
 
         string serverIP = "http://185.125.231.50:8680/soapbox-race-core/Engine.svc";
 
@@ -43,14 +47,14 @@ namespace NFS
         {
             if (emailForRegist.Text.ToString() == "" || password0.Password.ToString() == "" || password1.Password.ToString() == "")
             {
-                MessageBox.Show("Пожалуйста, заполните все данные.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(getStrFromResource("questToFillAccInfForReg"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             if (password0.Password.ToString() != password1.Password.ToString())
             {
                 password0.Password = "";
                 password1.Password = "";
-                MessageBox.Show("Пароли не совпадают. Попробуйте еще раз.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(getStrFromResource("questErrorAccInfForReg"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -59,7 +63,7 @@ namespace NFS
             try
             {
                 WebClient wcr = new WebClientWithTimeout();
-                wcr.Headers.Add("user-agent", "GameLauncher (+https://github.com/SoapboxRaceWorld/GameLauncher_NFSW)");
+                wcr.Headers.Add("user-agent", "GameLauncher (+https://github.com/XFaost/World-Evolved-Launcher)");
 
                 string BuildURL = serverIP + "/User/createUser?email=" + emailForRegist.Text.ToString() + "&password=" + SHA.HashPassword(password0.Password.ToString()).ToLower();
 
@@ -93,7 +97,7 @@ namespace NFS
 
                     if (Description == "Registration Error: Email already exists!")
                     {
-                        MessageBox.Show("Указанная электронная почта занята.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show(getStrFromResource("alreadyEmail"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                     else if (Description != "")
@@ -102,7 +106,7 @@ namespace NFS
                     }
                     if (childrenNode["UserId"].InnerText != "" && childrenNode["LoginToken"].InnerText != "")
                     {
-                        MessageBox.Show("Вы были успешно зарегистрированы.", "World Evolved", MessageBoxButton.OK);
+                        MessageBox.Show(getStrFromResource("succReg"), getStrFromResource("WE"), MessageBoxButton.OK);
                         backFunk();
                         return;
                     }
@@ -110,7 +114,7 @@ namespace NFS
             }
             catch
             {
-                MessageBox.Show("Что-то пошло не так.", "World Evolved", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(getStrFromResource("unknownError"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
