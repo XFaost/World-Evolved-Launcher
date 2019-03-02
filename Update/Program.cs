@@ -31,6 +31,9 @@ namespace Update
             request.Credentials = new NetworkCredential("ch56558", "Rj8S7dvnhbqf");
             request.Method = WebRequestMethods.Ftp.DownloadFile;
 
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            long sizeFile = response.ContentLength;
+
             using (Stream ftpStream = request.GetResponse().GetResponseStream())
             using (Stream fileStream = File.Create(@"launcherUpdate.zip"))
             {
@@ -43,9 +46,9 @@ namespace Update
                     fileStream.Write(buffer, 0, read);
 
                     Console.WriteLine("Downloading | {0} % | {1}MB / {2}MB",
-                        ((fileStream.Position * 100) / 4716848).ToString(),
+                        ((fileStream.Position * 100) / sizeFile).ToString(),
                         Math.Round((double)fileStream.Position / (double)1000000, 2).ToString("N2"),
-                        Math.Round((double)4716848 / (double)1000000, 2).ToString("N2")
+                        Math.Round((double)sizeFile / (double)1000000, 2).ToString("N2")
                         );
                     Console.SetCursorPosition(0, Console.CursorTop - 1);
 

@@ -290,8 +290,11 @@ namespace NFS
             request.Credentials = new NetworkCredential("ch56558", "Rj8S7dvnhbqf");
             request.Method = WebRequestMethods.Ftp.DownloadFile;
 
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            long sizeFile = response.ContentLength;
+
             using (Stream ftpStream = request.GetResponse().GetResponseStream())
-            using (Stream fileStream = File.Create(folderTogame + @"\nfsw.zip"))
+            using (Stream fileStream = File.Create(saveWayToFileNFSW + @"\nfsw.zip"))
             {
                 byte[] buffer = new byte[10240];
                 int read;
@@ -300,12 +303,12 @@ namespace NFS
                     fileStream.Write(buffer, 0, read);
                     this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
-                        BarProgress.Value = (fileStream.Position * 100) / 1829124164;
+                        BarProgress.Value = (fileStream.Position * 100) / sizeFile;
 
                         TextProgress.Text = string.Format( "Downloading | {0} % | {1}GB / {2}GB",
-                            ((fileStream.Position * 100) / 1829124164).ToString(),
+                            ((fileStream.Position * 100) / sizeFile).ToString(),
                             Math.Round((double)fileStream.Position / (double)1000000000, 2).ToString("N2"),
-                            Math.Round((double)1829124164 / (double)1000000000, 2).ToString("N2")
+                            Math.Round((double)sizeFile / (double)1000000000, 2).ToString("N2")
                             );
                     });
                 }
@@ -327,6 +330,7 @@ namespace NFS
                 TextProgress.Text = "Done!";
                 PlayButton.IsEnabled = true;
             });
+            File.Delete(saveWayToFileNFSW + @"\nfsw.zip");
 
             return;
         }
@@ -386,7 +390,7 @@ namespace NFS
 
             if (v != version)
             {
-                MessageBox.Show("Сейчас обновиться лаунчер");
+                MessageBox.Show("Сейчас обновиться лаунчер", version + " --> " + v);
                 Process.Start(@".\Update\Update.exe");
                 Process.GetCurrentProcess().Kill();
             }
