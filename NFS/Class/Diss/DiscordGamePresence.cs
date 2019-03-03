@@ -235,7 +235,7 @@ namespace NFS.Class.Diss.RPC
                 }
                 else
                 {
-                    _presence.Details = getStrFromResource("savehouse");
+                    _presence.Details = getStrFromResource("safehouse");
                     _presence.Timestamps = GetCurrentTimestamp();
                 }
                 _presence.State = string.Empty;

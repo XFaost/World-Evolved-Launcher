@@ -445,7 +445,6 @@ namespace NFS
                     this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
                         PlayButton.IsEnabled = true;
-                        PlayButton.Content = getStrFromResource("launch");
                     });
                 };
 
@@ -456,7 +455,6 @@ namespace NFS
             readSaveData();
 
             PlayButton.IsEnabled = false;
-            PlayButton.Content = getStrFromResource("launched");
             string Login = "";
             string EncryptPass = "";
 
@@ -464,7 +462,6 @@ namespace NFS
             {
                 MessageBox.Show(getStrFromResource("questToFillAccInf"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 PlayButton.IsEnabled = true;
-                PlayButton.Content = getStrFromResource("launch");
                 return;
             }
             if (saveLogin != "" && saveEncryptPass != "" && mPage.email.Text.ToString() != "" && mPage.password.Password.ToString() != "")
@@ -502,7 +499,6 @@ namespace NFS
                             updateSaveData("", 1);
                             updateSaveData("", 2);
                             PlayButton.IsEnabled = true;
-                            PlayButton.Content = getStrFromResource("launch");
                             mPage.infAboutSavePass.Text = "Password";
                             saveLogin = "";
                             saveEncryptPass = "";
@@ -533,7 +529,6 @@ namespace NFS
                             MessageBox.Show(getStrFromResource("notfoundTheGame") + "\n* \"" + saveWayToFileNFSW + "\"", getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Warning);
                             saveWayToFileNFSW = ""; updateSaveData("", 0);
                             PlayButton.IsEnabled = true;
-                            PlayButton.Content = getStrFromResource("launch");
                             return;
                         }
 
