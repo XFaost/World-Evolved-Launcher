@@ -1,16 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:NFS.Resources"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
 
     <v:String x:Key="WE">World Evolved</v:String>
-    <v:String x:Key="version">1.1.0</v:String>
+    <v:String x:Key="version">1.1.2</v:String>
 
     <v:String x:Key="questWaytoGame">You have downloaded the game?</v:String>
     <v:String x:Key="questWaytoGame0">Please indicate where the file nfsw.exe is located</v:String>
     <v:String x:Key="questWaytoGame1" xml:space="preserve">You did not specify the game file.
 Launcher quits</v:String>
-    <v:String x:Key="questWaytoGame2">Please indicate where you want to install the game</v:String>
 
     <v:String x:Key="unknownError">Unknown Error</v:String>
     <v:String x:Key="error5">Unable to connect to the HTTP server part</v:String>
@@ -34,8 +32,7 @@ The game ended with the code: </v:String>
     <v:String x:Key="questErrorAccInfForReg">Passwords do not match. try again</v:String>
     <v:String x:Key="notfoundTheGame" xml:space="preserve">You are logged in, but the game file* was not found.
 Please restart the launcher</v:String>
-
-    <v:String x:Key="recoveryAcc">Password reset link sent to </v:String>
+    <v:String x:Key="recoveryAcc">Password reset link sent to</v:String>
     <v:String x:Key="checkSpam">ERROR: Recovery password link already sent, please check your spam mail box or try again in 1 hour</v:String>
     <v:String x:Key="invalidEmail">ERROR: Invalid email!</v:String>
     <v:String x:Key="alreadyEmail">The specified email is busy</v:String>
@@ -53,12 +50,8 @@ Launcher quits</v:String>
     <!-- Main window -->
     <v:String x:Key="news">NEWS</v:String>
     <v:String x:Key="launch">LAUNCH</v:String>
-    <v:String x:Key="launched">LAUNCHED</v:String>
     <v:String x:Key="online">Online:</v:String>
     <v:String x:Key="ping">Ping:</v:String>
-    <v:String x:Key="downloading">Loading</v:String>
-    <v:String x:Key="extracting">Extracting</v:String>
-    <v:String x:Key="done">Done!</v:String>
 
     <v:String x:Key="accInf">AUTHORIZATION</v:String>
     <v:String x:Key="saveLaP">Save e-mail and password</v:String>
@@ -90,6 +83,6 @@ Launcher quits</v:String>
     <v:String x:Key="dissOnline">Online</v:String>
     <v:String x:Key="driving" xml:space="preserve">Car: </v:String>
     <v:String x:Key="dissEvent" xml:space="preserve">Event: </v:String>
-    <v:String x:Key="savehouse" xml:space="preserve">In Savehous</v:String>
-    
+    <v:String x:Key="safehouse" xml:space="preserve">In Safehouse</v:String>
+
 </ResourceDictionary>
