@@ -6,103 +6,257 @@
       xmlns:local="clr-namespace:NFS"
       mc:Ignorable="d" 
       Title="Settings"
-      d:DesignHeight="250" d:DesignWidth="200">
+      d:DesignHeight="475" d:DesignWidth="800"
+      >
 
+    <Page.Resources>
+        <Style TargetType="Border" x:Key="BluringColumnSetting">
+            <Style.Triggers>
+                
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <BlurEffect Radius="30" KernelType="Gaussian"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    
     <Grid Margin="15">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        
+
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="0.125*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{DynamicResource settings}" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
+        <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
+            <Button Content="{DynamicResource back}" Margin="0 0 2 0" Click="Press_Back" Style="{StaticResource BackButtons}" Width="80"/>
+            <Button Content="{DynamicResource save}" Margin="2 0 0 0" Click="Press_Save" Style="{StaticResource SaveButtons}" Width="80"/>
+            <TextBlock Text="{DynamicResource settings}" Foreground="{StaticResource TextLightColorBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Margin="15 0 0 0"/>
+        </StackPanel>
 
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource language}" Foreground="#FFAFB6C5" VerticalAlignment="Center"/>
-        <ComboBox Name="LangBox" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="0 5 0 5" HorizontalAlignment="Right"/>
+        <Border Background="{StaticResource BackgroungColorBrush}" Grid.Row="1" CornerRadius="5" WindowChrome.IsHitTestVisibleInChrome="True" >
+            <Grid Margin="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-        <CheckBox Name="CheckForAutoUpdate" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center">
-            <CheckBox.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-            </CheckBox.Resources>
-            <Label Content="{DynamicResource autoUpdate}" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
-        </CheckBox>
+                <StackPanel Grid.Column="0" Margin="5">
 
-        <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Text="DISCORD RPC" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
+                    <TextBlock Text="{DynamicResource settingsLauncher}" Background="Transparent" Foreground="{StaticResource BackgroungSelectElColorBrush}" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5"/>
 
-        <CheckBox Name="CheckForDRPCOnline" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Click="CheckForDRPCOnline_Checked">
-            <CheckBox.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-            </CheckBox.Resources>
-            <Label Content="{DynamicResource onlineFromSetting}" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
-        </CheckBox>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource language}" Foreground="{StaticResource TextColorBrush}" VerticalAlignment="Center" FontSize="14"/>
+                        <ComboBox Name="LangBox" Foreground="{StaticResource TextLightColorBrush}"/>
+                    </StackPanel>
 
-        <CheckBox Name="CheckForDRPCCar" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center">
-            <CheckBox.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-            </CheckBox.Resources>
-            <Label Content="{DynamicResource car}" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
-        </CheckBox>
+                    <CheckBox Name="CheckForAutoUpdate" VerticalAlignment="Center">
+                        <Label Content="{DynamicResource autoUpdate}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3" />
+                    </CheckBox>
 
-        <CheckBox Name="CheckForDRPCEvent" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">
-            <CheckBox.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-            </CheckBox.Resources>
-            <Label Content="{DynamicResource event}" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
-        </CheckBox>
+                    <TextBlock Text="DISCORD RPC" Margin="15 10 0 0" VerticalAlignment="Center" Foreground="{StaticResource TextColorBrush}" FontWeight="Bold" FontSize="14"/>
 
-        <CheckBox Name="CheckForDRPCLobby" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center">
-            <CheckBox.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-            </CheckBox.Resources>
-            <Label Content="{DynamicResource lobby}" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
-        </CheckBox>
+                    <CheckBox Name="CheckForDRPCOnline" VerticalAlignment="Center" Click="CheckForDRPCOnline_Checked">
+                        <Label Content="{DynamicResource onlineFromSetting}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                    </CheckBox>
 
-        <Button Grid.Row="7" Grid.Column="0" Content="{DynamicResource back}" Margin="0 0 1 1" Click="Press_Back" Style="{StaticResource MainButtons}"/>
-        <Button Grid.Row="7" Grid.Column="1" Content="{DynamicResource save}" Margin="1 0 0 1" Click="Press_Save" Style="{StaticResource MainButtons}"/>
+                    <CheckBox Name="CheckForDRPCCar" VerticalAlignment="Center">
+                        <Label Content="{DynamicResource car}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                    </CheckBox>
+
+                    <CheckBox Name="CheckForDRPCEvent" VerticalAlignment="Center">
+                        <Label Content="{DynamicResource event}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                    </CheckBox>
+
+                    <CheckBox Name="CheckForDRPCLobby" VerticalAlignment="Center">
+                        <Label Content="{DynamicResource lobby}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                    </CheckBox>
+
+                </StackPanel>
+
+                <Border Style="{StaticResource BluringColumnSetting}" Name="settings1" Grid.Column="1" Margin="5" IsEnabled="False">
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource screenSettings}" Background="Transparent" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5" Foreground="{StaticResource BackgroungSelectElColorBrush}"/>
+
+                        <CheckBox Name="screenwindowedBox" Grid.Column="0" Margin="0 0 0 5" VerticalAlignment="Center">
+                            <Label Content="{DynamicResource screenwindowed}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                        </CheckBox>
+
+                        <StackPanel Margin="0 0 0 5" Orientation="Horizontal">
+                            <TextBlock Grid.Row="1" Text="{DynamicResource screenrefresh}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+                            <TextBox Name="screenrefreshBox" Grid.Column="1" Grid.Row="1" Margin="5 0 0 0" Foreground="{StaticResource TextLightColorBrush}" FontSize="12" Width="60" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <Grid Margin="0 0 0 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.ColumnSpan="2" Text="{DynamicResource scheensize}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+
+                            <TextBlock Grid.Row="1" Text="{DynamicResource screenwidth}" Foreground="{StaticResource TextLightColorBrush}" Margin="5 0 0 0" FontSize="14" VerticalAlignment="Center"/>
+                            <TextBox Name="screenwidthBox" Grid.Column="1" Grid.Row="1" Margin="5 0 0 0" Foreground="{StaticResource TextLightColorBrush}"  Width="60" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+                        
+                            <TextBlock Grid.Row="2" Text="{DynamicResource screenheight}" Foreground="{StaticResource TextLightColorBrush}" Margin="5 0 0 0" FontSize="14" VerticalAlignment="Center"/>
+                            <TextBox Name="screenheightBox" Grid.Column="1" Grid.Row="2" Margin="5 0 0 0" Foreground="{StaticResource TextLightColorBrush}" FontSize="12" Width="60" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+                        </Grid>
+
+                        <StackPanel Margin="0 0 0 5" Orientation="Horizontal">
+                            <TextBlock Grid.Row="1" Text="{DynamicResource brightness}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+                            <TextBox Name="brightnessBox" Grid.Column="1" Grid.Row="1" Margin="5 0 0 0" Foreground="{StaticResource TextLightColorBrush}" FontSize="12" Width="60" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <CheckBox Name="enableaeroBox" Grid.Column="0" Margin="0 0 0 5" VerticalAlignment="Center">
+                            <Label Content="{DynamicResource enableaero}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                        </CheckBox>
+
+                        <StackPanel Margin="0 0 0 5" Orientation="Horizontal">
+                            <TextBlock Text="{DynamicResource pixelaspectratiooverride}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+                            <TextBox Name="pixelaspectratiooverrideBox" Margin="5 0 0 0" Foreground="{StaticResource TextLightColorBrush}"  Width="60" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+                        </StackPanel>
+
+
+                        
+                        
+                        <TextBlock Text="{DynamicResource audioSetting}" Background="Transparent" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5" Foreground="{StaticResource BackgroungSelectElColorBrush}"/>
+
+                        <Grid Margin="0 0 0 5">
+                            <TextBlock Text="{DynamicResource audiomode}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14" VerticalAlignment="Center"/>
+                            <ComboBox Name="audiomodeBox" Foreground="{StaticResource TextLightColorBrush}" HorizontalAlignment="Right" Width="140">
+                                <ComboBoxItem Content="{DynamicResource audiomodeStereo}"/>
+                                <ComboBoxItem Content="{DynamicResource audiomodeSurround}"/>
+                            </ComboBox>
+                        </Grid>
+                        
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource BluringColumnSetting}" Name="settings2" Grid.Column="2" Margin="5" IsEnabled="False">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock  Text="{DynamicResource gameSettings}" Background="Transparent" Foreground="{StaticResource BackgroungSelectElColorBrush}" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5"/>
+
+                        <ScrollViewer Grid.Row="1" >
+                            <StackPanel Margin="5">
+
+                                <CheckBox Name="visualtreatmentBox" Grid.Column="0" Margin="0 0 0 5" VerticalAlignment="Center">
+                                    <Label Content="{DynamicResource visualtreatment}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                                </CheckBox>
+                                
+                                <TextBlock Text="{DynamicResource globaldetaillevel}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+                                <Slider Name="globaldetaillevelBox" Minimum="0" Maximum="4" IsSnapToTickEnabled="True" Margin="5 0 5 5"/>
+
+                                <TextBlock Text="{DynamicResource basetexturefilter}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+                                <Slider Name="basetexturefilterBox" Minimum="0" Maximum="2" IsSnapToTickEnabled="True" Margin="5 0 5 5"/>
+
+                                <TextBlock Text="{DynamicResource roadtexturefilter}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+                                <Slider Name="roadtexturefilterBox" Minimum="0" Maximum="2" IsSnapToTickEnabled="True" Margin="5 0 5 5"/>
+
+                                <Grid  Margin="0 0 0 5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.ColumnSpan="2" Text="{DynamicResource textures}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+
+                                    <TextBlock Grid.Row="1" Text="{DynamicResource basetexturelodbias}" Foreground="{StaticResource TextLightColorBrush}" Margin="5 0 0 0" FontSize="14"/>
+                                    <TextBox Name="basetexturelodbiasBox" Grid.Column="1" Grid.Row="1" Foreground="{StaticResource TextLightColorBrush}"  Margin="10 0 0 0" Width="30" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+                                    <TextBlock Grid.Row="2" Text="{DynamicResource roadtexturelodbias}" Foreground="{StaticResource TextLightColorBrush}" Margin="5 0 0 0" FontSize="14"/>
+                                    <TextBox Name="roadtexturelodbiasBox" Grid.Column="1" Grid.Row="2" Foreground="{StaticResource TextLightColorBrush}"  Margin="10 0 0 0" Width="30" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+
+                                    <Border CornerRadius="10" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Background="{StaticResource BackgroungElColorBrush}" Margin="0 0 5 0" Width="70" HorizontalAlignment="Right">
+                                        <TextBlock Text="0 = max&#x0a;>= 0"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource TextLightColorBrush}" FontWeight="Bold" FontSize="14"/>
+                                    </Border>
+                                </Grid>
+
+                                <TextBlock Text="{DynamicResource shaderdetail}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+                                <Slider Name="shaderdetailBox" Minimum="0" Maximum="4" IsSnapToTickEnabled="True" Margin="5 0 5 5"/>
+
+                                <TextBlock Text="{DynamicResource fsaalevel}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+                                <Slider Name="fsaalevelBox" Minimum="0" Maximum="4" IsSnapToTickEnabled="True" Margin="5 0 5 5"/>
+
+                                <Grid Margin="0 0 0 5">
+                                    <TextBlock Text="{DynamicResource carlodlevel}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14" VerticalAlignment="Center"/>
+                                    <ComboBox Name="carlodlevelBox" Margin="0 0 5 0" Foreground="{StaticResource TextLightColorBrush}" HorizontalAlignment="Right" Width="60">
+                                        <ComboBoxItem Content="{DynamicResource min}"/>
+                                        <ComboBoxItem Content="{DynamicResource max}"/>
+                                    </ComboBox>
+                                </Grid>
+
+                                <CheckBox Name="overbrightenableBox" Grid.Column="0" Margin="0 0 0 5" VerticalAlignment="Center">
+                                    <Label Content="{DynamicResource overbrightenable}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                                </CheckBox>
+
+                                <CheckBox Name="particlesystemenableBox" Grid.Column="0" Margin="0 0 0 5" VerticalAlignment="Center">
+                                    <Label Content="{DynamicResource particlesystemenable}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                                </CheckBox>
+
+                                <TextBlock Text="{DynamicResource carenvironmentmapenable}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+                                <Slider Name="carenvironmentmapenableBox" Minimum="0" Maximum="4" IsSnapToTickEnabled="True" Margin="5 0 5 5"/>
+
+                                <TextBlock Text="{DynamicResource roadreflectionenable}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
+                                <Slider Name="roadreflectionenableBox" Minimum="0" Maximum="2" IsSnapToTickEnabled="True" Margin="5 0 5 5"/>
+
+                                <CheckBox Name="motionblurenableBox" Grid.Column="0" Margin="0 0 0 5" VerticalAlignment="Center">
+                                    <Label Content="{DynamicResource motionblurenable}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                                </CheckBox>
+
+                                <Grid Margin="0 0 0 5">
+                                    <TextBlock Text="{DynamicResource basetexturemaxani}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14" VerticalAlignment="Center"/>
+                                    <ComboBox Name="basetexturemaxaniBox" Foreground="{StaticResource TextLightColorBrush}" HorizontalAlignment="Right" Width="60">
+                                        <ComboBoxItem Content="0x"/>
+                                        <ComboBoxItem Content="2x"/>
+                                        <ComboBoxItem Content="4x"/>
+                                        <ComboBoxItem Content="8x"/>
+                                        <ComboBoxItem Content="16x"/>
+                                    </ComboBox>
+                                </Grid>
+
+                                <Grid Margin="0 0 0 5">
+                                    <TextBlock Text="{DynamicResource roadtexturemaxani}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14" VerticalAlignment="Center"/>
+                                    <ComboBox Name="roadtexturemaxaniBox" Foreground="{StaticResource TextLightColorBrush}" HorizontalAlignment="Right" Width="60">
+                                        <ComboBoxItem Content="0x"/>
+                                        <ComboBoxItem Content="2x"/>
+                                        <ComboBoxItem Content="4x"/>
+                                        <ComboBoxItem Content="8x"/>
+                                        <ComboBoxItem Content="16x"/>
+                                    </ComboBox>
+                                </Grid>
+
+                                <CheckBox Name="vsynconBox" Grid.Column="0" Margin="0 0 0 5" VerticalAlignment="Center">
+                                    <Label Content="{DynamicResource vsyncon}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                                </CheckBox>
+                                
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <Button Grid.Column="1" Grid.ColumnSpan="2" Name="activationHideSettingsButton" Content="{DynamicResource activationHideSettings}"  Click="Press_activationHideSettings" Style="{StaticResource SaveButtons}" Height="50" Width="200" Visibility="Visible"/>
+
+            </Grid>
+        </Border>
     </Grid>
 </Page>

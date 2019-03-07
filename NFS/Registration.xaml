@@ -5,55 +5,73 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:NFS"
       mc:Ignorable="d"
-      Title="Registration">
+      Title="Registration"
+      d:DesignHeight="475" d:DesignWidth="800"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      >
 
     <Grid Margin="15">
+
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition />
-            <RowDefinition Height="1"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="0.125*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="{DynamicResource accReg}" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
+        <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
+            <Button Content="{DynamicResource back}" Margin="0 0 2 0" Click="Press_Back" Style="{StaticResource BackButtons}" Width="80"/>
+            <TextBlock Text="{DynamicResource accReg}" Foreground="{StaticResource TextLightColorBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Margin="15 0 0 0"/>
+        </StackPanel>
 
-        <Grid Grid.Row="1" Margin="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="Images/mail_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
+        <Border Background="{StaticResource BackgroungColorBrush}" Grid.Row="1" CornerRadius="5" WindowChrome.IsHitTestVisibleInChrome="True">
+            <StackPanel Margin="15" VerticalAlignment="Center" Width="225">
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="Images/mail_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
 
-            <TextBlock Grid.Column="1" Text="{DynamicResource email}" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
-            <TextBox Style="{DynamicResource LoginBox}" Name="emailForRegist" Grid.Column="1" BorderBrush="#00000000" Padding="7 0 0 0"/>
-        </Grid>
-        
-        <Grid Grid.Row="2" Margin="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="Images/pass_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
-            <TextBlock Text="{DynamicResource pass}" Grid.Column="1" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
-            <PasswordBox Name="password0" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="0" VerticalContentAlignment="Center" Foreground="WhiteSmoke" Padding="7 0 0 0"/>
-        </Grid>
+                    <TextBox Name="emailForRegist" Grid.Column="1" Padding="3 0 0 0" Foreground="{StaticResource TextLightColorBrush}">
+                        <materialDesign:HintAssist.Hint>
+                            <TextBlock Text="{DynamicResource email}" />
+                        </materialDesign:HintAssist.Hint>
+                    </TextBox>
+                </Grid>
 
-        <Grid Grid.Row="3" Margin="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="Images/pass_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
-            <TextBlock Text="{DynamicResource pass}" Grid.Column="1" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
-            <PasswordBox Name="password1" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="0" VerticalContentAlignment="Center" Foreground="WhiteSmoke" Padding="7 0 0 0"/>
-        </Grid>
+                <Grid Grid.Row="2" Margin="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="Images/pass_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    
+                    <PasswordBox Name="password0" Grid.Column="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Foreground="{StaticResource TextLightColorBrush}" Padding="3 0 0 0">
+                        <materialDesign:HintAssist.Hint>
+                            <TextBlock Text="{DynamicResource pass}" />
+                        </materialDesign:HintAssist.Hint>
+                    </PasswordBox>
+                </Grid>
 
-        <Button Grid.Row="5" Content="{DynamicResource toReg}" Margin="0 0 0 1" Click="Press_Regist" Style="{StaticResource MainButtons}"/>
-        <Button Grid.Row="6" Content="{DynamicResource back}" Margin="0 0 0 1" Click="Press_Back" Style="{StaticResource MainButtons}"/>
+                <Grid Grid.Row="3" Margin="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="Images/pass_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    
+                    <PasswordBox Name="password1" Grid.Column="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Foreground="{StaticResource TextLightColorBrush}" Padding="3 0 0 0">
+                        <materialDesign:HintAssist.Hint>
+                            <TextBlock Text="{DynamicResource pass}" />
+                        </materialDesign:HintAssist.Hint>
+                    </PasswordBox>
+                </Grid>
+
+                <Button Grid.Row="5" Content="{DynamicResource toReg}" Margin="0 5 0 0" Click="Press_Regist" Style="{StaticResource SaveButtons}" Height="30"/>
+            
+            </StackPanel>
+        </Border>
     </Grid>
+
+    
 </Page>

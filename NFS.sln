@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFS", "NFS\NFS.csproj", "{815ACCD2-73CE-4952-A214-B7E70A23FB70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEX", "NFS\WEX.csproj", "{815ACCD2-73CE-4952-A214-B7E70A23FB70}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "getLastError", "getLastError\test\test.vcxproj", "{DA79B231-F046-4388-B836-2CE21B99488B}"
 EndProject

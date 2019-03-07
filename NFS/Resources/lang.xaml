@@ -2,8 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
 
-    <v:String x:Key="WE">World Evolved</v:String>
-    <v:String x:Key="version">1.1.2</v:String>
+    <v:String x:Key="WE">WEX</v:String>
+    <v:String x:Key="version">1.2.0</v:String>
+    <v:String x:Key="translated">|</v:String>
 
     <v:String x:Key="questWaytoGame">You have downloaded the game?</v:String>
     <v:String x:Key="questWaytoGame0">Please indicate where the file nfsw.exe is located</v:String>
@@ -60,13 +61,8 @@ Launcher quits</v:String>
     <v:String x:Key="settingsFromMain">Settings</v:String>
     <v:String x:Key="forgetPass">I forgot my password</v:String>
 
-    <v:String x:Key="settings">SETTINGS</v:String>
-    <v:String x:Key="language">Language:</v:String>
-    <v:String x:Key="autoUpdate">Auto. check for updates</v:String>
-    <v:String x:Key="onlineFromSetting">Online</v:String>
-    <v:String x:Key="event">Event</v:String>
-    <v:String x:Key="car">Car</v:String>
-    <v:String x:Key="lobby">Lobby</v:String>
+    <v:String x:Key="accReg">Account registration</v:String>
+    <v:String x:Key="toReg">To register</v:String>
 
     <v:String x:Key="email">E-mail</v:String>
     <v:String x:Key="pass">Password</v:String>
@@ -74,8 +70,62 @@ Launcher quits</v:String>
     <v:String x:Key="back">Back</v:String>
     <v:String x:Key="save">Save</v:String>
 
-    <v:String x:Key="accReg">ACCOUNT REGISTRATION</v:String>
-    <v:String x:Key="toReg">To register</v:String>
+    <!-- SETTINGS-->
+    <v:String x:Key="max">max</v:String>
+    <v:String x:Key="min">min</v:String>
+    <v:String x:Key="on">on</v:String>
+    <v:String x:Key="off">off</v:String>
+
+    <v:String x:Key="settings">Game and launcher settings</v:String>
+    <v:String x:Key="activationHideSettings">Advanced graphics settings</v:String>
+    <v:String x:Key="succHideSettings" xml:space="preserve">Done! Now log in to the game and exit to make the settings take effect.
+And please keep in charge, this feature is under development</v:String>
+
+    <v:String x:Key="settingsLauncher">Launcher settings</v:String>
+    <v:String x:Key="language">Language:</v:String>
+    <v:String x:Key="autoUpdate">Auto. check for updates</v:String>
+    <v:String x:Key="onlineFromSetting">Online</v:String>
+    <v:String x:Key="event">Event</v:String>
+    <v:String x:Key="car">Car</v:String>
+    <v:String x:Key="lobby">Lobby</v:String>
+
+    <v:String x:Key="firsttime">Auto-adjusting graphics</v:String>
+    <v:String x:Key="visualtreatment">Visual treatment</v:String>
+    <v:String x:Key="gameSettings">Graphics settings</v:String>
+    <v:String x:Key="globaldetaillevel">Global detail level</v:String>
+    <v:String x:Key="basetexturefilter">Base texture filter</v:String>
+    <v:String x:Key="roadtexturefilter">Road texture filter</v:String>
+    <v:String x:Key="textures">Render distance:</v:String>
+    <v:String x:Key="basetexturelodbias">• surround</v:String>
+    <v:String x:Key="roadtexturelodbias">• road</v:String>
+    <v:String x:Key="shaderdetail">Shader detail (not working correctly)</v:String>
+    <v:String x:Key="fsaalevel">Smoothing</v:String>
+    <v:String x:Key="carlodlevel">Сar detailing</v:String>
+    <v:String x:Key="overbrightenable">Bloom-effect</v:String>
+    <v:String x:Key="particlesystemenable">Exhaust, sparks, etc.</v:String>
+    <v:String x:Key="carenvironmentmapenable">Reflection on the car</v:String>
+    <v:String x:Key="roadreflectionenable">Reflections on the road</v:String>
+    <v:String x:Key="motionblurenable">Blur</v:String>
+    <v:String x:Key="basetexturemaxani">Anisotropic Filtering (world)</v:String>
+    <v:String x:Key="roadtexturemaxani">Anisotropic Filtering (road)</v:String>
+    <v:String x:Key="vsyncon">VSync</v:String>
+
+    <v:String x:Key="audioSetting">Audio settings</v:String>
+    <v:String x:Key="audiomode">Audio mode</v:String>
+    <v:String x:Key="audiomodeStereo">Stereo</v:String>
+    <v:String x:Key="audiomodeSurround">Surround 5.1 - best</v:String>
+    <v:String x:Key="audioquality">Audio quality</v:String>
+
+    <v:String x:Key="screenSettings">Screen settings</v:String>
+    <v:String x:Key="screenwindowed">Screen windowed</v:String>
+    <v:String x:Key="screenrefresh">Screen refresh</v:String>
+    <v:String x:Key="scheensize">Scheen size:</v:String>
+    <v:String x:Key="screenheight">• height</v:String>
+    <v:String x:Key="screenwidth">• width</v:String>
+    <v:String x:Key="brightness">Brightness</v:String>
+    <v:String x:Key="enableaero">DIsable Windows Aero</v:String>
+    <v:String x:Key="pixelaspectratiooverride">Pixel Aspect Ratio Override</v:String>
+
 
     <!-- Discord -->
     <v:String x:Key="loading">Downloading</v:String>

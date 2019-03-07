@@ -7,85 +7,33 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        Title="World Evolved Alpha 1.0.3" Height="500" Width="850"
+        Title="{DynamicResource WE}" Height="500" Width="850" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="142*"/>
-            <ColumnDefinition Width="425*"></ColumnDefinition>
-            <ColumnDefinition Width="283*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
+        
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Image Grid.ColumnSpan="3" Grid.RowSpan="3" Source="Images/map.png" Stretch="UniformToFill"/>
-        <Image Source="Images/logo.png" Grid.ColumnSpan="2" Margin="15" RenderOptions.BitmapScalingMode="HighQuality"/>
+        <Image Grid.RowSpan="2" Source="Images/map.jpg" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="LowQuality"/>
 
-        <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
-            <Button Command="{Binding MinimizeCommand}" Style="{StaticResource HideButton}" Margin="10 5 5 0"/>
-            <Button Command="{Binding CloseCommand}" Style="{StaticResource CloseButton}" Margin="5 5 10 0"/>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+            <Button Command="{Binding MinimizeCommand}" Style="{StaticResource HideButton}" Margin="10 0 0 0" Width="25"/>
+            <Button Command="{Binding CloseCommand}" Style="{StaticResource CloseButton}" Margin="0 0 10 0" Width="25"/>
         </StackPanel>
 
+        <Frame Grid.Row="1" Name="UserPanel" Margin="0 -10 0 0" ContentRendered="myFrame_ContentRendered"/>
 
-        <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="20 0 5 0" Background="#D82C394C" CornerRadius="10">
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="{DynamicResource news}" Foreground="#FF919CAE" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Label Content="{DynamicResource online}" Foreground="#FFD2D6DC" FontSize="12"/>
-                    <Label Name="OnlineInf" Content="NULL" Foreground="#FFD2D6DC" FontSize="12" Margin="-5 0 0 0"/>
-                    <Label Content="{DynamicResource ping}" Foreground="#FFD2D6DC" FontSize="12"/>
-                    <Label Name="PingInf" Content="NULL" Foreground="#FFD2D6DC" FontSize="12" Margin="-5 0 0 0"/>
-                </StackPanel>
-                <Image Grid.Row="1" Source="Images/oDTilm0.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="0 5 0 0"/>
-            </Grid>
-        </Border>
-
-        <Border Grid.Column="2" Grid.Row="1" Margin="5 0 25 0" Background="#D82C394C" CornerRadius="10">
-            <Frame Name="UserPanel" ContentRendered="myFrame_ContentRendered"/>
-            
-        </Border>
-
-        <Grid Grid.Row="2" Margin="20 5 0 0" VerticalAlignment="Top">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-            <Image Grid.Column="0" Grid.Row="1" Source="Images/vk.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-            <Button Click="openVK" Style="{StaticResource UrlButton}" Grid.Column="0" Grid.Row="1"/>
-
-            <Image Grid.Column="2" Grid.Row="1" Source="Images/discord.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-            <Button Click="openDiscord" Style="{StaticResource UrlButton}" Grid.Column="2" Grid.Row="1"/>
-
-            <Image Grid.Column="1" Grid.Row="1" Source="Images/miniLogo.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="3"/>
-            <Button Click="openSite" Style="{StaticResource UrlButton}" Grid.Column="1" Grid.Row="1"/>
-
-        </Grid>
-
-        <TextBlock Text="{DynamicResource version}" Grid.Column="0" Grid.Row="2" Foreground="#FF919CAE" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10"/>
-
-
-        <Button Name="PlayButton" Click="Press_Play" Grid.Column="2" Grid.Row="2"  Margin="5 10 25 25" Content="{DynamicResource launch}" FontSize="20" FontWeight="Bold" Style="{StaticResource MainButtons}"/>
     </Grid>
 
     <WindowChrome.WindowChrome>
         <WindowChrome
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
-            CaptionHeight="115"
-            CornerRadius="15"
+            CaptionHeight="{Binding TitleHeight}"
+            CornerRadius="10"
             GlassFrameThickness="0"
             />
     </WindowChrome.WindowChrome>

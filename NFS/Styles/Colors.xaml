@@ -2,10 +2,27 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:NFS">
 
-    <Color              x:Key="BackgroungColor">#FF222B3B</Color>
-    <SolidColorBrush    x:Key="BackgroungColorBrush" Color="{StaticResource BackgroungColor}" /> 
 
-    <Color              x:Key="BackgroungColorLight">#FF232C3D</Color>
-    <SolidColorBrush    x:Key="BackgroungColorLightBrush" Color="{StaticResource BackgroungColorLight}" />
+    <Color              x:Key="BackgroungColor">#D81A1B1D</Color>
+    <SolidColorBrush    x:Key="BackgroungColorBrush" Color="{StaticResource BackgroungColor}" />
+
+    <Color              x:Key="BackgroungElColor">#FF0B0C0D</Color>
+    <SolidColorBrush    x:Key="BackgroungElColorBrush" Color="{StaticResource BackgroungElColor}" />
+
+    <Color              x:Key="BackgroungSelectElColor">#FF4CAF50</Color>
+    <SolidColorBrush    x:Key="BackgroungSelectElColorBrush" Color="{StaticResource BackgroungSelectElColor}" />
+
+    <Color              x:Key="BackgroungCloseColor">#FFC50000</Color>
+    <SolidColorBrush    x:Key="BackgroungCloseColorBrush" Color="{StaticResource BackgroungCloseColor}" />
+
+    <!--Text-->
+    <Color              x:Key="TextColor">#FF919CAE</Color>
+    <SolidColorBrush    x:Key="TextColorBrush" Color="{StaticResource TextColor}" />
+
+    <Color              x:Key="TextLightColor">#FFD2D6DC</Color>
+    <SolidColorBrush    x:Key="TextLightColorBrush" Color="{StaticResource TextLightColor}" />
+    
+    <Color              x:Key="SelectTextColor">Black</Color>
+    <SolidColorBrush    x:Key="SelectTextColorBrush" Color="{StaticResource SelectTextColor}" />
 
 </ResourceDictionary>

@@ -5,68 +5,149 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:NFS"
       mc:Ignorable="d" 
-      Title="Main" >
+      Title="Main"
+      d:DesignHeight="475" d:DesignWidth="800"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      >
 
-    <Grid Margin="15">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="Styles/Scroll.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    
+    <Grid Margin="15 0 15 15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="1"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="0.7*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="{DynamicResource accInf}" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
+        <!--<Image  Source="Images/logo.png" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left"/>-->
+        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+            <Image  Source="Images/mainlogo.png" RenderOptions.BitmapScalingMode="HighQuality" Height="70" HorizontalAlignment="Left" />
+            <TextBlock Text="World Evolved" Foreground="{StaticResource TextLightColorBrush}" FontSize="40" Margin="10 0 0 0" VerticalAlignment="Center"/>
+        </StackPanel>
+        
+        <Border Grid.Column="0" Grid.Row="1" Margin="0 0 5 0" Background="{StaticResource BackgroungColorBrush}" CornerRadius="5">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Margin="1">
+                <TextBlock Text="{DynamicResource news}" Foreground="{StaticResource TextColorBrush}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Label Content="{DynamicResource online}" Foreground="{StaticResource TextLightColorBrush}" FontSize="12"/>
+                    <Label Name="OnlineInf" Content="NULL" Foreground="{StaticResource TextLightColorBrush}" FontSize="12" Margin="-5 0 0 0"/>
+                    <Label Content="{DynamicResource ping}" Foreground="{StaticResource TextLightColorBrush}" FontSize="12"/>
+                    <Label Name="PingInf" Content="NULL" Foreground="{StaticResource TextLightColorBrush}" FontSize="12" Margin="-5 0 0 0"/>
+                </StackPanel>
+                <Image Grid.Row="1" Source="Images/oDTilm0.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="0 5 0 0"/>
+            </Grid>
+        </Border>
+
+
+        <Border Grid.Column="2" Grid.Row="1" Background="{StaticResource BackgroungColorBrush}" CornerRadius="5">
+            <Grid Margin="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="{DynamicResource accInf}" Margin="15 0 0 0" VerticalAlignment="Center" Foreground="{StaticResource TextColorBrush}" FontWeight="Bold"/>
+
+                <Grid Grid.Row="1" Margin="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="Images/mail_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
+
+                    <TextBox Name="email" Grid.Column="1" Padding="3 0 0 0" Foreground="{StaticResource TextLightColorBrush}">
+                        <materialDesign:HintAssist.Hint>
+                            <TextBlock Text="{DynamicResource email}" />
+                        </materialDesign:HintAssist.Hint>
+                    </TextBox>
+                </Grid>
+                
+                <Grid Grid.Row="2" Margin="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="Images/pass_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <PasswordBox Name="password" Grid.Column="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Foreground="{StaticResource TextLightColorBrush}" Padding="3 0 0 0">
+                        <materialDesign:HintAssist.Hint>
+                            <TextBlock Name="infAboutSavePass" Text="{DynamicResource pass}" />
+                        </materialDesign:HintAssist.Hint>
+                    </PasswordBox>
+                </Grid>
+
+                <Grid Grid.Row="3" Margin="5 0 5 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Name="CheckForRememberUser" Grid.Column="0" VerticalAlignment="Center">
+                        <Label Content="{DynamicResource saveLaP}" FontSize="12" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                    </CheckBox>
+                </Grid>
+
+                
+                
+                <TextBlock Grid.Row="4" Text="{DynamicResource RaS}" Margin="15 5 0 0" VerticalAlignment="Center" Foreground="{StaticResource TextColorBrush}" FontWeight="Bold"/>
+                <Button Grid.Row="5" Content="{DynamicResource startReg}" Margin="0 0 0 1" Click="startReg" Style="{StaticResource MainButtons}"/>
+                <Button Grid.Row="6" Content="{DynamicResource settingsFromMain}" Margin="0 1 0 0" Click="openSettings" Style="{StaticResource MainButtons}"/>
+                <TextBlock Grid.Row="7" Text="{DynamicResource forgetPass}" MouseLeftButtonUp="recoveryAcc" Style="{StaticResource TextBlockButton}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="{StaticResource TextColorBrush}"/>
+            </Grid>
+        </Border>
+
+
+
+        <Grid Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left">
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="Images/mail_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
-
-            <TextBlock Grid.Column="1" Text="{DynamicResource email}" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
-            <TextBox Style="{DynamicResource LoginBox}" Name="email" Grid.Column="1" BorderBrush="#00000000" Padding="7 0 0 0"/>
-        </Grid>
-        <Grid Grid.Row="2" Margin="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="Images/pass_icon.png" Margin="0 0 5 0" RenderOptions.BitmapScalingMode="HighQuality"/>
-            <TextBlock Name="infAboutSavePass" Text="{DynamicResource pass}" Grid.Column="1" Background="{StaticResource BackgroungColorLightBrush}" Foreground="#FF999DA4" Padding="10 6 0 0" />
-            <PasswordBox Name="password" Grid.Column="1" Grid.ColumnSpan="2" BorderThickness="0" VerticalContentAlignment="Center" Foreground="WhiteSmoke" Padding="7 0 0 0"/>
-        </Grid>
-
-        <Grid Grid.Row="3" Margin="5 0 5 5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="50"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <CheckBox Name="CheckForRememberUser" Grid.Column="0" VerticalAlignment="Center">
-                <CheckBox.Resources>
-                    <ResourceDictionary>
-                        <ResourceDictionary.MergedDictionaries>
-                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
-                        </ResourceDictionary.MergedDictionaries>
-                    </ResourceDictionary>
-                </CheckBox.Resources>
-                <Label Content="{DynamicResource saveLaP}" FontSize="12" Foreground="#FFD2D5DA" Padding="0 0 0 3"/>
-            </CheckBox>
+            <Image Grid.Column="0" Grid.Row="1" Source="Images/vk.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+            <Button Click="openVK" Style="{StaticResource UrlButton}" Grid.Column="0" Grid.Row="1"/>
+
+            <Image Grid.Column="2" Grid.Row="1" Source="Images/discord.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+            <Button Click="openDiscord" Style="{StaticResource UrlButton}" Grid.Column="2" Grid.Row="1"/>
+
+            <Image Grid.Column="1" Grid.Row="1" Source="Images/miniLogo.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="3"/>
+            <Button Click="openSite" Style="{StaticResource UrlButton}" Grid.Column="1" Grid.Row="1"/>
+
         </Grid>
 
-        <Grid Grid.Row="4" Background="#FF727272" Margin="2 0 2 0"/>
-        <TextBlock Grid.Row="5" Text="{DynamicResource RaS}" Margin="15 5 0 0" VerticalAlignment="Center" Foreground="#FFAFB6C5" FontWeight="Bold"/>
-        <Button Grid.Row="6" Content="{DynamicResource startReg}" Margin="0 0 0 1" Click="startReg" Style="{StaticResource MainButtons}"/>
-        <Button Grid.Row="7" Content="{DynamicResource settingsFromMain}" Margin="0 1 0 0" Click="openSettings" Style="{StaticResource MainButtons}"/>
-        <TextBlock Grid.Row="8" Text="{DynamicResource forgetPass}" MouseLeftButtonUp="recoveryAcc" Style="{StaticResource TextBlockButton}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFAFB6C5"/>
+        <StackPanel  Grid.Column="0" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <TextBlock Text="{DynamicResource version}" Foreground="{StaticResource TextColorBrush}"/>
+            <TextBlock Text="{DynamicResource translated}" Foreground="{StaticResource TextColorBrush}" Margin="5 0 0 0"/>
+        </StackPanel>
+        <Button Name="PlayButton" Click="Press_Play" Grid.Column="2" Grid.Row="2"  Margin="0 5 0 0" Content="{DynamicResource launch}" FontSize="20" FontWeight="Bold" Style="{StaticResource MainButtons}"/>
     </Grid>
+
+
 </Page>

@@ -2,8 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
 
-    <v:String x:Key="WE">World Evolved</v:String>
-    <v:String x:Key="version">1.1.2</v:String>
+    <v:String x:Key="WE">WEX</v:String>
+    <v:String x:Key="version">1.2.0</v:String>
+    <v:String x:Key="translated">| перевел Pixel Games</v:String>
 
     <v:String x:Key="questWaytoGame">У Вас установлен Need for Speed World?</v:String>
     <v:String x:Key="questWaytoGame0">Пожалуйста, укажите где находится файл nfsw.exe</v:String>
@@ -60,13 +61,8 @@
     <v:String x:Key="settingsFromMain">Настройки</v:String>
     <v:String x:Key="forgetPass">Я забыл пароль</v:String>
 
-    <v:String x:Key="settings">НАСТРОЙКИ</v:String>
-    <v:String x:Key="language">Язык:</v:String>
-    <v:String x:Key="autoUpdate">Авто. проверка обновлений</v:String>
-    <v:String x:Key="onlineFromSetting">Онлайн</v:String>
-    <v:String x:Key="event">Событие</v:String>
-    <v:String x:Key="car">Машина</v:String>
-    <v:String x:Key="lobby">Лобби</v:String>
+    <v:String x:Key="accReg">Регистрация аккаунта</v:String>
+    <v:String x:Key="toReg">Зарегистрироваться</v:String>
 
     <v:String x:Key="email">Эл. почта</v:String>
     <v:String x:Key="pass">Пароль</v:String>
@@ -74,8 +70,62 @@
     <v:String x:Key="back">Назад</v:String>
     <v:String x:Key="save">Сохранить</v:String>
 
-    <v:String x:Key="accReg">РЕГИСТРАЦИЯ АККАУНТА</v:String>
-    <v:String x:Key="toReg">Зарегистрироваться</v:String>
+    <!-- SETTINGS-->
+    <v:String x:Key="max">макс</v:String>
+    <v:String x:Key="min">мин</v:String>
+    <v:String x:Key="on">вкл</v:String>
+    <v:String x:Key="off">выкл</v:String>
+
+    <v:String x:Key="settings">Настройки игры и лаунчера</v:String>
+    <v:String x:Key="activationHideSettings">Активировать скрытые настройки</v:String>
+    <v:String x:Key="succHideSettings" xml:space="preserve">Готово! Теперь зайдите в игру и выйдете, что бы настройки вступили в силу.
+И пожалуйста, имейте ввиду, эта функция в стадии разработки</v:String>
+
+    <v:String x:Key="settingsLauncher">Настройки лаунчера</v:String>
+    <v:String x:Key="language">Язык:</v:String>
+    <v:String x:Key="autoUpdate">Авто. проверка обновлений</v:String>
+    <v:String x:Key="onlineFromSetting">Онлайн</v:String>
+    <v:String x:Key="event">Событие</v:String>
+    <v:String x:Key="car">Машина</v:String>
+    <v:String x:Key="lobby">Лобби</v:String>
+
+    <v:String x:Key="firsttime">Авто-настройка графики</v:String>
+    <v:String x:Key="visualtreatment">Визуальная обработка</v:String>
+    <v:String x:Key="gameSettings">Настройки графики</v:String>
+    <v:String x:Key="globaldetaillevel">Проработка мира</v:String>
+    <v:String x:Key="basetexturefilter">Фильтр текстур окружения</v:String>
+    <v:String x:Key="roadtexturefilter">Фильтр текстур дороги</v:String>
+    <v:String x:Key="textures">Дальность прорисовки:</v:String>
+    <v:String x:Key="basetexturelodbias">• окружения</v:String>
+    <v:String x:Key="roadtexturelodbias">• дороги</v:String>
+    <v:String x:Key="shaderdetail">Шейдеры (глючная)</v:String>
+    <v:String x:Key="fsaalevel">Сглаживание</v:String>
+    <v:String x:Key="carlodlevel">Детализация машины</v:String>
+    <v:String x:Key="overbrightenable">Bloom-эффект</v:String>
+    <v:String x:Key="particlesystemenable">Выхлопы, искры и т.д.</v:String>
+    <v:String x:Key="carenvironmentmapenable">Отражение на машине</v:String>
+    <v:String x:Key="roadreflectionenable">Отражения на дороге</v:String>
+    <v:String x:Key="motionblurenable">Размытие</v:String>
+    <v:String x:Key="basetexturemaxani">Anisotropic Filtering (мир)</v:String>
+    <v:String x:Key="roadtexturemaxani">Anisotropic Filtering (дорога)</v:String>
+    <v:String x:Key="vsyncon">Вертикальная синхронизация</v:String>
+
+    <v:String x:Key="audioSetting">Настройки звука</v:String>
+    <v:String x:Key="audiomode">Режим звука</v:String>
+    <v:String x:Key="audiomodeStereo">Стерео</v:String>
+    <v:String x:Key="audiomodeSurround">Surround 5.1 - лучше</v:String>
+    <v:String x:Key="audioquality">Качество звука</v:String>
+
+    <v:String x:Key="screenSettings">Настройки экрана</v:String>
+    <v:String x:Key="screenwindowed">Оконный режим</v:String>
+    <v:String x:Key="screenrefresh">Герцовка монитора</v:String>
+    <v:String x:Key="scheensize">Размер изображение:</v:String>
+    <v:String x:Key="screenheight">• высота</v:String>
+    <v:String x:Key="screenwidth">• ширина</v:String>
+    <v:String x:Key="brightness">Яркость</v:String>
+    <v:String x:Key="enableaero">Отключить Windows Aero</v:String>
+    <v:String x:Key="pixelaspectratiooverride">Соотношения сторон</v:String>
+
 
     <!-- Discord -->
     <v:String x:Key="loading">Загрузка игры</v:String>

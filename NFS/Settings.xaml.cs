@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NFS.Class.Diss;
+using System.Xml;
 using System.Globalization;
 
 namespace NFS
@@ -23,7 +24,7 @@ namespace NFS
     /// </summary>
     public partial class Settings : Page
     {
-        string autoUpdate = "1";
+        string autoUpdate = "1", wayToUserSettings = "";
         string DRPCOnline = "0", DRPCCar = "0", DRPCEvent = "0", DRPCLobby = "0";
 
         string getStrFromResource(string key)
@@ -69,11 +70,67 @@ namespace NFS
         {
             try
             {
-                autoUpdate = File.ReadLines("saveData.txt").Skip(3).First() == "" ? autoUpdate : File.ReadLines("saveData.txt").Skip(3).First();
-                DRPCOnline = File.ReadLines("saveData.txt").Skip(4).First() == "" ? DRPCOnline : File.ReadLines("saveData.txt").Skip(4).First();
-                DRPCCar = File.ReadLines("saveData.txt").Skip(5).First() == "" ? DRPCCar : File.ReadLines("saveData.txt").Skip(5).First();
-                DRPCEvent = File.ReadLines("saveData.txt").Skip(6).First() == "" ? DRPCEvent : File.ReadLines("saveData.txt").Skip(6).First();
-                DRPCLobby = File.ReadLines("saveData.txt").Skip(7).First() == "" ? DRPCLobby : File.ReadLines("saveData.txt").Skip(7).First();
+                autoUpdate  = File.ReadLines("saveData.txt").Skip(3).First() == "" ? autoUpdate   : File.ReadLines("saveData.txt").Skip(3).First();
+                DRPCOnline  = File.ReadLines("saveData.txt").Skip(4).First() == "" ? DRPCOnline   : File.ReadLines("saveData.txt").Skip(4).First();
+                DRPCCar     = File.ReadLines("saveData.txt").Skip(5).First() == "" ? DRPCCar      : File.ReadLines("saveData.txt").Skip(5).First();
+                DRPCEvent   = File.ReadLines("saveData.txt").Skip(6).First() == "" ? DRPCEvent    : File.ReadLines("saveData.txt").Skip(6).First();
+                DRPCLobby   = File.ReadLines("saveData.txt").Skip(7).First() == "" ? DRPCLobby    : File.ReadLines("saveData.txt").Skip(7).First();
+
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.Load(wayToUserSettings);
+                XmlElement xRoot = xDoc.DocumentElement;
+
+                foreach (XmlNode xnode in xRoot)
+                {
+                    foreach (XmlNode childnode in xnode.ChildNodes)
+                    {
+                        if (childnode.Name == "performancelevel")
+                        {
+                            if (childnode.InnerText != "5") return;
+                            else
+                            {
+                                settings1.IsEnabled = settings2.IsEnabled = true;
+                                activationHideSettingsButton.Visibility = Visibility.Hidden;
+                            }
+                        }
+                    }
+                }
+
+                foreach (XmlNode xnode in xRoot)
+                {
+                    foreach (XmlNode childnode in xnode.ChildNodes)
+                    {
+                        if (childnode.Name == "screenwindowed")             screenwindowedBox.IsChecked         = childnode.InnerText == "1" ? true : false;
+                        if (childnode.Name == "screenrefresh")              screenrefreshBox.Text               = childnode.InnerText;
+                        if (childnode.Name == "screenheight")               screenheightBox.Text                = childnode.InnerText;
+                        if (childnode.Name == "screenwidth")                screenwidthBox.Text                 = childnode.InnerText;
+                        if (childnode.Name == "brightness")                 brightnessBox.Text                  = childnode.InnerText;
+                        if (childnode.Name == "enableaero")                 enableaeroBox.IsChecked             = childnode.InnerText == "1" ? false : true;
+                        if (childnode.Name == "pixelaspectratiooverride")   pixelaspectratiooverrideBox.Text    = childnode.InnerText;
+
+                        if (childnode.Name == "audiomode")                  audiomodeBox.SelectedIndex          = Int32.Parse(childnode.InnerText)-1;
+
+                        if (childnode.Name == "visualtreatment")            visualtreatmentBox.IsChecked        = childnode.InnerText == "1" ? true : false;
+                        if (childnode.Name == "globaldetaillevel")          globaldetaillevelBox.Value          = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "basetexturefilter")          basetexturefilterBox.Value          = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "roadtexturefilter")          roadtexturefilterBox.Value          = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "basetexturelodbias")         basetexturelodbiasBox.Text          = childnode.InnerText;
+                        if (childnode.Name == "roadtexturelodbias")         roadtexturelodbiasBox.Text          = childnode.InnerText;
+                        if (childnode.Name == "shaderdetail")               shaderdetailBox.Value               = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "fsaalevel")                  fsaalevelBox.Value                  = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "carlodlevel")                carlodlevelBox.SelectedIndex        = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "overbrightenable")           overbrightenableBox.IsChecked       = childnode.InnerText == "1" ? true : false;
+                        if (childnode.Name == "particlesystemenable")       particlesystemenableBox.IsChecked   = childnode.InnerText == "1" ? true : false;
+                        if (childnode.Name == "carenvironmentmapenable")    carenvironmentmapenableBox.Value    = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "roadreflectionenable")       roadreflectionenableBox.Value       = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "motionblurenable")           motionblurenableBox.IsChecked       = childnode.InnerText == "1" ? true : false;
+                        if (childnode.Name == "basetexturemaxani")          basetexturemaxaniBox.SelectedIndex  = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "roadtexturemaxani")          roadtexturemaxaniBox.SelectedIndex  = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "vsyncon")                    vsynconBox.IsChecked                = childnode.InnerText == "1" ? true : false;
+
+                    }
+                }
+
             }
             catch
             {
@@ -86,9 +143,29 @@ namespace NFS
         {
             NavigationService.GoBack();
         }
+        void Press_activationHideSettings(object sender, RoutedEventArgs e)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(wayToUserSettings);
+            XmlElement xRoot = xDoc.DocumentElement;
+
+            foreach (XmlNode xnode in xRoot)
+            {
+                foreach (XmlNode childnode in xnode.ChildNodes)
+                {
+                    if (childnode.Name == "performancelevel") childnode.InnerText = "5";
+                }
+            }
+
+            xDoc.Save(wayToUserSettings);
+
+            MessageBox.Show(getStrFromResource("succHideSettings"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Information);
+        }
         public Settings()
         {
             InitializeComponent();
+
+            wayToUserSettings += Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Need for Speed World\Settings\UserSettings.xml";
 
             App.LanguageChanged += LanguageChanged;
 
@@ -99,7 +176,7 @@ namespace NFS
             foreach (var lang in App.Languages)
             {
                 ComboBoxItem menuLang = new ComboBoxItem();
-                menuLang.Content = lang.DisplayName;
+                menuLang.Content = lang.EnglishName;
                 menuLang.Tag = lang;
                 menuLang.IsSelected = lang.Equals(currLang);
                 menuLang.Selected += ChangeLanguageClick;
@@ -132,6 +209,53 @@ namespace NFS
             updateSaveData((CheckForDRPCCar.IsChecked ==    true ? 1 : 0).ToString(), 5);
             updateSaveData((CheckForDRPCEvent.IsChecked ==  true ? 1 : 0).ToString(), 6);
             updateSaveData((CheckForDRPCLobby.IsChecked ==  true ? 1 : 0).ToString(), 7);
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(wayToUserSettings);
+            XmlElement xRoot = xDoc.DocumentElement;
+
+            if (settings1.IsEnabled == false)
+            {
+                backFunk();
+                return;
+            }       
+
+            foreach (XmlNode xnode in xRoot)
+            {
+                foreach (XmlNode childnode in xnode.ChildNodes)
+                {
+                    if (childnode.Name == "screenwindowed")             childnode.InnerText = (screenwindowedBox.IsChecked == true ? "1" : "0");
+                    if (childnode.Name == "screenrefresh")              childnode.InnerText = screenrefreshBox.Text;
+                    if (childnode.Name == "screenheight")               childnode.InnerText = screenheightBox.Text;
+                    if (childnode.Name == "screenwidth")                childnode.InnerText = screenwidthBox.Text;
+                    if (childnode.Name == "brightness")                 childnode.InnerText = brightnessBox.Text;
+                    if (childnode.Name == "enableaero")                 childnode.InnerText = (enableaeroBox.IsChecked == true ? "0" : "1");
+                    if (childnode.Name == "pixelaspectratiooverride")   childnode.InnerText = pixelaspectratiooverrideBox.Text;
+
+                    if (childnode.Name == "audiomode")                  childnode.InnerText = (audiomodeBox.SelectedIndex + 1).ToString();
+
+                    if (childnode.Name == "visualtreatment")            childnode.InnerText = (visualtreatmentBox.IsChecked == true ? "1" : "0");
+                    if (childnode.Name == "globaldetaillevel")          childnode.InnerText = globaldetaillevelBox.Value.ToString();
+                    if (childnode.Name == "basetexturefilter")          childnode.InnerText = basetexturefilterBox.Value.ToString();
+                    if (childnode.Name == "roadtexturefilter")          childnode.InnerText = roadtexturefilterBox.Value.ToString();
+                    if (childnode.Name == "basetexturelodbias")         childnode.InnerText = basetexturelodbiasBox.Text;
+                    if (childnode.Name == "roadtexturelodbias")         childnode.InnerText = roadtexturelodbiasBox.Text;
+                    if (childnode.Name == "shaderdetail")               childnode.InnerText = shaderdetailBox.Value.ToString();
+                    if (childnode.Name == "fsaalevel")                  childnode.InnerText = fsaalevelBox.Value.ToString();
+                    if (childnode.Name == "carlodlevel")                childnode.InnerText = carlodlevelBox.SelectedIndex.ToString();
+                    if (childnode.Name == "overbrightenable")           childnode.InnerText = (overbrightenableBox.IsChecked == true ? "1" : "0");
+                    if (childnode.Name == "particlesystemenable")       childnode.InnerText = (particlesystemenableBox.IsChecked == true ? "1" : "0");
+                    if (childnode.Name == "carenvironmentmapenable")    childnode.InnerText = carenvironmentmapenableBox.Value.ToString();
+                    if (childnode.Name == "roadreflectionenable")       childnode.InnerText = roadreflectionenableBox.Value.ToString();
+                    if (childnode.Name == "motionblurenable")           childnode.InnerText = (motionblurenableBox.IsChecked == true ? "1" : "0");
+                    if (childnode.Name == "basetexturemaxani")          childnode.InnerText = basetexturemaxaniBox.SelectedIndex.ToString();
+                    if (childnode.Name == "roadtexturemaxani")          childnode.InnerText = roadtexturemaxaniBox.SelectedIndex.ToString();
+                    if (childnode.Name == "vsyncon")                    childnode.InnerText = (vsynconBox.IsChecked == true ? "1" : "0");
+
+                }
+            }
+
+            xDoc.Save(wayToUserSettings);
 
             backFunk();
             return;

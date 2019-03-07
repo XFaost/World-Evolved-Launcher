@@ -12,6 +12,11 @@
                 <ResourceDictionary Source="Styles/Colors.xaml" />
 
                 <ResourceDictionary Source="Resources/lang.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="Styles/Scroll.xaml" />
                 <!--<ResourceDictionary Source="Resources/lang.ru-RU.xaml" />-->
 
             </ResourceDictionary.MergedDictionaries>

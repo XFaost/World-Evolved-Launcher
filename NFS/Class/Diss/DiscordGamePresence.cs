@@ -15,15 +15,6 @@ namespace NFS.Class.Diss.RPC
     class DiscordGamePresence
     {
         private static DateTime RPCstartTimestamp;
-        public static RichPresence _presence = new RichPresence()
-        {
-            Timestamps = GetCurrentTimestamp(),
-            Assets = new Assets()
-            {
-                LargeImageKey = "maxmlpzbsrw"
-            }
-        };
-
 
         private static readonly bool checkCar = ServerProxy.Instance.GetCheckCar(), checkEvent = ServerProxy.Instance.GetCheckEvent(), checkLobby = ServerProxy.Instance.GetCheckLobby();
 
@@ -99,10 +90,10 @@ namespace NFS.Class.Diss.RPC
             {
                 PersonaTreasure++;
 
-                _presence.Details = "Collecting gems (" + PersonaTreasure + " of " + TotalTreasure + ")";
-                _presence.Timestamps = GetCurrentTimestamp();
+                MainWindow._presence.Details = "Collecting gems (" + PersonaTreasure + " of " + TotalTreasure + ")";
+                MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 
-                MainWindow.discordRpcClient.SetPresence(_presence);
+                MainWindow.discordRpcClient.SetPresence(MainWindow._presence);
 
                 Console.WriteLine(serverreply);
             }
@@ -171,19 +162,14 @@ namespace NFS.Class.Diss.RPC
                 if (checkCar)
                 {
                     //MessageBox.Show("{DRIVING CARNAME}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                    _presence.Details = getStrFromResource("driving") + PersonaCarName;
-                    _presence.Timestamps = GetCurrentTimestamp();
+                    MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
+                    MainWindow._presence.Timestamps = GetCurrentTimestamp();
 
                 }
-                else _presence.Details = getStrFromResource("dissOnline");
+                else MainWindow._presence.Details = getStrFromResource("dissOnline");
 
-                _presence.State = string.Empty;
-
-                _presence.Assets = new Assets()
-                {
-                    LargeImageKey = "maxmlpzbsrw"
-                };
-                MainWindow.discordRpcClient.SetPresence(_presence);
+                MainWindow._presence.State = string.Empty;
+                MainWindow.discordRpcClient.SetPresence(MainWindow._presence);
 
                 eventTerminatedManually = true;
             }
@@ -197,24 +183,20 @@ namespace NFS.Class.Diss.RPC
                 {
                     //MessageBox.Show("{IN LOBBY0}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
                     EventID = Convert.ToInt32(SBRW_XML.SelectSingleNode("LobbyInfo/EventId").InnerText);
-                    _presence.State = "In Lobby: " + EventList.getEventName(EventID);
-                    _presence.Timestamps = GetCurrentTimestamp();
+                    MainWindow._presence.State = "In Lobby: " + EventList.getEventName(EventID);
+                    MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.State = "";
+                else MainWindow._presence.State = "";
 
                 if (checkCar)
                 {
                     //MessageBox.Show("{IN LOBBY1}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                    _presence.Details = getStrFromResource("driving") + PersonaCarName;
-                    _presence.Timestamps = GetCurrentTimestamp();
+                    MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
+                    MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.Details = getStrFromResource("dissOnline");
+                else MainWindow._presence.Details = getStrFromResource("dissOnline");
 
-                _presence.Assets = new Assets()
-                {
-                    LargeImageKey = "maxmlpzbsrw"
-                };
-                MainWindow.discordRpcClient.SetPresence(_presence);
+                MainWindow.discordRpcClient.SetPresence(MainWindow._presence);
 
                 eventTerminatedManually = false;
             }
@@ -223,28 +205,24 @@ namespace NFS.Class.Diss.RPC
             if (uri == "/DriverPersona/UpdatePersonaPresence")
             {
                 string UpdatePersonaPresenceParam = GET.Split(';').Last().Split('=').Last();
-                _presence.Assets = new Assets();
+                MainWindow._presence.Assets = new Assets();
                 if (UpdatePersonaPresenceParam == "1")
                 {
                     if (checkCar)
                     {
                         //MessageBox.Show("{IN SAFEHOUSE/FREEROAM}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                        _presence.Details = getStrFromResource("driving") + PersonaCarName;
+                        MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
                     }
-                    else _presence.Details = getStrFromResource("dissOnline");
+                    else MainWindow._presence.Details = getStrFromResource("dissOnline");
                 }
                 else
                 {
-                    _presence.Details = getStrFromResource("safehouse");
-                    _presence.Timestamps = GetCurrentTimestamp();
+                    MainWindow._presence.Details = getStrFromResource("safehouse");
+                    MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
-                _presence.State = string.Empty;
+                MainWindow._presence.State = string.Empty;
 
-                _presence.Assets = new Assets()
-                {
-                    LargeImageKey = "maxmlpzbsrw"
-                };
-                MainWindow.discordRpcClient.SetPresence(_presence);
+                MainWindow.discordRpcClient.SetPresence(MainWindow._presence);
             }
 
             //IN EVENT
@@ -253,24 +231,20 @@ namespace NFS.Class.Diss.RPC
                 if (checkEvent)
                 {
                     EventID = Convert.ToInt32(splitted_uri[3]);
-                    _presence.State = getStrFromResource("dissEvent") + EventList.getEventName(EventID);
-                    _presence.Timestamps = GetCurrentTimestamp();
+                    MainWindow._presence.State = getStrFromResource("dissEvent") + EventList.getEventName(EventID);
+                    MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.State = "";
+                else MainWindow._presence.State = "";
 
                 if (checkCar)
                 {
                     //MessageBox.Show("{IN EVENT}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                    _presence.Details = getStrFromResource("driving") + PersonaCarName;
-                    _presence.Timestamps = GetCurrentTimestamp();
+                    MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
+                    MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.Details = getStrFromResource("dissOnline");
+                else MainWindow._presence.Details = getStrFromResource("dissOnline");
 
-                _presence.Assets = new Assets()
-                {
-                    LargeImageKey = "maxmlpzbsrw"
-                };
-                MainWindow.discordRpcClient.SetPresence(_presence);
+                MainWindow.discordRpcClient.SetPresence(MainWindow._presence);
 
                 eventTerminatedManually = false;
             }
@@ -278,24 +252,20 @@ namespace NFS.Class.Diss.RPC
             {
                 if (checkEvent)
                 {
-                    _presence.State = getStrFromResource("dissEvent") + EventList.getEventName(EventID);
-                    _presence.Timestamps = GetCurrentTimestamp();
+                    MainWindow._presence.State = getStrFromResource("dissEvent") + EventList.getEventName(EventID);
+                    MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.State = "";
+                else MainWindow._presence.State = "";
 
                 if (checkCar)
                 {
                     //MessageBox.Show("{IN EVENT2}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                    _presence.Details = getStrFromResource("driving") + PersonaCarName;
-                    _presence.Timestamps = GetCurrentTimestamp();
+                    MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
+                    MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.Details = getStrFromResource("dissOnline");
+                else MainWindow._presence.Details = getStrFromResource("dissOnline");
 
-                _presence.Assets = new Assets()
-                {
-                    LargeImageKey = "maxmlpzbsrw"
-                };
-                MainWindow.discordRpcClient.SetPresence(_presence);
+                MainWindow.discordRpcClient.SetPresence(MainWindow._presence);
 
                 eventTerminatedManually = false;
             }
@@ -303,24 +273,20 @@ namespace NFS.Class.Diss.RPC
             {
                 if (checkEvent)
                 {
-                    _presence.State = getStrFromResource("dissEvent") + EventList.getEventName(EventID);
-                    _presence.Timestamps = GetCurrentTimestamp();
+                    MainWindow._presence.State = getStrFromResource("dissEvent") + EventList.getEventName(EventID);
+                    MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.State = "";
+                else MainWindow._presence.State = "";
 
                 if (checkCar)
                 {
                     //MessageBox.Show("{IN EVENT3}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
-                    _presence.Details = getStrFromResource("driving") + PersonaCarName;
-                    _presence.Timestamps = GetCurrentTimestamp();
+                    MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
+                    MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
-                else _presence.Details = getStrFromResource("dissOnline");
+                else MainWindow._presence.Details = getStrFromResource("dissOnline");
 
-                _presence.Assets = new Assets()
-                {
-                    LargeImageKey = "maxmlpzbsrw"
-                };
-                MainWindow.discordRpcClient.SetPresence(_presence);
+                MainWindow.discordRpcClient.SetPresence(MainWindow._presence);
             }
 
             //CARS RELATED

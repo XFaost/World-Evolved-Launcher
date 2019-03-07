@@ -67,7 +67,7 @@ namespace Update
             File.Delete(@"launcherUpdate.zip");
 
             MessageBox((IntPtr)0, "Update completed successfully\nОбновление завершилось успешно", "World Evolved", 0);
-            Process.Start(@"NFS.exe");
+            Process.Start(@"WEX.exe");
             return;
         }
 

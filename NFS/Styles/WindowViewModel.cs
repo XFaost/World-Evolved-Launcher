@@ -61,6 +61,8 @@ namespace NFS
     {
         private Window mWindow;
 
+        public int TitleHeight { get; set; } = 110;
+
         #region Commands
 
         public ICommand MinimizeCommand { get; set; }
