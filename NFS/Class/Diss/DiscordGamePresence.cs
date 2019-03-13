@@ -183,7 +183,7 @@ namespace NFS.Class.Diss.RPC
                 {
                     //MessageBox.Show("{IN LOBBY0}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
                     EventID = Convert.ToInt32(SBRW_XML.SelectSingleNode("LobbyInfo/EventId").InnerText);
-                    MainWindow._presence.State = "In Lobby: " + EventList.getEventName(EventID);
+                    MainWindow._presence.State = getStrFromResource("dissLobby") + EventList.getEventName(EventID);
                     MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
                 else MainWindow._presence.State = "";

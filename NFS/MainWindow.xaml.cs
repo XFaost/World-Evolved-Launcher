@@ -32,9 +32,6 @@ namespace NFS
 {
     public partial class MainWindow : Window
     {
-
-        public Main mPage;
-
         public static RichPresence _presence = new RichPresence()
         {
             Details = (string)Application.Current.Resources["launcherOpen"],
@@ -66,10 +63,7 @@ namespace NFS
             InitializeComponent();
             this.DataContext = new WindowViewModel(this);
 
-            mPage = new Main();
-            UserPanel.NavigationService.Navigate(mPage);
-
-            
+            UserPanel.NavigationService.Navigate(new Main());
         }
 
     }

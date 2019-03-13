@@ -3,7 +3,7 @@
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
 
     <v:String x:Key="WE">WEX</v:String>
-    <v:String x:Key="version">1.2.0</v:String>
+    <v:String x:Key="version">1.2.1</v:String>
     <v:String x:Key="translated">| перевел Pixel Games</v:String>
 
     <v:String x:Key="questWaytoGame">У Вас установлен Need for Speed World?</v:String>
@@ -81,8 +81,9 @@
     <v:String x:Key="succHideSettings" xml:space="preserve">Готово! Теперь зайдите в игру и выйдете, что бы настройки вступили в силу.
 И пожалуйста, имейте ввиду, эта функция в стадии разработки</v:String>
 
-    <v:String x:Key="settingsLauncher">Настройки лаунчера</v:String>
-    <v:String x:Key="language">Язык:</v:String>
+    <v:String x:Key="basicSettings">Основные настройки</v:String>
+    <v:String x:Key="language">Язык лаунчера:</v:String>
+    <v:String x:Key="gameLanguage">Язык игры:</v:String>
     <v:String x:Key="autoUpdate">Авто. проверка обновлений</v:String>
     <v:String x:Key="onlineFromSetting">Онлайн</v:String>
     <v:String x:Key="event">Событие</v:String>
@@ -91,14 +92,14 @@
 
     <v:String x:Key="firsttime">Авто-настройка графики</v:String>
     <v:String x:Key="visualtreatment">Визуальная обработка</v:String>
-    <v:String x:Key="gameSettings">Настройки графики</v:String>
+    <v:String x:Key="graphicsSettings">Настройки графики</v:String>
     <v:String x:Key="globaldetaillevel">Проработка мира</v:String>
     <v:String x:Key="basetexturefilter">Фильтр текстур окружения</v:String>
     <v:String x:Key="roadtexturefilter">Фильтр текстур дороги</v:String>
     <v:String x:Key="textures">Дальность прорисовки:</v:String>
     <v:String x:Key="basetexturelodbias">• окружения</v:String>
     <v:String x:Key="roadtexturelodbias">• дороги</v:String>
-    <v:String x:Key="shaderdetail">Шейдеры (глючная)</v:String>
+    <v:String x:Key="shaderdetail">Шейдеры</v:String>
     <v:String x:Key="fsaalevel">Сглаживание</v:String>
     <v:String x:Key="carlodlevel">Детализация машины</v:String>
     <v:String x:Key="overbrightenable">Bloom-эффект</v:String>
@@ -131,8 +132,9 @@
     <v:String x:Key="loading">Загрузка игры</v:String>
     <v:String x:Key="launcherOpen">Открыт лаунчер</v:String>
     <v:String x:Key="dissOnline">Онлайн</v:String>
-    <v:String x:Key="driving" xml:space="preserve">Машина: </v:String>
     <v:String x:Key="dissEvent" xml:space="preserve">Событие: </v:String>
+    <v:String x:Key="driving" xml:space="preserve">Машина: </v:String>
+    <v:String x:Key="dissLobby" xml:space="preserve">Лобби: </v:String>
     <v:String x:Key="safehouse" xml:space="preserve">В гараже</v:String>
 
 </ResourceDictionary>

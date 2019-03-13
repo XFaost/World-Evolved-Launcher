@@ -26,33 +26,11 @@ namespace Update
 
         static void downloadGame()
         {
-            Console.WriteLine("\nConnected to FTP...");
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://ch56558@vh174.timeweb.ru/launcherUpdate.zip");
-            request.Credentials = new NetworkCredential("ch56558", "Rj8S7dvnhbqf");
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
+            Console.WriteLine("\nDownloading...");
 
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            long sizeFile = response.ContentLength;
-
-            using (Stream ftpStream = request.GetResponse().GetResponseStream())
-            using (Stream fileStream = File.Create(@"launcherUpdate.zip"))
+            using (var client = new WebClient())
             {
-                Console.WriteLine("\nStart download");
-
-                byte[] buffer = new byte[10240];
-                int read;
-                while ((read = ftpStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    fileStream.Write(buffer, 0, read);
-
-                    Console.WriteLine("Downloading | {0} % | {1}MB / {2}MB",
-                        ((fileStream.Position * 100) / sizeFile).ToString(),
-                        Math.Round((double)fileStream.Position / (double)1000000, 2).ToString("N2"),
-                        Math.Round((double)sizeFile / (double)1000000, 2).ToString("N2")
-                        );
-                    Console.SetCursorPosition(0, Console.CursorTop - 1);
-
-                }
+                client.DownloadFile("http://world-evolved.ru/launcher/launcherUpdate.zip", "launcherUpdate.zip");
             }
 
             Console.WriteLine("\nDownloaded!\n\nStart Extract");

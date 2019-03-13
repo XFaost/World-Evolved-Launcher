@@ -48,14 +48,22 @@
 
                 <StackPanel Grid.Column="0" Margin="5">
 
-                    <TextBlock Text="{DynamicResource settingsLauncher}" Background="Transparent" Foreground="{StaticResource BackgroungSelectElColorBrush}" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5"/>
+                    <TextBlock Text="{DynamicResource basicSettings}" Background="Transparent" Foreground="{StaticResource BackgroungSelectElColorBrush}" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5"/>
 
-                    <StackPanel>
+                    <StackPanel Margin="0 0 0 5">
                         <TextBlock Text="{DynamicResource language}" Foreground="{StaticResource TextColorBrush}" VerticalAlignment="Center" FontSize="14"/>
                         <ComboBox Name="LangBox" Foreground="{StaticResource TextLightColorBrush}"/>
                     </StackPanel>
 
-                    <CheckBox Name="CheckForAutoUpdate" VerticalAlignment="Center">
+                    <StackPanel Margin="0 0 0 5">
+                        <TextBlock Text="{DynamicResource gameLanguage}" Foreground="{StaticResource TextColorBrush}" VerticalAlignment="Center" FontSize="14"/>
+                        <ComboBox Name="GameLangBox" Foreground="{StaticResource TextLightColorBrush}">
+                            <ComboBoxItem>EN</ComboBoxItem>
+                            <ComboBoxItem>RU</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <CheckBox Name="CheckForAutoUpdate" VerticalAlignment="Center" Margin="0 0 0 5">
                         <Label Content="{DynamicResource autoUpdate}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3" />
                     </CheckBox>
 
@@ -77,6 +85,8 @@
                         <Label Content="{DynamicResource lobby}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
                     </CheckBox>
 
+                    
+
                 </StackPanel>
 
                 <Border Style="{StaticResource BluringColumnSetting}" Name="settings1" Grid.Column="1" Margin="5" IsEnabled="False">
@@ -85,6 +95,10 @@
 
                         <CheckBox Name="screenwindowedBox" Grid.Column="0" Margin="0 0 0 5" VerticalAlignment="Center">
                             <Label Content="{DynamicResource screenwindowed}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
+                        </CheckBox>
+
+                        <CheckBox Name="vsynconBox" Grid.Column="0" Margin="0 0 0 5" VerticalAlignment="Center">
+                            <Label Content="{DynamicResource vsyncon}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
                         </CheckBox>
 
                         <StackPanel Margin="0 0 0 5" Orientation="Horizontal">
@@ -149,7 +163,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock  Text="{DynamicResource gameSettings}" Background="Transparent" Foreground="{StaticResource BackgroungSelectElColorBrush}" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5"/>
+                        <TextBlock  Text="{DynamicResource graphicsSettings}" Background="Transparent" Foreground="{StaticResource BackgroungSelectElColorBrush}" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 0 5"/>
 
                         <ScrollViewer Grid.Row="1" >
                             <StackPanel Margin="5">
@@ -192,7 +206,7 @@
                                 </Grid>
 
                                 <TextBlock Text="{DynamicResource shaderdetail}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
-                                <Slider Name="shaderdetailBox" Minimum="0" Maximum="4" IsSnapToTickEnabled="True" Margin="5 0 5 5"/>
+                                <Slider Name="shaderdetailBox" Minimum="0" Maximum="3" IsSnapToTickEnabled="True" Margin="5 0 5 5"/>
 
                                 <TextBlock Text="{DynamicResource fsaalevel}" Foreground="{StaticResource TextLightColorBrush}" FontSize="14"/>
                                 <Slider Name="fsaalevelBox" Minimum="0" Maximum="4" IsSnapToTickEnabled="True" Margin="5 0 5 5"/>
@@ -245,10 +259,6 @@
                                     </ComboBox>
                                 </Grid>
 
-                                <CheckBox Name="vsynconBox" Grid.Column="0" Margin="0 0 0 5" VerticalAlignment="Center">
-                                    <Label Content="{DynamicResource vsyncon}" FontSize="14" Foreground="{StaticResource TextLightColorBrush}" Padding="0 0 0 3"/>
-                                </CheckBox>
-                                
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>

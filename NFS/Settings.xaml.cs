@@ -66,7 +66,7 @@ namespace NFS
                 writetext.WriteLine(file[7]);
             }
         }
-        void readSaveData()
+        public void readSaveData()
         {
             try
             {
@@ -84,9 +84,24 @@ namespace NFS
                 {
                     foreach (XmlNode childnode in xnode.ChildNodes)
                     {
+                        if (childnode.Name == "Language")
+                        {
+                            for (int i = 0; i < GameLangBox.Items.Count; i++)
+                            {
+                                if (((ComboBoxItem)GameLangBox.Items[i]).Content.ToString() == childnode.InnerText)
+                                {
+                                    GameLangBox.SelectedIndex = i;
+                                    break;
+                                }
+                            }
+                        }
                         if (childnode.Name == "performancelevel")
                         {
-                            if (childnode.InnerText != "5") return;
+                            if (childnode.InnerText != "5")
+                            {
+                                settings1.IsEnabled = settings2.IsEnabled = false;
+                                activationHideSettingsButton.Visibility = Visibility.Visible;
+                            }
                             else
                             {
                                 settings1.IsEnabled = settings2.IsEnabled = true;
@@ -116,7 +131,7 @@ namespace NFS
                         if (childnode.Name == "roadtexturefilter")          roadtexturefilterBox.Value          = Int32.Parse(childnode.InnerText);
                         if (childnode.Name == "basetexturelodbias")         basetexturelodbiasBox.Text          = childnode.InnerText;
                         if (childnode.Name == "roadtexturelodbias")         roadtexturelodbiasBox.Text          = childnode.InnerText;
-                        if (childnode.Name == "shaderdetail")               shaderdetailBox.Value               = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "shaderdetail")               shaderdetailBox.Value               = Int32.Parse(childnode.InnerText) == 4 ? 3 : Int32.Parse(childnode.InnerText); //3 - глючная
                         if (childnode.Name == "fsaalevel")                  fsaalevelBox.Value                  = Int32.Parse(childnode.InnerText);
                         if (childnode.Name == "carlodlevel")                carlodlevelBox.SelectedIndex        = Int32.Parse(childnode.InnerText);
                         if (childnode.Name == "overbrightenable")           overbrightenableBox.IsChecked       = childnode.InnerText == "1" ? true : false;
@@ -124,8 +139,28 @@ namespace NFS
                         if (childnode.Name == "carenvironmentmapenable")    carenvironmentmapenableBox.Value    = Int32.Parse(childnode.InnerText);
                         if (childnode.Name == "roadreflectionenable")       roadreflectionenableBox.Value       = Int32.Parse(childnode.InnerText);
                         if (childnode.Name == "motionblurenable")           motionblurenableBox.IsChecked       = childnode.InnerText == "1" ? true : false;
-                        if (childnode.Name == "basetexturemaxani")          basetexturemaxaniBox.SelectedIndex  = Int32.Parse(childnode.InnerText);
-                        if (childnode.Name == "roadtexturemaxani")          roadtexturemaxaniBox.SelectedIndex  = Int32.Parse(childnode.InnerText);
+                        if (childnode.Name == "basetexturemaxani")
+                        {
+                            for (int i = 0; i < roadtexturemaxaniBox.Items.Count; i++)
+                            {
+                                if (((ComboBoxItem)basetexturemaxaniBox.Items[i]).Content.ToString() == childnode.InnerText + "x")
+                                {
+                                    basetexturemaxaniBox.SelectedIndex = i;
+                                    break;
+                                }
+                            }
+                        }
+                        if (childnode.Name == "roadtexturemaxani")
+                        {
+                            for (int i = 0; i < roadtexturemaxaniBox.Items.Count; i++)
+                            {
+                                if (((ComboBoxItem)roadtexturemaxaniBox.Items[i]).Content.ToString() == childnode.InnerText + "x")
+                                {
+                                    roadtexturemaxaniBox.SelectedIndex = i;
+                                    break;
+                                }
+                            }
+                        }
                         if (childnode.Name == "vsyncon")                    vsynconBox.IsChecked                = childnode.InnerText == "1" ? true : false;
 
                     }
@@ -164,7 +199,7 @@ namespace NFS
         public Settings()
         {
             InitializeComponent();
-
+            
             wayToUserSettings += Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Need for Speed World\Settings\UserSettings.xml";
 
             App.LanguageChanged += LanguageChanged;
@@ -214,8 +249,21 @@ namespace NFS
             xDoc.Load(wayToUserSettings);
             XmlElement xRoot = xDoc.DocumentElement;
 
+            foreach (XmlNode xnode in xRoot)
+            {
+                foreach (XmlNode childnode in xnode.ChildNodes)
+                {
+                    if (childnode.Name == "Language")
+                    {
+                        childnode.InnerText = ((ComboBoxItem)GameLangBox.SelectedItem).Content.ToString();
+                        break;
+                    }
+                }
+            }
+
             if (settings1.IsEnabled == false)
             {
+                xDoc.Save(wayToUserSettings);
                 backFunk();
                 return;
             }       
@@ -240,7 +288,7 @@ namespace NFS
                     if (childnode.Name == "roadtexturefilter")          childnode.InnerText = roadtexturefilterBox.Value.ToString();
                     if (childnode.Name == "basetexturelodbias")         childnode.InnerText = basetexturelodbiasBox.Text;
                     if (childnode.Name == "roadtexturelodbias")         childnode.InnerText = roadtexturelodbiasBox.Text;
-                    if (childnode.Name == "shaderdetail")               childnode.InnerText = shaderdetailBox.Value.ToString();
+                    if (childnode.Name == "shaderdetail")               childnode.InnerText = shaderdetailBox.Value.ToString() == "3" ? "4" : shaderdetailBox.Value.ToString();
                     if (childnode.Name == "fsaalevel")                  childnode.InnerText = fsaalevelBox.Value.ToString();
                     if (childnode.Name == "carlodlevel")                childnode.InnerText = carlodlevelBox.SelectedIndex.ToString();
                     if (childnode.Name == "overbrightenable")           childnode.InnerText = (overbrightenableBox.IsChecked == true ? "1" : "0");
@@ -248,8 +296,8 @@ namespace NFS
                     if (childnode.Name == "carenvironmentmapenable")    childnode.InnerText = carenvironmentmapenableBox.Value.ToString();
                     if (childnode.Name == "roadreflectionenable")       childnode.InnerText = roadreflectionenableBox.Value.ToString();
                     if (childnode.Name == "motionblurenable")           childnode.InnerText = (motionblurenableBox.IsChecked == true ? "1" : "0");
-                    if (childnode.Name == "basetexturemaxani")          childnode.InnerText = basetexturemaxaniBox.SelectedIndex.ToString();
-                    if (childnode.Name == "roadtexturemaxani")          childnode.InnerText = roadtexturemaxaniBox.SelectedIndex.ToString();
+                    if (childnode.Name == "basetexturemaxani")          childnode.InnerText = ((ComboBoxItem)basetexturemaxaniBox.SelectedItem).Content.ToString().Remove(((ComboBoxItem)basetexturemaxaniBox.SelectedItem).Content.ToString().Length - 1);// например выбрано "16x", а нужно записать в файл "16"
+                    if (childnode.Name == "roadtexturemaxani")          childnode.InnerText = ((ComboBoxItem)roadtexturemaxaniBox.SelectedItem).Content.ToString().Remove(((ComboBoxItem)roadtexturemaxaniBox.SelectedItem).Content.ToString().Length - 1);//
                     if (childnode.Name == "vsyncon")                    childnode.InnerText = (vsynconBox.IsChecked == true ? "1" : "0");
 
                 }

@@ -3,7 +3,7 @@
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
 
     <v:String x:Key="WE">WEX</v:String>
-    <v:String x:Key="version">1.2.0</v:String>
+    <v:String x:Key="version">1.2.1</v:String>
     <v:String x:Key="translated">|</v:String>
 
     <v:String x:Key="questWaytoGame">You have downloaded the game?</v:String>
@@ -81,8 +81,9 @@ Launcher quits</v:String>
     <v:String x:Key="succHideSettings" xml:space="preserve">Done! Now log in to the game and exit to make the settings take effect.
 And please keep in charge, this feature is under development</v:String>
 
-    <v:String x:Key="settingsLauncher">Launcher settings</v:String>
-    <v:String x:Key="language">Language:</v:String>
+    <v:String x:Key="basicSettings">Basic settings</v:String>
+    <v:String x:Key="language">Launcher language:</v:String>
+    <v:String x:Key="gameLanguage">Game language:</v:String>
     <v:String x:Key="autoUpdate">Auto. check for updates</v:String>
     <v:String x:Key="onlineFromSetting">Online</v:String>
     <v:String x:Key="event">Event</v:String>
@@ -91,21 +92,21 @@ And please keep in charge, this feature is under development</v:String>
 
     <v:String x:Key="firsttime">Auto-adjusting graphics</v:String>
     <v:String x:Key="visualtreatment">Visual treatment</v:String>
-    <v:String x:Key="gameSettings">Graphics settings</v:String>
+    <v:String x:Key="graphicsSettings">Graphics settings</v:String>
     <v:String x:Key="globaldetaillevel">Global detail level</v:String>
     <v:String x:Key="basetexturefilter">Base texture filter</v:String>
     <v:String x:Key="roadtexturefilter">Road texture filter</v:String>
     <v:String x:Key="textures">Render distance:</v:String>
     <v:String x:Key="basetexturelodbias">• surround</v:String>
     <v:String x:Key="roadtexturelodbias">• road</v:String>
-    <v:String x:Key="shaderdetail">Shader detail (not working correctly)</v:String>
-    <v:String x:Key="fsaalevel">Smoothing</v:String>
+    <v:String x:Key="shaderdetail">Shader detail</v:String>
+    <v:String x:Key="fsaalevel">Anti-Aliasing (FSAA)</v:String>
     <v:String x:Key="carlodlevel">Сar detailing</v:String>
     <v:String x:Key="overbrightenable">Bloom-effect</v:String>
     <v:String x:Key="particlesystemenable">Exhaust, sparks, etc.</v:String>
-    <v:String x:Key="carenvironmentmapenable">Reflection on the car</v:String>
-    <v:String x:Key="roadreflectionenable">Reflections on the road</v:String>
-    <v:String x:Key="motionblurenable">Blur</v:String>
+    <v:String x:Key="carenvironmentmapenable">Car Reflections</v:String>
+    <v:String x:Key="roadreflectionenable">Road Reflections</v:String>
+    <v:String x:Key="motionblurenable">Motion blur</v:String>
     <v:String x:Key="basetexturemaxani">Anisotropic Filtering (world)</v:String>
     <v:String x:Key="roadtexturemaxani">Anisotropic Filtering (road)</v:String>
     <v:String x:Key="vsyncon">VSync</v:String>
@@ -128,11 +129,12 @@ And please keep in charge, this feature is under development</v:String>
 
 
     <!-- Discord -->
-    <v:String x:Key="loading">Downloading</v:String>
+    <v:String x:Key="loading">Loading game</v:String>
     <v:String x:Key="launcherOpen">Launcher is open</v:String>
     <v:String x:Key="dissOnline">Online</v:String>
-    <v:String x:Key="driving" xml:space="preserve">Car: </v:String>
     <v:String x:Key="dissEvent" xml:space="preserve">Event: </v:String>
+    <v:String x:Key="driving" xml:space="preserve">Car: </v:String>
+    <v:String x:Key="dissLobby" xml:space="preserve">In Lobby: </v:String>
     <v:String x:Key="safehouse" xml:space="preserve">In Safehouse</v:String>
 
 </ResourceDictionary>

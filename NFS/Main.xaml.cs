@@ -44,6 +44,9 @@ namespace NFS
         Thread ThreadForMonitoringOnlineAndPing;
         Thread _nfswstarted, updateThread;
 
+        Settings form1 = new Settings();
+        Registration form2 = new Registration();
+
         string SiteLink = "";
         string VKLink = "";
         string DiscordLink = "";
@@ -54,21 +57,14 @@ namespace NFS
             {
                 try
                 {
-                    string v = "";
-                    FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://ch56558@vh174.timeweb.ru/v.txt");
-                    request.Credentials = new NetworkCredential("ch56558", "Rj8S7dvnhbqf");
-                    request.Method = WebRequestMethods.Ftp.DownloadFile;
+                    string v = version;
 
-                    using (Stream ftpStream = request.GetResponse().GetResponseStream())
-                    using (Stream fileStream = File.Create(@"v.txt"))
+
+                    using (var client = new WebClient())
                     {
-                        byte[] buffer = new byte[10240];
-                        int read;
-                        while ((read = ftpStream.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            v = System.Text.Encoding.UTF8.GetString(buffer).TrimEnd('\0');
-                        }
+                        client.DownloadFile("http://world-evolved.ru/launcher/version.txt", "v.txt");
                     }
+                    v = File.ReadLines("v.txt").Skip(0).First();
 
                     File.Delete(@"v.txt");
 
@@ -196,11 +192,6 @@ namespace NFS
                     continue;//если игра запущена, то незачем обновлять данные
                 }
 
-                this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
-                {
-                    PingInf.Content = ping + "ms";
-                });
-
                 WebClientWithTimeout client = new WebClientWithTimeout();
                 var stringToUri = new Uri(serverIP + "/GetServerInformation");
                 client.DownloadStringAsync(stringToUri);
@@ -211,6 +202,7 @@ namespace NFS
 
                     this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
+                        PingInf.Content = ping + "ms";
                         OnlineInf.Content = string.Format("{0}/{1}", json.onlineNumber, json.maxOnlinePlayers);
                     });
 
@@ -537,11 +529,12 @@ namespace NFS
         }
         void openSettings(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Settings());
+            form1.readSaveData();
+            NavigationService.Navigate(form1);
         }
         void startReg(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Registration());
+            NavigationService.Navigate(form2);
         }
         void recoveryAcc(object sender, RoutedEventArgs e)
         {
