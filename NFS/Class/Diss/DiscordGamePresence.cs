@@ -205,7 +205,6 @@ namespace NFS.Class.Diss.RPC
             if (uri == "/DriverPersona/UpdatePersonaPresence")
             {
                 string UpdatePersonaPresenceParam = GET.Split(';').Last().Split('=').Last();
-                MainWindow._presence.Assets = new Assets();
                 if (UpdatePersonaPresenceParam == "1")
                 {
                     if (checkCar)

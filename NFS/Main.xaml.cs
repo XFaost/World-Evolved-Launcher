@@ -53,24 +53,20 @@ namespace NFS
 
         void checkUpdate()
         {
-            if (autoUpdate == "1")
+            try
             {
-                try
+                using (var client = new WebClient())
                 {
-                    string v = version;
+                    client.DownloadFile("http://world-evolved.ru/launcher/version.txt", "v.txt");
+                }
 
+                if (autoUpdate == "1")
+                {
+                    string tempVersion = File.ReadLines("v.txt").Skip(0).First();
 
-                    using (var client = new WebClient())
+                    if (tempVersion != version)
                     {
-                        client.DownloadFile("http://world-evolved.ru/launcher/version.txt", "v.txt");
-                    }
-                    v = File.ReadLines("v.txt").Skip(0).First();
-
-                    File.Delete(@"v.txt");
-
-                    if (v != version)
-                    {
-                        MessageBoxResult result = MessageBox.Show(getStrFromResource("questUpdate"), getStrFromResource("WE") + " | " + version + " --> " + v, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show(getStrFromResource("questUpdate"), getStrFromResource("WE") + " | " + version + " --> " + tempVersion, MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (result == MessageBoxResult.Yes)
                         {
                             Process.Start(@".\Update\Update.exe");
@@ -78,8 +74,33 @@ namespace NFS
                         }
                     }
                 }
-                catch { }
+
+                File.Delete(@"v.txt");
+
+                HttpWebRequest wrq = (HttpWebRequest)WebRequest.Create("http://world-evolved.ru/launcher/imageNews.png");
+                HttpWebResponse wrs = (HttpWebResponse)wrq.GetResponse();
+                DateTime dt = wrs.LastModified;
+
+                if (!System.IO.File.Exists("imageNews.png") || File.GetLastWriteTime(@"imageNews.png") < dt)
+                {
+                    using (var client = new WebClient())
+                    {
+                        client.DownloadFile("http://world-evolved.ru/launcher/imageNews.png", "imageNews.png");
+                    }
+                }
+
+                this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+                {
+                    BitmapImage bi3 = new BitmapImage();
+                    bi3.BeginInit();
+                    bi3.UriSource = new Uri(Environment.CurrentDirectory + "\\imageNews.png");
+                    bi3.EndInit();
+                    imageNewsBox.Source = bi3;
+                });
+
+                
             }
+            catch { }
         }
 
         void getWayToLog()
@@ -139,14 +160,14 @@ namespace NFS
         {
             try
             {
-                saveWayToFileNFSW = File.ReadLines("saveData.txt").Skip(0).First();
-                saveLogin = File.ReadLines("saveData.txt").Skip(1).First();
-                saveEncryptPass = File.ReadLines("saveData.txt").Skip(2).First();
-                autoUpdate = File.ReadLines("saveData.txt").Skip(3).First() == "" ? autoUpdate : File.ReadLines("saveData.txt").Skip(3).First();
-                DRPCOnline = File.ReadLines("saveData.txt").Skip(4).First() == "" ? DRPCOnline : File.ReadLines("saveData.txt").Skip(4).First();
-                DRPCCar = File.ReadLines("saveData.txt").Skip(5).First() == "" ? DRPCCar : File.ReadLines("saveData.txt").Skip(5).First();
-                DRPCEvent = File.ReadLines("saveData.txt").Skip(6).First() == "" ? DRPCEvent : File.ReadLines("saveData.txt").Skip(6).First();
-                DRPCLobby = File.ReadLines("saveData.txt").Skip(7).First() == "" ? DRPCLobby : File.ReadLines("saveData.txt").Skip(7).First();
+                saveWayToFileNFSW   = File.ReadLines("saveData.txt").Skip(0).First();
+                saveLogin           = File.ReadLines("saveData.txt").Skip(1).First();
+                saveEncryptPass     = File.ReadLines("saveData.txt").Skip(2).First();
+                autoUpdate          = File.ReadLines("saveData.txt").Skip(3).First() == "" ? autoUpdate : File.ReadLines("saveData.txt").Skip(3).First();
+                DRPCOnline          = File.ReadLines("saveData.txt").Skip(4).First() == "" ? DRPCOnline : File.ReadLines("saveData.txt").Skip(4).First();
+                DRPCCar             = File.ReadLines("saveData.txt").Skip(5).First() == "" ? DRPCCar    : File.ReadLines("saveData.txt").Skip(5).First();
+                DRPCEvent           = File.ReadLines("saveData.txt").Skip(6).First() == "" ? DRPCEvent  : File.ReadLines("saveData.txt").Skip(6).First();
+                DRPCLobby           = File.ReadLines("saveData.txt").Skip(7).First() == "" ? DRPCLobby  : File.ReadLines("saveData.txt").Skip(7).First();
             }
             catch
             {
@@ -278,9 +299,8 @@ namespace NFS
         public Main()
         {
             InitializeComponent();
-
+            
             readSaveData();
-
             
             if (saveWayToFileNFSW == "" && saveLogin == "")
             {

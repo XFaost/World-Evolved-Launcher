@@ -53,6 +53,7 @@
     <v:String x:Key="launch">ИГРАТЬ</v:String>
     <v:String x:Key="online">Игроков на сервере:</v:String>
     <v:String x:Key="ping">Пинг:</v:String>
+    <v:String x:Key="downloading">Загрузка...</v:String>
 
     <v:String x:Key="accInf">АВТОРИЗАЦИЯ</v:String>
     <v:String x:Key="saveLaP">Сохранить почту и пароль</v:String>

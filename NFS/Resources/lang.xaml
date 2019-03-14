@@ -53,6 +53,7 @@ Launcher quits</v:String>
     <v:String x:Key="launch">LAUNCH</v:String>
     <v:String x:Key="online">Online:</v:String>
     <v:String x:Key="ping">Ping:</v:String>
+    <v:String x:Key="downloading">Downloading...</v:String>
 
     <v:String x:Key="accInf">AUTHORIZATION</v:String>
     <v:String x:Key="saveLaP">Save e-mail and password</v:String>

@@ -216,11 +216,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\logo.png">
-      <CustomToolNamespace>Images</CustomToolNamespace>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\mail_icon.png">
       <CustomToolNamespace>Images</CustomToolNamespace>
     </Resource>
@@ -246,7 +241,6 @@
     <Resource Include="Images\mainLogo.png" />
     <Resource Include="Images\map.jpg" />
     <Resource Include="mainIcon.ico" />
-    <Resource Include="Images\oDTilm0.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
