@@ -3,7 +3,7 @@
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
 
     <v:String x:Key="WE">WEX</v:String>
-    <v:String x:Key="version">1.2.1</v:String>
+    <v:String x:Key="version">1.2.3</v:String>
     <v:String x:Key="translated">|</v:String>
 
     <v:String x:Key="questWaytoGame">You have downloaded the game?</v:String>
@@ -78,7 +78,8 @@ Launcher quits</v:String>
     <v:String x:Key="off">off</v:String>
 
     <v:String x:Key="settings">Game and launcher settings</v:String>
-    <v:String x:Key="activationHideSettings">Advanced graphics settings</v:String>
+    <v:String x:Key="activationHideSettings">ADVENCED GRAPHICS SETTINGS</v:String>
+    <v:String x:Key="forExperienced">for experienced</v:String>
     <v:String x:Key="succHideSettings" xml:space="preserve">Done! Now log in to the game and exit to make the settings take effect.
 And please keep in charge, this feature is under development</v:String>
 

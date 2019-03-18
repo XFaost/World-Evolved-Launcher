@@ -48,11 +48,7 @@ namespace NFS
         };
 
         public static DiscordRpcClient discordRpcClient;
-        public void HideWin()
-        {
-            WindowState = WindowState.Minimized;
-        }
-
+        
         private void myFrame_ContentRendered(object sender, EventArgs e)
         {
             UserPanel.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
@@ -64,6 +60,8 @@ namespace NFS
             this.DataContext = new WindowViewModel(this);
 
             UserPanel.NavigationService.Navigate(new Main());
+
+            
         }
 
     }

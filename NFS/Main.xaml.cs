@@ -66,12 +66,16 @@ namespace NFS
 
                     if (tempVersion != version)
                     {
-                        MessageBoxResult result = MessageBox.Show(getStrFromResource("questUpdate"), getStrFromResource("WE") + " | " + version + " --> " + tempVersion, MessageBoxButton.YesNo, MessageBoxImage.Question);
-                        if (result == MessageBoxResult.Yes)
+                        this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
-                            Process.Start(@".\Update\Update.exe");
-                            Process.GetCurrentProcess().Kill();
-                        }
+                            MessageBoxResult result = MessageBox.Show(getStrFromResource("questUpdate"), getStrFromResource("WE") + " | " + version + " --> " + tempVersion, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (result == MessageBoxResult.Yes)
+                            {
+                                Process.Start(@".\Update\Update.exe");
+                                Process.GetCurrentProcess().Kill();
+                            }
+                        });
+                        
                     }
                 }
 
@@ -299,7 +303,7 @@ namespace NFS
         public Main()
         {
             InitializeComponent();
-            
+
             readSaveData();
             
             if (saveWayToFileNFSW == "" && saveLogin == "")
@@ -380,12 +384,23 @@ namespace NFS
                 MainWindow.discordRpcClient.SetPresence(MainWindow._presence);
             }
 
+            this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Minimized;
+            });
+
             var nfswProcess = Process.Start(saveWayToFileNFSW, args);
             if (nfswProcess != null)
             {
                 nfswProcess.EnableRaisingEvents = true;
 
                 nfswProcess.Exited += (sender2, e2) => {
+
+                    this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+                    {
+                        Application.Current.MainWindow.WindowState = WindowState.Normal;
+                    });
+
                     if (Int32.Parse(DRPCCar) == 1)
                     {
                         MainWindow._presence.Details = getStrFromResource("launcherOpen");
@@ -421,14 +436,14 @@ namespace NFS
                                 error = getErrorProcess.ExitCode;
                                 switch (error)
                                 {
-                                    case 1001: MessageBox.Show(getStrFromResource("logNotFound") + " \"" + wayToLog + "\"", getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 5: MessageBox.Show(getStrFromResource("error5") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 6: MessageBox.Show(getStrFromResource("error6") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 7: MessageBox.Show(getStrFromResource("error7") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 10: MessageBox.Show(getStrFromResource("error10") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 13: MessageBox.Show(getStrFromResource("error13") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 410: MessageBox.Show(getStrFromResource("error410"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
-                                    case 500: MessageBox.Show(getStrFromResource("error500") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 1001:  MessageBox.Show(getStrFromResource("logNotFound") + " \"" + wayToLog + "\"", getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 5:     MessageBox.Show(getStrFromResource("error5") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 6:     MessageBox.Show(getStrFromResource("error6") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 7:     MessageBox.Show(getStrFromResource("error7") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 10:    MessageBox.Show(getStrFromResource("error10") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 13:    MessageBox.Show(getStrFromResource("error13") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 410:   MessageBox.Show(getStrFromResource("error410"), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
+                                    case 500:   MessageBox.Show(getStrFromResource("error500") + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
 
                                     default: MessageBox.Show(getStrFromResource("anotherError") + error + getStrFromResource("gameReturnCode") + exitCode.ToString(), getStrFromResource("WE"), MessageBoxButton.OK, MessageBoxImage.Error); break;
                                 }
@@ -443,6 +458,7 @@ namespace NFS
 
             }
         }
+
         void Press_Play(object sender, RoutedEventArgs e)
         {
             readSaveData();
@@ -524,8 +540,6 @@ namespace NFS
                             PlayButton.IsEnabled = true;
                             return;
                         }
-
-                        //MainWindow.HideWin();
 
                         ServerProxy.Instance.SetServerUrl(serverIP);
                         ServerProxy.Instance.SetServerName("WORLDEVOLVED");

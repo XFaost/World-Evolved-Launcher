@@ -3,7 +3,7 @@
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
 
     <v:String x:Key="WE">WEX</v:String>
-    <v:String x:Key="version">1.2.1</v:String>
+    <v:String x:Key="version">1.2.3</v:String>
     <v:String x:Key="translated">| перевел Pixel Games</v:String>
 
     <v:String x:Key="questWaytoGame">У Вас установлен Need for Speed World?</v:String>
@@ -78,7 +78,8 @@
     <v:String x:Key="off">выкл</v:String>
 
     <v:String x:Key="settings">Настройки игры и лаунчера</v:String>
-    <v:String x:Key="activationHideSettings">Активировать скрытые настройки</v:String>
+    <v:String x:Key="activationHideSettings">АКТИВИРОВАТЬ СКРЫТЫЕ НАСТРОЙКИ</v:String>
+    <v:String x:Key="forExperienced">для опытных</v:String>
     <v:String x:Key="succHideSettings" xml:space="preserve">Готово! Теперь зайдите в игру и выйдете, что бы настройки вступили в силу.
 И пожалуйста, имейте ввиду, эта функция в стадии разработки</v:String>
 

@@ -8,7 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NFS.Properties {
+namespace NFS.Properties
+{
 
 
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

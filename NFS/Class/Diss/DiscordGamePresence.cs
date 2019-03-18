@@ -32,9 +32,6 @@ namespace NFS.Class.Diss.RPC
         public static string PersonaAvatarId = string.Empty;
         public static string PersonaCarId = string.Empty;
         public static string PersonaCarName = string.Empty;
-        public static int PersonaTreasure = 0;
-        public static int TotalTreasure = 15;
-        public static int TEDay = 0;
         public static List<string> PersonaIds = new List<string>();
 
         static string getStrFromResource(string key)
@@ -49,69 +46,18 @@ namespace NFS.Class.Diss.RPC
             var SBRW_XML = new XmlDocument();
             string[] splitted_uri = uri.Split('/');
 
-            /*if(uri == "/DriverPersona/GetPersonaBaseFromList" && POST != string.Empty) {
-                SBRW_XML.LoadXml(serverreply);
-                string PersonaFriend = SBRW_XML.SelectSingleNode("ArrayOfPersonaBase/PersonaBase/Name").InnerText;
-
-                if(PersonaFriend != PersonaName) { 
-                    var notification = new NotifyIcon()  {
-                        Visible = true,
-                        Icon = System.Drawing.SystemIcons.Information,
-                        BalloonTipIcon = ToolTipIcon.Info,
-                        BalloonTipTitle = "Friend Request - " + serverName,
-                        BalloonTipText = PersonaFriend + " wants to be your friend. Go ingame to accept or decline",
-                    };
-
-                    notification.ShowBalloonTip(5000);
-                    notification.Dispose();
-                }
-            }*/
-
-
-
-            if (uri == "/events/gettreasurehunteventsession")
-            {
-                PersonaTreasure = 0;
-                TotalTreasure = 15;
-                TEDay = 0;
-
-                SBRW_XML.LoadXml(serverreply);
-                var xPersonaTreasure = Convert.ToInt32(SBRW_XML.SelectSingleNode("TreasureHuntEventSession/CoinsCollected").InnerText);
-                for (var i = 0; i < 15; i++)
-                {
-                    if ((xPersonaTreasure & (1 << (15 - i))) != 0) PersonaTreasure++;
-                }
-
-                TotalTreasure = Convert.ToInt32(SBRW_XML.SelectSingleNode("TreasureHuntEventSession/NumCoins").InnerText);
-                TEDay = Convert.ToInt32(SBRW_XML.SelectSingleNode("TreasureHuntEventSession/Streak").InnerText);
-            }
-
-            if (uri == "/events/notifycoincollected")
-            {
-                PersonaTreasure++;
-
-                MainWindow._presence.Details = "Collecting gems (" + PersonaTreasure + " of " + TotalTreasure + ")";
-                MainWindow._presence.Timestamps = GetCurrentTimestamp();
-                
-                MainWindow.discordRpcClient.SetPresence(MainWindow._presence);
-
-                Console.WriteLine(serverreply);
-            }
-
-
             if (uri == "/User/SecureLoginPersona")
             {
                 canUpdateProfileField = true;
             }
             if (uri == "/User/SecureLogoutPersona")
             {
-                PersonaId = string.Empty;
-                PersonaName = string.Empty;
-                PersonaLevel = string.Empty;
-                PersonaAvatarId = string.Empty;
-                PersonaCarId = string.Empty;
-                PersonaCarName = string.Empty;
-                PersonaTreasure = 0;
+                PersonaId =         string.Empty;
+                PersonaName =       string.Empty;
+                PersonaLevel =      string.Empty;
+                PersonaAvatarId =   string.Empty;
+                PersonaCarId =      string.Empty;
+                PersonaCarName =    string.Empty;
             }
 
             //FIRST PERSONA EVER LOCALIZED IN CODE
@@ -161,7 +107,6 @@ namespace NFS.Class.Diss.RPC
                 
                 if (checkCar)
                 {
-                    //MessageBox.Show("{DRIVING CARNAME}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
                     MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
                     MainWindow._presence.Timestamps = GetCurrentTimestamp();
 
@@ -181,7 +126,6 @@ namespace NFS.Class.Diss.RPC
 
                 if (checkLobby)
                 {
-                    //MessageBox.Show("{IN LOBBY0}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
                     EventID = Convert.ToInt32(SBRW_XML.SelectSingleNode("LobbyInfo/EventId").InnerText);
                     MainWindow._presence.State = getStrFromResource("dissLobby") + EventList.getEventName(EventID);
                     MainWindow._presence.Timestamps = GetCurrentTimestamp();
@@ -190,7 +134,6 @@ namespace NFS.Class.Diss.RPC
 
                 if (checkCar)
                 {
-                    //MessageBox.Show("{IN LOBBY1}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
                     MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
                     MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
@@ -209,7 +152,6 @@ namespace NFS.Class.Diss.RPC
                 {
                     if (checkCar)
                     {
-                        //MessageBox.Show("{IN SAFEHOUSE/FREEROAM}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
                         MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
                     }
                     else MainWindow._presence.Details = getStrFromResource("dissOnline");
@@ -237,7 +179,6 @@ namespace NFS.Class.Diss.RPC
 
                 if (checkCar)
                 {
-                    //MessageBox.Show("{IN EVENT}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
                     MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
                     MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
@@ -258,7 +199,6 @@ namespace NFS.Class.Diss.RPC
 
                 if (checkCar)
                 {
-                    //MessageBox.Show("{IN EVENT2}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
                     MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
                     MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }
@@ -279,7 +219,6 @@ namespace NFS.Class.Diss.RPC
 
                 if (checkCar)
                 {
-                    //MessageBox.Show("{IN EVENT3}\nDRPCCar: " + checkCar + "\nDRPCEvent: " + checkEvent + "\nDRPCLobby: " + checkLobby);
                     MainWindow._presence.Details = getStrFromResource("driving") + PersonaCarName;
                     MainWindow._presence.Timestamps = GetCurrentTimestamp();
                 }

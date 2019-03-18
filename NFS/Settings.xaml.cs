@@ -299,11 +299,23 @@ namespace NFS
                     if (childnode.Name == "basetexturemaxani")          childnode.InnerText = ((ComboBoxItem)basetexturemaxaniBox.SelectedItem).Content.ToString().Remove(((ComboBoxItem)basetexturemaxaniBox.SelectedItem).Content.ToString().Length - 1);// например выбрано "16x", а нужно записать в файл "16"
                     if (childnode.Name == "roadtexturemaxani")          childnode.InnerText = ((ComboBoxItem)roadtexturemaxaniBox.SelectedItem).Content.ToString().Remove(((ComboBoxItem)roadtexturemaxaniBox.SelectedItem).Content.ToString().Length - 1);//
                     if (childnode.Name == "vsyncon")                    childnode.InnerText = (vsynconBox.IsChecked == true ? "1" : "0");
-
                 }
             }
 
-            xDoc.Save(wayToUserSettings);
+            try
+            {
+                xDoc.Save(wayToUserSettings);
+            }
+            catch
+            {
+                foreach (string fileName in System.IO.Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Need for Speed World\Settings"))
+                {
+                    System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileName);
+                    fileInfo.Attributes = FileAttributes.Normal;
+                }
+                xDoc.Save(wayToUserSettings);
+            }
+            
 
             backFunk();
             return;

@@ -261,10 +261,15 @@
 
                             </StackPanel>
                         </ScrollViewer>
-                    </Grid>
+                    </Grid> 
                 </Border>
 
-                <Button Grid.Column="1" Grid.ColumnSpan="2" Name="activationHideSettingsButton" Content="{DynamicResource activationHideSettings}"  Click="Press_activationHideSettings" Style="{StaticResource SaveButtons}" Height="50" Width="200" Visibility="Visible"/>
+                <Button Grid.Column="1" Grid.ColumnSpan="2" Name="activationHideSettingsButton" Click="Press_activationHideSettings" Style="{StaticResource SaveButtons}" Height="50" Width="{Binding Path=ActualWidth,ElementName=buttonPanel}" Visibility="Visible">
+                    <StackPanel>
+                        <TextBlock Name="buttonPanel" Text="{DynamicResource activationHideSettings}" HorizontalAlignment="Center" Padding="15 0 15 0"/>
+                        <TextBlock Text="{DynamicResource forExperienced}" HorizontalAlignment="Center" TextDecorations="Underline"/>
+                    </StackPanel>
+                </Button>
 
             </Grid>
         </Border>
